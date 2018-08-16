@@ -26,7 +26,6 @@ class Preferences extends Model
         'dietary-mode',
         'preferred-price-range',
         'preferred-radius-size',
-
     ];
     /**
      * A profile belongs to a user.
