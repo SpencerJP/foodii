@@ -18,3 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/admindashboard', 'AdminDashboardController@index')->name('admindashboard');
+Route::get('/rodashboard', 'RODashboardController@index')->name('restaurantownerdashboard');
+Route::get('/dashboard', 'UserDashboardController@index')->name('dashboard');
