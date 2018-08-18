@@ -15,6 +15,9 @@
                     @endif
 
                     You are logged in! YEET
+                    @if( Auth::check() )
+                        Your user type is: {{ Auth::user()->getUserTypeToString() }}
+                    @endif
                 </div>
             </div>
         </div>
