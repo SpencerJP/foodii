@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use Illuminate\Support\Facades\View;
 
 class CustomerPreferencesController extends CustomerController
 {
@@ -17,6 +18,7 @@ class CustomerPreferencesController extends CustomerController
         if(\Auth::check() && !(\Auth::user()->isCustomer()) ) {
             return redirect('/home');
         }
-        return view('customer/index'); // TODO
+        $preferences = \Auth::user()->preferences;
+        return View::make('customer.index')->with('preferences', $preferences); // TODO
     }
 }

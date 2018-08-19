@@ -14,7 +14,7 @@ class AddUserRoles extends Migration
     public function up()
     {
         Schema::table('users', function($table) {
-            $table->string('user_type');
+            $table->string('user_type')->nullable();
         });
     }
 

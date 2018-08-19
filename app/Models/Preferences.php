@@ -23,9 +23,9 @@ class Preferences extends Model
      * @var array
      */
     protected $fillable = [
-        'dietary-mode',
-        'preferred-price-range',
-        'preferred-radius-size',
+        'dietary_mode',
+        'preferred_price_range',
+        'preferred_radius_size',
     ];
     /**
      * A profile belongs to a user.

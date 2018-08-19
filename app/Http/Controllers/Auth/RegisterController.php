@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
+use App\Models\Preferences as Preferences;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+
 
 class RegisterController extends Controller
 {
@@ -63,10 +65,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $preferences = new Preferences;
+        $preferences->dietary_mode = "None";
+        $preferences->preferred_price_range = "None";
+        $preferences->preferred_radius_size = "None";
+        $preferences->save();
+
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'user_type' => 'Customer',
         ]);
+
+        $user->preference_id = $preferences->id;
+        $user->save();
+        $preferences->user_id = $user->id;
+        $preferences->save();
+
+        return $user;
+
     }
 }
