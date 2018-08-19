@@ -15,9 +15,6 @@ class RestaurantOwnerController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        if(\Auth::check() && !(\Auth::user()->isRestaurantOwner()) ) {
-            return Redirect::to('/home');
-        }
     }
 
     /**
@@ -27,6 +24,10 @@ class RestaurantOwnerController extends Controller
      */
     public function index()
     {
+
+        if(\Auth::check() && !(\Auth::user()->isRestaurantOwner()) ) {
+            return redirect('/home');
+        }
         return view('testview');
     }
 }

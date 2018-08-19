@@ -15,9 +15,7 @@ class CustomerController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        if(\Auth::check() && !(\Auth::user()->isCustomer()) ) {
-            return Redirect::to('/home');
-        }
+        
     }
 
     /**
@@ -27,6 +25,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        if(\Auth::check() && !(\Auth::user()->isCustomer()) ) {
+            return redirect('/home');
+        }
         return view('testview'); //TODO
     }
 }

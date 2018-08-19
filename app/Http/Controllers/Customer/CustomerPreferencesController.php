@@ -14,6 +14,9 @@ class CustomerPreferencesController extends CustomerController
      */
     public function index()
     {
+        if(\Auth::check() && !(\Auth::user()->isCustomer()) ) {
+            return redirect('/home');
+        }
         return view('testview'); // TODO
     }
 }

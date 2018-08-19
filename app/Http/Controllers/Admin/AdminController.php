@@ -15,9 +15,7 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        if(\Auth::check() && !(\Auth::user()->isAdmin()) ) {
-            return Redirect::to('/home');
-        }
+
     }
 
     /**
@@ -27,6 +25,9 @@ class AdminController extends Controller
      */
     public function index()
     {
+        if(\Auth::check() && !(\Auth::user()->isAdmin()) ) {
+            return redirect('/home');
+        }
         return view('home');
     }
 }

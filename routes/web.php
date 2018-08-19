@@ -42,5 +42,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/admin', 'Admin\AdminController@index')->name('admindashboard');
+
+
 Route::get('/restaurantowner', 'RestaurantOwner\RestaurantOwnerController@index')->name('restaurantownerdashboard');
+
+
 Route::get('/customer', 'Customer\CustomerController@index')->name('dashboard');
+Route::get('/customer/preferences', 'Customer\CustomerPreferencesController@index')->name('preferencesdashboard');
