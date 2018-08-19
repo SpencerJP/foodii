@@ -41,6 +41,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/admindashboard', 'Dashboards\AdminDashboardController@index')->name('admindashboard');
-Route::get('/rodashboard', 'Dashboards\RODashboardController@index')->name('restaurantownerdashboard');
-Route::get('/dashboard', 'Dashboards\UserDashboardController@index')->name('dashboard');
+Route::get('/admin', 'Admin\AdminController@index')->name('admindashboard');
+Route::get('/restaurantowner', 'RestaurantOwner\RestaurantOwnerController@index')->name('restaurantownerdashboard');
+Route::get('/customer', 'Customer\CustomerController@index')->name('dashboard');

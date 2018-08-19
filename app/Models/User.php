@@ -66,6 +66,18 @@ class User extends Authenticatable
         }
     }
 
+    public function isCustomer()
+    {
+        if ($this->isRestaurantOwner()) {
+            return false;
+        }
+        if ($this->isAdmin()) {
+            return false;
+        }
+        return true;
+        //return ( !($this->isAdmin() or $this->isRestaurantOwner()));
+    }
+
     public function getUserTypeToString()
     {
         if ($this->isRestaurantOwner())

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Dashboards;
+namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class UserDashboardController extends Controller
+class CustomerController extends Controller
 {
 	/**
      * Create a new controller instance.
@@ -15,6 +15,9 @@ class UserDashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        if(\Auth::check() && !(\Auth::user()->isCustomer()) ) {
+            return Redirect::to('/home');
+        }
     }
 
     /**
@@ -24,6 +27,6 @@ class UserDashboardController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('testview'); //TODO
     }
 }

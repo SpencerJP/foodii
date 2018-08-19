@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Dashboards;
+namespace App\Http\Controllers\RestaurantOwner;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class RODashboardController extends Controller
+class RestaurantOwnerController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -15,6 +15,9 @@ class RODashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        if(\Auth::check() && !(\Auth::user()->isRestaurantOwner()) ) {
+            return Redirect::to('/home');
+        }
     }
 
     /**
@@ -24,6 +27,6 @@ class RODashboardController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('testview');
     }
 }

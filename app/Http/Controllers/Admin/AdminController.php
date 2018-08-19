@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Dashboards;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AdminDashboardController extends Controller
+class AdminController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -15,6 +15,9 @@ class AdminDashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        if(\Auth::check() && !(\Auth::user()->isAdmin()) ) {
+            return Redirect::to('/home');
+        }
     }
 
     /**
