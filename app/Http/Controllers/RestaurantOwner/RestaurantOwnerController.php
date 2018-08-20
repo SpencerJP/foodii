@@ -27,7 +27,7 @@ class RestaurantOwnerController extends Controller
 
         if(\Auth::check() && !(\Auth::user()->isRestaurantOwner()) ) {
             return redirect('/home');
-        }
+        }   
         return view('testview');
     }
 }
