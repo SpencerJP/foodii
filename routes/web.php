@@ -52,4 +52,4 @@ Route::resource('/customer/preferences', 'Customer\CustomerPreferencesController
     'index', 'update'
 ]);
 
-Route::resource('/restaurantowner/restaurants', 'RestaurantOwner\RestaurantsController')
+Route::resource('/restaurantowner/restaurants', 'RestaurantOwner\RestaurantsController');
