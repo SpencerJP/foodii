@@ -2,11 +2,11 @@
 
 namespace App;
 
-use App\Models\Franchise;
+use Illuminate\Database\Eloquent\Model;
 
-class Restaurant extends Franchise
+class Franchise extends Model
 {
-    /**
+	/**
      * The attributes that are mass assignable.
      *
      * @var array
