@@ -28,7 +28,7 @@ class RestaurantsController extends Controller
             return redirect('/home');
         }
         $restaurants = \Auth::user()->restaurants;
-        return View::make('restaurantowner.index')->with('restaurants', $restaurants); // TODO
+        return View::make('restaurants.index')->with('restaurants', $restaurants); // TODO
     }
 
     public function create()
@@ -36,7 +36,7 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-         return View::make('restaurantowner.create');
+         return View::make('restaurants.create');
     }
 
     /**
