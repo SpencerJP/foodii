@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 
+use App\Models\Restaurant;
+
 class RestaurantsController extends Controller
 {
     
@@ -52,7 +54,33 @@ class RestaurantsController extends Controller
     public function store()
     {
         if ($this->checkAuth()) {
-            return redirect('/home');
+            return redirect('/home');            
+        }
+        
+        //validate
+        $rules = array(
+            'name' => 'required',
+            'address' => 'required',
+            'description' => 'required'
+        );
+        $validator = Validator::make(Input::all(), $rules);
+        
+        //process the login
+        if ($validator->fails()){
+            return Redirect::to('\restaurantowner\restaurants\create')
+                ->withErrors($validator);
+        } else {
+            //store
+            $restaurant = new Restaurant;
+            $restaurant->name = Input::get('name');
+            $restaurant->address = Input::get('address');
+            $restaurant->description = Input::get('description');
+            $restaurant->rating = rand(1,5);
+            $restaurant->user_id = \Auth::user()->id;
+            $restaurant->save();
+            
+            //redirect
+            return Redirect::to('\restaurantowner\restaurants');
         }
     }
 
@@ -67,6 +95,12 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
+        
+        // Get the restaurant
+        $restaurant = Restaurant::find($id);
+        
+        return View::make('restaurants.show')
+            ->with('restaurant', $restaurant);
     }
 
     /**
