@@ -114,6 +114,13 @@ class RestaurantsController extends Controller
     	if ($this->checkAuth()) {
             return redirect('/home');
         }
+        
+        // get the restaurant
+        $restaurant = Restaurant::find($id);
+        
+        // show the edit form and pass the nerd
+        return View::make('restaurants.edit')
+        ->with('restaurant', $restaurant);
     }
 
     /**
