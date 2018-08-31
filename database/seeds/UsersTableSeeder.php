@@ -61,5 +61,6 @@ class UsersTableSeeder extends Seeder
     	$customer->email = "testcustomer@example.com";
     	$customer->user_type = "customer";
     	$customer->save();
+        /* TODO */
     }
 }
