@@ -138,7 +138,7 @@ class RestaurantsController extends Controller
         $rules = array(
             'name' => 'required',
             'address' => 'required',
-            'description' => 'required',
+            'description' => 'required'
         );
         $validator = Validator::make(Input::all(), $rules);
         

@@ -22,13 +22,7 @@
                 <div class="form-group">
                     {{ Form::label('description', 'Description') }}
                     {{ Form::text('description', null, array('class' => 'form-control')) }}
-                </div>
-                
-                <div class="form-group">
-                    {{ Form::label('rating', 'Rating') }}
-                    {{ Form::number('rating', null, array('class' => 'form-control')) }}
-                </div>
-               
+                </div>               
             
                 {{ Form::submit('Edit the Restaurant!', array('class' => 'btn btn-primary')) }}
             
