@@ -9,6 +9,10 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+
+
+    Note to my group members - 
+    These are the "links" of our application. Run 'php artisan route:list' to see a comprehensive full list of routes.
 */
 
 Route::get('/', function () {
@@ -18,6 +22,9 @@ Route::get('/', function () {
 Auth::routes();
 
 /*
+
+// spencer note, copied this here from the source code. These are called in Auth::routes so they apply to our application, and are all valid links
+
  public function auth()
     {
         // Authentication Routes...
@@ -50,6 +57,10 @@ Route::get('/restaurantowner', 'RestaurantOwner\RestaurantOwnerController@index'
 Route::get('/customer', 'Customer\CustomerController@index')->name('dashboard');	
 
 Route::resource('/restaurantowner/restaurants', 'RestaurantOwner\RestaurantsController');
+
 Route::resource('/customer/preferences', 'Customer\CustomerPreferencesController')->only([
     'index', 'update'
 ]);
+
+Route::resource('/admin/questions', 'Admin\QuestionsController');
+ 
