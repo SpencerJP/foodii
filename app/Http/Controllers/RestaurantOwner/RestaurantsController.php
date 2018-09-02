@@ -169,5 +169,13 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
+        
+        //delete the restaurant
+        $restaurant = Restaurant::find($id);
+        $restaurant->delete();
+        
+        //redirect to restaurants page
+        //Session::flash('message', 'Restaurant deleted successfully!');
+        return Redirect::to('\restaurantowner\restaurants');
     }
 }
