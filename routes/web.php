@@ -56,13 +56,13 @@ Route::get('/restaurantowner', 'RestaurantOwner\RestaurantOwnerController@index'
 
 Route::get('/customer', 'Customer\CustomerController@index')->name('dashboard');	
 
-Route::resource('/restaurantowner/restaurants', 'RestaurantOwner\RestaurantsController')->name('restaurants')
+Route::resource('/restaurantowner/restaurants', 'RestaurantOwner\RestaurantsController');
 
 Route::resource('/customer/preferences', 'Customer\CustomerPreferencesController')->only([
     'index', 'update'
 ]);
 
-Route::resource('/admin/questions', 'Admin\QuestionsController')->only(['index', 'create', 'store', 'delete'])->name('questions')
+Route::resource('/admin/questions', 'Admin\QuestionsController')->only(['index', 'create', 'store', 'delete']);
  
 
  // routes for AnswersController (modified resource controller)

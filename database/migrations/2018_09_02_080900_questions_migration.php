@@ -22,16 +22,16 @@ class QuestionsMigration extends Migration
 
         Schema::create('answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('type')->nullable();
+            $table->string('answervalue');
+            $table->integer('question_id')->nullable();
+            $table->foreign('question_id')->references('id')->on('questions');
             $table->timestamps();
         });
 
         Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('answervalue');
-            $table->integer('question_id')->nullable();
-            $table->foreign('question_id')->references('id')->on('questions');
+            $table->string('name')->default("defaultTag");
+            $table->string('type')->nullable();
             $table->timestamps();
         });
 
