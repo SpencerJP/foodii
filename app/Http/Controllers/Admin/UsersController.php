@@ -29,4 +29,17 @@ class UsersController extends Controller
         $users = User::All();
         return View::make('admin.users.index')->with('users', $users);
     }
+    
+    public function show($id)
+    {
+        if ($this->checkAuth()) {
+            return redirect('/home');
+        }
+        
+        // Get the restaurant
+        $user = User::find($id);
+        
+        return View::make('admin.users.show')
+        ->with('user', $user);
+    }
 }
