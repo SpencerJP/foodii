@@ -41,7 +41,7 @@ class QuestionsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-         return View::make('restaurants.create');
+         return View::make('admin.question.create');
     }
 
     /**
@@ -53,6 +53,31 @@ class QuestionsController extends Controller
     {
     	if ($this->checkAuth()) {
             return redirect('/home');
+        }
+        //validate
+        $rules = array(
+            'questionvalue' => 'required',
+            'impact' => 'required|numeric',
+            'description' => 'required'
+        );
+        $validator = Validator::make(Input::all(), $rules);
+        
+        //process the login
+        if ($validator->fails()){
+            return Redirect::to('\restaurantowner\restaurants\create')
+                ->withErrors($validator);
+        } else {
+            //store
+            $restaurant = new Restaurant;
+            $restaurant->name = Input::get('name');
+            $restaurant->address = Input::get('address');
+            $restaurant->description = Input::get('description');
+            $restaurant->rating = rand(1,5);
+            $restaurant->user_id = \Auth::user()->id;
+            $restaurant->save();
+            
+            //redirect
+            return Redirect::to('\restaurantowner\restaurants');
         }
     }
 
