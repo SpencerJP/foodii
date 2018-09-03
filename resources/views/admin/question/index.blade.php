@@ -8,18 +8,16 @@
                 <thead>
                     <tr>
                         <td>ID</td>
-                        <td>Restaurant Name</td>
-                        <td>Address</td>
-                        <td>Rating</td>
+                        <td>Question</td>
+                        <td>Weight</td>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($restaurants as $key => $value)
+                @foreach($questions as $key => $value)
                     <tr>
                         <td>{{ $value->id }}</td>
-                        <td>{{ $value->name }}</td>
-                        <td>{{ $value->address }}</td>
-                        <td>{{ $value->rating }}</td>
+                        <td>{{ $value->questionvalue }}</td>
+                        <td>{{ $value->weight }}</td>
 
                         <!-- we will also add show, edit, and delete buttons -->
                         <td>

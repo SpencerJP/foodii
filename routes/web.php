@@ -56,11 +56,20 @@ Route::get('/restaurantowner', 'RestaurantOwner\RestaurantOwnerController@index'
 
 Route::get('/customer', 'Customer\CustomerController@index')->name('dashboard');	
 
-Route::resource('/restaurantowner/restaurants', 'RestaurantOwner\RestaurantsController');
+Route::resource('/restaurantowner/restaurants', 'RestaurantOwner\RestaurantsController')->name('restaurants')
 
 Route::resource('/customer/preferences', 'Customer\CustomerPreferencesController')->only([
     'index', 'update'
 ]);
 
-Route::resource('/admin/questions', 'Admin\QuestionsController');
+Route::resource('/admin/questions', 'Admin\QuestionsController')->only(['index', 'create', 'store', 'delete'])->name('questions')
  
+
+ // routes for AnswersController (modified resource controller)
+Route::get('/admin/questions/{question_id}', 'Admin\AnswersController@index')->name('answers.index'); // overrides  questions resource
+Route::get('/admin/questions/{question_id}/create', 'Admin\AnswersController@create')->name('answers.create');
+Route::post('/admin/questions/{question_id}', 'Admin\AnswersController@store')->name('answers.store');
+Route::get('/admin/questions/{question_id}/{answer_id}', 'Admin\AnswersController@show')->name('answers.show');
+Route::get('/admin/questions/{question_id}/{answer_id}/edit', 'Admin\AnswersController@edit')->name('answers.edit');
+Route::put('/admin/questions/{question_id}/{answer_id}/update', 'Admin\AnswersController@update')->name('answers.update');
+Route::delete('/admin/questions/{question_id}/{answer_id}/delete', 'Admin\AnswersController@delete')->name('answers.delete');

@@ -2,8 +2,9 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(App\Models\Question::class, function (Faker $faker) {
     return [
-        //
+       'questionvalue' => $faker->text,
+       'weight' => rand(1,5),
     ];
 });

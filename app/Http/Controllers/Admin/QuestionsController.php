@@ -33,7 +33,7 @@ class QuestionsController extends Controller
             return redirect('/home');
         }
         $questions = Question::All();
-        return View::make('admin.questions.index')->with('questions', $questions); // TODO
+        return View::make('admin.question.index')->with('questions', $questions); // TODO
     }
 
     public function create()
@@ -51,36 +51,9 @@ class QuestionsController extends Controller
      */
     public function store()
     {
-    	/*
-        if ($this->checkAuth()) {
-            return redirect('/home');            
+    	if ($this->checkAuth()) {
+            return redirect('/home');
         }
-        
-        //validate
-        $rules = array(
-            'name' => 'required',
-            'address' => 'required',
-            'description' => 'required'
-        );
-        $validator = Validator::make(Input::all(), $rules);
-        
-        //process the login
-        if ($validator->fails()){
-            return Redirect::to('\restaurantowner\restaurants\create')
-                ->withErrors($validator);
-        } else {
-            //store
-            $restaurant = new Restaurant;
-            $restaurant->name = Input::get('name');
-            $restaurant->address = Input::get('address');
-            $restaurant->description = Input::get('description');
-            $restaurant->rating = rand(1,5);
-            $restaurant->user_id = \Auth::user()->id;
-            $restaurant->save();
-            
-            //redirect
-            return Redirect::to('\restaurantowner\restaurants');
-        } */
     }
 
     /**
@@ -91,16 +64,9 @@ class QuestionsController extends Controller
      */
     public function show($id)
     {
-    	/*
-        if ($this->checkAuth()) {
+    	if ($this->checkAuth()) {
             return redirect('/home');
         }
-        
-        // Get the restaurant
-        $restaurant = Restaurant::find($id);
-        
-        return View::make('restaurants.show')
-            ->with('restaurant', $restaurant); */
     }
 
     /**
@@ -123,34 +89,8 @@ class QuestionsController extends Controller
      */
     public function update($id)
     { 
-    /*
         if ($this->checkAuth()) {
             return redirect('/home');
-        }
-        $preferences = \Auth::user()->preferences;
-         $rules = array(
-            'dietary_mode'       => 'required',
-            'preferred_price_range'      => 'required',
-            'preferred_radius_size' => 'required'
-        );
-         /* TODO  Make a proper validator http://laravel.com/docs/validation
-         */
-        $validator = Validator::make(Input::all(), $rules);
-
-        // process the login
-        if ($validator->fails()) {
-            return Redirect::to('customer.index')
-                ->withErrors($validator)
-                ->withInput(Input);
-        } else {
-            // store
-            $preferences->dietary_mode       = Input::get('dietary_mode');
-            $preferences->preferred_price_range      = Input::get('preferred_price_range');
-            $preferences->preferred_radius_size = Input::get('preferred_radius_size');
-            $preferences->save();
-
-            // redirect
-            return Redirect::to('\customer\preferences'); */
         }
     }
 
