@@ -16,9 +16,31 @@
                     <strong>Dietary Mode:</strong> {{ $user->preferences->dietary_mode }}<br>
                     <strong>Preferred Price Range:</strong> {{ $user->preferences->preferred_price_range }}<br>
                     <strong>Preferred Radius Size:</strong> {{ $user->preferences->preferred_radius_size}}<br>    
-                </p>                
+                </p>
+                
                                
-            </div>            
+            </div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Restaurant Name</td>
+                        <td>Address</td>
+                        <td>Rating</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($user->restaurants as $key => $value)                                        
+                    <tr>
+                        <td>{{ $value->id }}</td>
+                        <td>{{ $value->name }}</td>
+                        <td>{{ $value->address }}</td>
+                        <td>{{ $value->rating }}</td>
+                        
+                    </tr>
+                    @endforeach
+                </tbody>
+           </table>
         </div>
     </div>
 </div>

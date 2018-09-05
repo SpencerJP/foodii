@@ -39,7 +39,18 @@ class UsersController extends Controller
         // Get the restaurant
         $user = User::find($id);
         
-        return View::make('admin.users.show')
-        ->with('user', $user);
+        $restaurants = $user->restaurants;
+        
+        if($user->isRestaurantOwner())
+        {
+            return View::make('admin.users.showro')
+            ->with('user', $user)->with('restaurants', $restaurants);
+        }
+        else {
+            return View::make('admin.users.show')
+            ->with('user', $user);
+        }
+        
+        
     }
 }
