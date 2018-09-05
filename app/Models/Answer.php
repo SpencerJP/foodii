@@ -19,4 +19,15 @@ class Answer extends Model
     {
         return $this->belongsToMany('App\Models\Tag', 'answer_tags');
     }
+
+     /**
+     * A profile belongs to a user.
+     *
+     * @return the user that this belongs to.
+     */
+    public function question()
+    {
+        return $this->belongsTo('App\Models\Question');
+    }
+
 }

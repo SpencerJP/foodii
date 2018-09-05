@@ -24,9 +24,13 @@
                         <td>
 
                             <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                            <a class="btn btn-small btn-info" href="{{ URL::to('/restaurantowner/restaurants/' . $value->id) }}">Edit</a>
+                            <a class="btn btn-small btn-info" href="{{ URL::to('/admin/questions/' . $value->id) }}">Edit</a>
 
-                            <a class="btn btn-small btn-danger" href="{{ URL::to('/restaurantowner/restaurants/' . $value->id . '/edit') }}">Delete</a>
+                            <form action="{{ route('questions.destroy', $value->id) }}" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn btn-small btn-danger">Delete</button>
+                            </form>
 
                         </td>
                     </tr>

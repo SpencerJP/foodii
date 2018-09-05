@@ -31,23 +31,24 @@ class AnswersController extends Controller
      * @param question id
      * @return \Illuminate\Http\Response
      */
-    public function index(int $id)
+    public function index(int $question_id)
     {
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        $question = Question::find($id);
+        $question = Question::find($question_id);
         $answers = $question->answers();
    
         return View::make('admin.question.answer.index')->with('question', $question)->with('answers', $answers); // TODO
     }
 
-    public function create()
+    public function create($question_id)
     {
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-         return View::make('restaurants.create');
+        $question = Question::find($question_id);
+         return View::make('admin.question.answer.create')->with('question', $question);
     }
 
     /**
@@ -55,10 +56,29 @@ class AnswersController extends Controller
      *
      * @return Response
      */
-    public function store()
+    public function store($question_id)
     {
     	if ($this->checkAuth()) {
             return redirect('/home');
+        }
+        //validate
+        $rules = array(
+            'answervalue' => 'required',
+        );
+        $validator = Validator::make(Input::all(), $rules);
+        
+        //process the login
+        if ($validator->fails()){
+            return Redirect::to("\admin\questions\\". $question_id . "\create")
+                ->withErrors($validator);
+        } else {
+            //store
+            $answer = new Answer;
+            $answer->answervalue = Input::get('answervalue');
+            $answer->question_id = $question_id;            
+            $answer->save();
+            //redirect
+            return Redirect::to('\admin\questions\\' . $question_id);
         }
     }
 
@@ -90,7 +110,7 @@ class AnswersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  int  $id -- does nothing, just required for laravel to find the route
+     * @param  int  $id
      * @return Response
      */
     public function update($id)

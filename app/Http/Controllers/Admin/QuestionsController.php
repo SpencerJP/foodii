@@ -82,5 +82,10 @@ class QuestionsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
+
+        $question = Question::find($id);
+        $question->delete();
+        
+        return Redirect::to('\admin\questions');
     }
 }

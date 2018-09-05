@@ -5,6 +5,7 @@
     <div class="row justify-content-center">
         <div class="card-body">
             <h1>Showing {{ $question->questionvalue }}</h1>
+            <p><a href="{{ URL::to('/admin/questions/'. $question->id . '/create') }}">Add New Answer</a></p>
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
