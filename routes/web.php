@@ -69,7 +69,8 @@ Route::resource('/admin/questions', 'Admin\QuestionsController')->only(['index',
 Route::get('/admin/questions/{question_id}', 'Admin\AnswersController@index')->name('answers.index'); // overrides  questions resource
 Route::get('/admin/questions/{question_id}/create', 'Admin\AnswersController@create')->name('answers.create');
 Route::post('/admin/questions/{question_id}', 'Admin\AnswersController@store')->name('answers.store');
-Route::get('/admin/questions/{question_id}/{answer_id}', 'Admin\AnswersController@show')->name('answers.show');
+//Route::get('/admin/questions/{question_id}/{answer_id}', 'Admin\AnswersController@show')->name('answers.show');
+Route::get('/admin/questions/{question_id}/{answer_id}', 'Admin\TagsController@answerTagIndex')->name('tags.answerIndex');
 Route::get('/admin/questions/{question_id}/{answer_id}/edit', 'Admin\AnswersController@edit')->name('answers.edit');
 Route::put('/admin/questions/{question_id}/{answer_id}/update', 'Admin\AnswersController@update')->name('answers.update');
 Route::delete('/admin/questions/{question_id}/{answer_id}/delete', 'Admin\AnswersController@delete')->name('answers.delete');
