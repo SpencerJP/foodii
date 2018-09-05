@@ -58,26 +58,22 @@ class QuestionsController extends Controller
         $rules = array(
             'questionvalue' => 'required',
             'impact' => 'required|numeric',
-            'description' => 'required'
         );
         $validator = Validator::make(Input::all(), $rules);
         
         //process the login
         if ($validator->fails()){
-            return Redirect::to('\restaurantowner\restaurants\create')
+            return Redirect::to('\admin\questions\create')
                 ->withErrors($validator);
         } else {
             //store
-            $restaurant = new Restaurant;
-            $restaurant->name = Input::get('name');
-            $restaurant->address = Input::get('address');
-            $restaurant->description = Input::get('description');
-            $restaurant->rating = rand(1,5);
-            $restaurant->user_id = \Auth::user()->id;
-            $restaurant->save();
+            $question = new Question;
+            $question->questionvalue = Input::get('questionvalue');
+            $question->impact = Input::get('address');
+            $question->save();
             
             //redirect
-            return Redirect::to('\restaurantowner\restaurants');
+            return Redirect::to('\admin\questions');
         }
     }
 
