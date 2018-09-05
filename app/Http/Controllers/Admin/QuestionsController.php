@@ -57,7 +57,7 @@ class QuestionsController extends Controller
         //validate
         $rules = array(
             'questionvalue' => 'required',
-            'impact' => 'required|numeric',
+            'weight' => 'required|numeric',
         );
         $validator = Validator::make(Input::all(), $rules);
         
@@ -69,7 +69,7 @@ class QuestionsController extends Controller
             //store
             $question = new Question;
             $question->questionvalue = Input::get('questionvalue');
-            $question->impact = Input::get('address');
+            $question->weight = Input::get('weight');
             $question->save();
             
             //redirect
@@ -77,37 +77,6 @@ class QuestionsController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-    	if ($this->checkAuth()) {
-            return redirect('/home');
-        }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param  int  $id -- does nothing, just required for laravel to find the route
-     * @return Response
-     */
-    public function update($id)
-    { 
-        if ($this->checkAuth()) {
-            return redirect('/home');
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function destroy($id)
     {
         if ($this->checkAuth()) {
