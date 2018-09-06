@@ -38,7 +38,7 @@ class TagsController extends Controller
         }
         $question = Question::find($question_id);
         $answer = Answer::find($answer_id);
-        $answerTags = $answer->tags; // only tags for this answer
+        $answerTags = $answer->tags()->get(); // only tags for this answer
         $completeTagList = Tag::All();
         return View::make('admin.question.answer.tag.index')->with('question', $question)->with('answer', $answer)->with('answerTags', $answerTags)->with('completeTagList', $completeTagList); 
     }
@@ -57,6 +57,41 @@ class TagsController extends Controller
         $restaurantTags = $answer->tags; // only tags for this answer
         $completeTagList = Tag::All();
         return View::make('restaurants.tags.index')->with('restaurant', $restaurant)->with('restaurantTags', $restaurantTags)->with('completeTagList', $completeTagList); 
+    }
+
+    public function addTagAnswer($question_id, $answer_id, $tag_id)
+    {
+        if ($this->checkAuth()) {
+            return redirect('/home');
+        }
+        $answer = Answer::find($answer_id);
+        $question = Question::find($question_id);
+        $answer = Answer::find($answer_id);
+        $completeTagList = Tag::All();
+
+        $answer->tags()->attach($tag_id);
+        $answer->save();
+        $answerTags = $answer->tags()->get();
+
+        return redirect()->action('Admin\TagsController@answerTagIndex', ['question_id' => $question_id, 'answer_id' => $answer_id]);
+    }
+
+    public function removeTagAnswer($question_id, $answer_id, $tag_id)
+    {
+        if ($this->checkAuth()) {
+            return redirect('/home');
+        }
+        $answer = Answer::find($answer_id);
+        $question = Question::find($question_id);
+        $answer = Answer::find($answer_id);
+        $completeTagList = Tag::All();
+
+        $answer->tags()->detach($tag_id);
+        $answer->save();
+
+        $answerTags = $answer->tags()->get();
+
+        return redirect()->action('Admin\TagsController@answerTagIndex', ['question_id' => $question_id, 'answer_id' => $answer_id]);
     }
 
 

@@ -21,12 +21,10 @@
 
                         <!-- we will also add show, edit, and delete buttons -->
                         <td>
-                            @if(in_array(value, $answerTags))
-                            <a class="btn btn-small btn-success" href="{{ URL::to('/restaurantowner/restaurants/' . $value->id) }}">Details</a>
+                            @if($answerTags->contains($key))
+                                <a class="btn btn-small btn-danger" href="{{ URL::to('/admin/questions/' . $question->id .'/' . $answer->id . '/removetag/' . $key) }}">Remove</a>
                             @else
-                            <a class="btn btn-small btn-info" href="{{ URL::to('/restaurantowner/restaurants/' . $value->id . '/edit') }}">Edit</a>
-
-                            <a class="btn btn-small btn-danger" href="{{ URL::to('/restaurantowner/restaurants/' . $value->id . '/edit') }}">Delete</a>
+                                <a class="btn btn-small btn-success" href="{{ URL::to('/admin/questions/' . $question->id .'/' . $answer->id . '/addtag/' . $key) }}">Add</a>
                             @endif
                         </td>
                     </tr>

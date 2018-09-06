@@ -73,4 +73,6 @@ Route::post('/admin/questions/{question_id}', 'Admin\AnswersController@store')->
 Route::get('/admin/questions/{question_id}/{answer_id}', 'Admin\TagsController@answerTagIndex')->name('tags.answerIndex');
 Route::get('/admin/questions/{question_id}/{answer_id}/edit', 'Admin\AnswersController@edit')->name('answers.edit');
 Route::put('/admin/questions/{question_id}/{answer_id}/update', 'Admin\AnswersController@update')->name('answers.update');
+Route::get('/admin/questions/{question_id}/{answer_id}/addtag/{tag_id}', 'Admin\TagsController@addTagAnswer')->name('tags.addtTagAnswer');
+Route::get('/admin/questions/{question_id}/{answer_id}/removetag/{tag_id}', 'Admin\TagsController@removeTagAnswer')->name('answers.removeTagAnswer');
 Route::delete('/admin/questions/{question_id}/{answer_id}/destroy', 'Admin\AnswersController@destroy')->name('answers.destroy');
