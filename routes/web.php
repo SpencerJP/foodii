@@ -51,5 +51,6 @@ Route::get('/customer', 'Customer\CustomerController@index')->name('dashboard');
 
 Route::resource('/restaurantowner/restaurants', 'RestaurantOwner\RestaurantsController');
 Route::resource('/customer/preferences', 'Customer\CustomerPreferencesController')->only([
-    'index', 'update'
-]);
+    'index', 'update']);
+Route::resource('/admin/users', 'Admin\UsersController');
+

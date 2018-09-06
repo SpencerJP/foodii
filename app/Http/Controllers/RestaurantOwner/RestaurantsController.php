@@ -114,6 +114,13 @@ class RestaurantsController extends Controller
     	if ($this->checkAuth()) {
             return redirect('/home');
         }
+        
+        // get the restaurant
+        $restaurant = Restaurant::find($id);
+        
+        // show the edit form and pass the nerd
+        return View::make('restaurants.edit')
+        ->with('restaurant', $restaurant);
     }
 
     /**
@@ -124,32 +131,30 @@ class RestaurantsController extends Controller
     public function update($id)
     {
         if ($this->checkAuth()) {
-            return redirect('/home');
+            return redirect('/home');            
         }
-        $preferences = \Auth::user()->preferences;
-         $rules = array(
-            'dietary_mode'       => 'required',
-            'preferred_price_range'      => 'required',
-            'preferred_radius_size' => 'required'
+        $restaurant = Restaurant::find($id);
+        //validate
+        $rules = array(
+            'name' => 'required',
+            'address' => 'required',
+            'description' => 'required'
         );
-         /* TODO  Make a proper validator http://laravel.com/docs/validation
-         */
         $validator = Validator::make(Input::all(), $rules);
-
-        // process the login
-        if ($validator->fails()) {
-            return Redirect::to('customer.index')
-                ->withErrors($validator)
-                ->withInput(Input);
+        
+        //process the login
+        if ($validator->fails()){
+            return Redirect::to('\restaurantowner\restaurants\edit')
+                ->withErrors($validator);
         } else {
-            // store
-            $preferences->dietary_mode       = Input::get('dietary_mode');
-            $preferences->preferred_price_range      = Input::get('preferred_price_range');
-            $preferences->preferred_radius_size = Input::get('preferred_radius_size');
-            $preferences->save();
-
-            // redirect
-            return Redirect::to('\customer\preferences');
+            //store
+            $restaurant->name = Input::get('name');
+            $restaurant->address = Input::get('address');
+            $restaurant->description = Input::get('description');
+            $restaurant->save();
+            
+            //redirect
+            return Redirect::to('\restaurantowner\restaurants');
         }
     }
 
@@ -164,5 +169,13 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
+        
+        //delete the restaurant
+        $restaurant = Restaurant::find($id);
+        $restaurant->delete();
+        
+        //redirect to restaurants page
+        //Session::flash('message', 'Restaurant deleted successfully!');
+        return Redirect::to('\restaurantowner\restaurants');
     }
 }
