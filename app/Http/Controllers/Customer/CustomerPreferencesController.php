@@ -89,7 +89,8 @@ class CustomerPreferencesController extends CustomerController
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        $preferences = \Auth::user()->preferences;
+        $user = User::find($id);
+        $preferences = $user->preferences;
          $rules = array(
             'dietary_mode'       => 'required',
             'preferred_price_range'      => 'required',
@@ -101,7 +102,7 @@ class CustomerPreferencesController extends CustomerController
 
         // process the login
         if ($validator->fails()) {
-            return Redirect::to('customer.index')
+            return Redirect::to('customer\index')
                 ->withErrors($validator)
                 ->withInput(Input);
         } else {

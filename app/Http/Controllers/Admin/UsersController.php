@@ -53,4 +53,54 @@ class UsersController extends Controller
         
         
     }
+    
+    public function edit($id)
+    {
+        if ($this->checkAuth()) {
+            return redirect('/home');
+        }
+        
+        // get the restaurant
+        $user = User::find($id);
+        
+        // show the edit form and pass the nerd
+        return View::make('admin.users.edit')
+        ->with('user', $user);
+    }
+    
+    public function update($id)
+    {
+        if ($this->checkAuth()) {
+            return redirect('/home');
+        }
+        $user = User::find($id);
+        $preferences = $user->preferences;
+        $rules = array(
+            'dietary_mode'              => 'required',
+            'preferred_price_range'     => 'required',
+            'preferred_radius_size'     => 'required'
+        );
+        /* TODO  Make a proper validator http://laravel.com/docs/validation
+         */
+        $validator = Validator::make(Input::all(), $rules);
+        
+        // process the login
+        if ($validator->fails()) {
+            return Redirect::to('admin\users\edit')
+            ->withErrors($validator)
+            ->withInput(Input);
+        } else {
+            // store
+            
+            $user->user_type                        = Input::get('user_type');       
+            $preferences->dietary_mode              = Input::get('dietary_mode');
+            $preferences->preferred_price_range     = Input::get('preferred_price_range');
+            $preferences->preferred_radius_size     = Input::get('preferred_radius_size');
+            $preferences->save();
+            $user->save();
+            
+            // redirect
+            return Redirect::to('admin\users');
+        }
+    }
 }
