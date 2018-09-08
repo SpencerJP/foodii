@@ -37,6 +37,7 @@ Route::get('restaurants/{restaurant_id}/viewtags', 'Admin\TagsController@restaur
 Route::get('restaurants/{restaurant_id}/addtag/{tag_id}', 'Admin\TagsController@addTagRestaurant')->name('tags.addTagRestaurant');
 Route::get('restaurants/{restaurant_id}/removetag/{tag_id}', 'Admin\TagsController@removeTagRestaurant')->name('answers.removeTagRestaurant');
 
+
 Route::resource('preferences', 'Customer\CustomerPreferencesController')->only([
     'index', 'update'
 ]);
@@ -55,3 +56,5 @@ Route::put('questions/{question_id}/{answer_id}/update', 'Admin\AnswersControlle
 Route::get('questions/{question_id}/{answer_id}/addtag/{tag_id}', 'Admin\TagsController@addTagAnswer')->name('tags.addTagAnswer');
 Route::get('questions/{question_id}/{answer_id}/removetag/{tag_id}', 'Admin\TagsController@removeTagAnswer')->name('answers.removeTagAnswer');
 Route::delete('questions/{question_id}/{answer_id}/destroy', 'Admin\AnswersController@destroy')->name('answers.destroy');
+
+Route::resource('/admin/users', 'Admin\UsersController')->name('users.index');
