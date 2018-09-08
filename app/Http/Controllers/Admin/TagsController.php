@@ -20,7 +20,7 @@ class TagsController extends Controller
         Checks if they're a logged in customer
     */
     private function checkAuth() {
-        if(\Auth::check() && !(\Auth::user()->isAdmin()) ) {
+        if(\Auth::check() && !(\Auth::user()->isAdmin() || \Auth::user()->isRestaurantOwner() ) ) {
            return true;
         }
         return false;
@@ -40,7 +40,7 @@ class TagsController extends Controller
         $answer = Answer::find($answer_id);
         $answerTags = $answer->tags()->get(); // only tags for this answer
         $completeTagList = Tag::All();
-        return View::make('admin.question.answer.tag.index')->with('question', $question)->with('answer', $answer)->with('answerTags', $answerTags)->with('completeTagList', $completeTagList); 
+        return View::make('admin.question.answer.tag.index')->with('question', $question)->with('answer', $answer)->with('answerTags', $answerTags)->with('completeTagList', $completeTagList);
     }
 
     /**
@@ -54,9 +54,9 @@ class TagsController extends Controller
             return redirect('/home');
         }
         $restaurant = Restaurant::find($restaurant_id);
-        $restaurantTags = $answer->tags; // only tags for this answer
+        $restaurantTags = $restaurant->tags; // only tags for this answer
         $completeTagList = Tag::All();
-        return View::make('restaurants.tags.index')->with('restaurant', $restaurant)->with('restaurantTags', $restaurantTags)->with('completeTagList', $completeTagList); 
+        return View::make('restaurants.tag.index')->with('restaurant', $restaurant)->with('restaurantTags', $restaurantTags)->with('completeTagList', $completeTagList);
     }
 
     public function addTagAnswer($question_id, $answer_id, $tag_id)
@@ -66,7 +66,6 @@ class TagsController extends Controller
         }
         $answer = Answer::find($answer_id);
         $question = Question::find($question_id);
-        $answer = Answer::find($answer_id);
         $completeTagList = Tag::All();
 
         $answer->tags()->attach($tag_id);
@@ -83,7 +82,6 @@ class TagsController extends Controller
         }
         $answer = Answer::find($answer_id);
         $question = Question::find($question_id);
-        $answer = Answer::find($answer_id);
         $completeTagList = Tag::All();
 
         $answer->tags()->detach($tag_id);
@@ -92,6 +90,36 @@ class TagsController extends Controller
         $answerTags = $answer->tags()->get();
 
         return redirect()->action('Admin\TagsController@answerTagIndex', ['question_id' => $question_id, 'answer_id' => $answer_id]);
+    }
+
+    public function addTagRestaurant($restaurant_id, $tag_id)
+    {
+        if ($this->checkAuth()) {
+            return redirect('/home');
+        }
+        $restaurant = Restaurant::find($restaurant_id);
+        $completeTagList = Tag::All();
+
+        $restaurant->tags()->attach($tag_id);
+        $restaurant->save();
+        $restaurantTags = $restaurant->tags()->get();
+
+        return redirect()->action('Admin\TagsController@restaurantTagIndex', ['restaurant' => $restaurant]);
+    }
+
+    public function removeTagRestaurant($restaurant_id, $tag_id)
+    {
+        if ($this->checkAuth()) {
+            return redirect('/home');
+        }
+        $restaurant = Restaurant::find($restaurant_id);
+        $completeTagList = Tag::All();
+
+        $restaurant->tags()->detach($tag_id);
+        $restaurant->save();
+        $restaurantTags = $restaurant->tags()->get();
+
+        return redirect()->action('Admin\TagsController@restaurantTagIndex', ['restaurant' => $restaurant]);
     }
 
 

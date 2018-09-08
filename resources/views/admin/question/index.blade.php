@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="card-body">
-            <p><a href="{{ URL::to('/admin/questions/create') }}">Create New</a></p>
+            <p><a href="{{ URL::to('/questions/create') }}">Create New</a></p>
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -24,7 +24,7 @@
                         <td>
 
                             <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                            <a class="btn btn-small btn-info" href="{{ URL::to('/admin/questions/' . $value->id) }}">Edit</a>
+                            <a class="btn btn-small btn-info" href="{{ URL::to('/questions/' . $value->id) }}">Edit</a>
 
                             <form action="{{ route('questions.destroy', $value->id) }}" method="POST">
                                 @method('DELETE')

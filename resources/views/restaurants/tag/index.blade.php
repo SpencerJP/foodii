@@ -4,9 +4,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="card-body">
-            <h1>Question: {{ $question->questionvalue}} </h1>
-            <h2>Answer: {{ $answer->answervalue}} </h2>
-            <h3><a href="{{ URL::to('/questions/' . $question->id . '/') }}">Back to Answers</a></h3>
+            <h1>Restaurant: {{ $restaurant->name}} </h1>
+            <h3><a href="{{ URL::to('/restaurants/') }}">Back to Restaurants</a></h3>
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -22,10 +21,10 @@
 
                         <!-- we will also add show, edit, and delete buttons -->
                         <td>
-                            @if($answerTags->contains($value->id))
-                                <a class="btn btn-small btn-danger" href="{{ URL::to('/questions/' . $question->id .'/' . $answer->id . '/removetag/' . ($value->id))}}">Remove</a>
+                            @if($restaurantTags->contains($value->id))
+                                <a class="btn btn-small btn-danger" href="{{ URL::to('/restaurants/' . $restaurant->id .'/removetag/' . ($value->id))}}">Remove</a>
                             @else
-                                <a class="btn btn-small btn-success" href="{{ URL::to('/questions/' . $question->id .'/' . $answer->id . '/addtag/' . ($value->id))}}">Add</a>
+                                <a class="btn btn-small btn-success" href="{{ URL::to('/restaurants/' . $restaurant->id .'/addtag/' . ($value->id))}}">Add</a>
                             @endif
                         </td>
                     </tr>
