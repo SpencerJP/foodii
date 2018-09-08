@@ -35,7 +35,7 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        if (\Auth::user()->isAdmin()) {
+        if (\Auth::check() && \Auth::user()->isAdmin()) {
           $restaurants = Restaurant::All();
           return View::make('restaurants.index')->with('restaurants', $restaurants);
         }
