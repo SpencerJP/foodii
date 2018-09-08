@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email',
     ];
 
     /**
@@ -30,7 +30,7 @@ class User extends Authenticatable
     /**
      * User Preferences
      *
-     * @return mixed
+     * @return this user's preferences
      */
     public function preferences()
     {
@@ -39,6 +39,15 @@ class User extends Authenticatable
 
     /**
      * User Preferences
+     *
+     * @return this user's restaurants
+     */
+        public function restaurants()
+    {
+        return $this->hasMany('App\Models\Restaurant');
+    }
+    /**
+     * Is the user an admin
      *
      * @return bool 
      */
@@ -53,7 +62,11 @@ class User extends Authenticatable
             return false;
         }
     }
-
+    /**
+     * Is the user a restaurant owner
+     *
+     * @return bool 
+     */
     public function isRestaurantOwner()
     {
         if ($this->user_type == 'restaurant_owner')
@@ -66,6 +79,11 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * Is the user a customer
+     *
+     * @return bool 
+     */
     public function isCustomer()
     {
         if ($this->isRestaurantOwner()) {
@@ -78,6 +96,11 @@ class User extends Authenticatable
         //return ( !($this->isAdmin() or $this->isRestaurantOwner()));
     }
 
+    /**
+     * Returns a readable string of what kind of user this is
+     *
+     * @return String 
+     */
     public function getUserTypeToString()
     {
         if ($this->isRestaurantOwner())
@@ -90,6 +113,8 @@ class User extends Authenticatable
         }
         return "Customer";
     }
+
+
 
 
 }
