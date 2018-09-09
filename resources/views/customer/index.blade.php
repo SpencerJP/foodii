@@ -8,32 +8,46 @@
 
                 <div class="form-group">
                     {{ Form::label('dietary_mode', 'Dietary Mode') }}
-                    {{ Form::text('dietary_mode', null, array('class' => 'form-control')) }}
-                    {{ Form::radio('Diet', 'Vegan', '1') }}
-                    {{ Form::radio('Diet', 'Vegetarian', '2') }}
-                    {{ Form::radio('Diet', 'Meat Lover', '3') }}
-                    {{ Form::radio('Diet', 'Halal', '4') }}
-                    {{ Form::radio('Diet', 'Seafood', '5') }}
+                    <br/>
+                    {{ Form::radio('Diet', '1') }} Vegan
+                    <br/>
+                    {{ Form::radio('Diet', '2') }} Vegetarian
+                    <br/>
+                    {{ Form::radio('Diet','3') }} Meat Lover
+                    <br/>
+                    {{ Form::radio('Diet','4') }} Halal
+                    <br/>
+                    {{ Form::radio('Diet','5') }} Seafood
+                    <br/>
+                    {{ Form::radio('Diet','6') }} Gluten-free
+                    <br/>
+                    {{ Form::radio('Diet', '7') }} Lactose intolerant
+                    
                 </div>
 
                 <div class="form-group">
-                  <!-- hello -->
                     {{ Form::label('preferred_price_range', 'Preferred Price Range') }}
-                    {{ Form::text('preferred_price_range', null, array('class' => 'form-control')) }}
-                    {{ Form::radio('Price','$', '1') }}
-                    {{ Form::radio('Price','$$', '2') }}
-                    {{ Form::radio('Price','$$$', '3') }}
+                    <br/>
+                    {{ Form::radio('Price', '1') }} $
+                    <br/>
+                    {{ Form::radio('Price', '2') }} $$
+                    <br/>
+                    {{ Form::radio('Price','3') }} $$$
+                    <br/>
                 </div>
 
                 <div class="form-group">
                     {{ Form::label('preferred_radius_size', 'Preferred Radius Size') }}
-                    {{ Form::text('preferred_radius_size', null, array('class' => 'form-control')) }}
-                    {{ Form::radio('Radius','Walking distance', '1') }}
-                    {{ Form::radio('Radius','Short ride', '2') }}
-                    {{ Form::radio('Radius','Comfortable drive', '3') }}
+                    <br/>
+                    {{ Form::radio('Distance', '1') }} Walking Distance
+                    <br/>
+                    {{ Form::radio('Distance', '2') }} Short ride
+                    <br/>
+                    {{ Form::radio('Distance','3') }} Comfortable drive
+                    <br/>
                 </div>
 
-                {{ Form::submit('Edit the Preference!', array('class' => 'btn btn-primary')) }}
+                {{ Form::submit('Save Changes', array('class' => 'btn btn-primary')) }}
 
             {{ Form::close() }}
         </div>
