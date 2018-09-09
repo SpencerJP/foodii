@@ -8,7 +8,7 @@ class Restaurant extends Franchise
 {
 
 	protected $fillable = [
-        'longitude', 'latitude'
+        'longitude', 'latitude', 'price_range_identifier',
     ];
     /**
      * 
