@@ -13,7 +13,9 @@ class AlgorithmBasics extends Migration
      */
     public function up()
     {
-        //
+      Schema::table('restaurants', function($table) {
+          $table->string('price_range_identifier')->nullable();
+      });
     }
 
     /**
@@ -23,6 +25,8 @@ class AlgorithmBasics extends Migration
      */
     public function down()
     {
-        //
+      Schema::table('restaurants', function($table) {
+          $table->dropColumn('price_range_identifier');
+      });
     }
 }
