@@ -57,4 +57,4 @@ Route::get('questions/{question_id}/{answer_id}/addtag/{tag_id}', 'Admin\TagsCon
 Route::get('questions/{question_id}/{answer_id}/removetag/{tag_id}', 'Admin\TagsController@removeTagAnswer')->name('answers.removeTagAnswer');
 Route::delete('questions/{question_id}/{answer_id}/destroy', 'Admin\AnswersController@destroy')->name('answers.destroy');
 
-Route::resource('/admin/users', 'Admin\UsersController')->name('users.index');
+Route::resource('/admin/users', 'Admin\UsersController');
