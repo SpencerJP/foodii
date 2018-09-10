@@ -19,8 +19,6 @@ $factory->define(App\Models\Restaurant::class, function (Faker $faker) {
 	return [
         'name' => $faker->company,
         'address' => $faker->address,
-        'longitude' => $faker->longitude(144, 145),
-        'latitude' => $faker->latitude(-37, -38),
         'description' => $faker->text,
         'rating' => rand(1,5),
     ];

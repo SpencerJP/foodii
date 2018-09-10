@@ -13,13 +13,12 @@ use App\Models\Restaurant;
 
 class RestaurantsController extends Controller
 {
-
+    
     /**
-     *  Checks if they're authenticated correctly
-     *  @return boolean they authenticated?
+        Checks if they're a logged in customer
     */
     private function checkAuth() {
-        if(\Auth::check() && !(\Auth::user()->isRestaurantOwner() || \Auth::user()->isAdmin()) ) {
+        if(\Auth::check() && !(\Auth::user()->isRestaurantOwner()) ) {
            return true;
         }
         return false;
@@ -35,14 +34,8 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        if (\Auth::check() && \Auth::user()->isAdmin()) {
-          $restaurants = Restaurant::All();
-          return View::make('restaurants.index')->with('restaurants', $restaurants);
-        }
-        else {
-          $restaurants = \Auth::user()->restaurants;
-          return View::make('restaurants.index')->with('restaurants', $restaurants);
-        }
+        $restaurants = \Auth::user()->restaurants;
+        return View::make('restaurants.index')->with('restaurants', $restaurants); // TODO
     }
 
     public function create()
@@ -61,9 +54,9 @@ class RestaurantsController extends Controller
     public function store()
     {
         if ($this->checkAuth()) {
-            return redirect('/home');
+            return redirect('/home');            
         }
-
+        
         //validate
         $rules = array(
             'name' => 'required',
@@ -71,7 +64,7 @@ class RestaurantsController extends Controller
             'description' => 'required'
         );
         $validator = Validator::make(Input::all(), $rules);
-
+        
         //process the login
         if ($validator->fails()){
             return Redirect::to('\restaurantowner\restaurants\create')
@@ -85,7 +78,7 @@ class RestaurantsController extends Controller
             $restaurant->rating = rand(1,5);
             $restaurant->user_id = \Auth::user()->id;
             $restaurant->save();
-
+            
             //redirect
             return Redirect::to('\restaurantowner\restaurants');
         }
@@ -102,10 +95,10 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-
+        
         // Get the restaurant
         $restaurant = Restaurant::find($id);
-
+        
         return View::make('restaurants.show')
             ->with('restaurant', $restaurant);
     }
