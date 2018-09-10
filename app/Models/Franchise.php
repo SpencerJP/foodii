@@ -33,4 +33,13 @@ class Franchise extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    /**
+     * 
+     * @return the tags that this restaurant has
+     */
+    public function tags()
+    {
+        return $this->belongsToMany('App\Models\Tag');
+    }
 }
