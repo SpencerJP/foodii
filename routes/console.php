@@ -16,3 +16,26 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+Artisan::command('yeet', function () {
+    $this->comment("yote");
+})->describe('Display an yeet quote');
+
+
+Artisan::command('testGetNextQuestion {quiz_id}', function ($quiz_id = null) {
+  if ($quiz_id == null) {
+    $quiz = new App\Models\Quiz;
+    $nextQuestion = $quiz->getNextQuestion();
+    if ($nextQuestion != null) {
+      $this->comment($nextQuestion->questionvalue);
+    }
+  }
+  else {
+      $quiz = App\Models\Quiz::find($quiz_id);
+      $nextQuestion = $quiz->getNextQuestion();
+      if ($nextQuestion != null) {
+        $this->comment($nextQuestion->questionvalue);
+      }
+  }
+
+})->describe('Test getNextQuestion as part of the Quiz class');
