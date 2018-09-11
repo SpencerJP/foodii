@@ -10,6 +10,6 @@ class QuizController extends Controller
     $activeQuiz = false;
 
     public function index() {
-
+    	return View::make('quiz.start');
     }
 }

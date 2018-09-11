@@ -53,3 +53,5 @@ Route::get('/questions/{question_id}/{answer_id}/removetag/{tag_id}', 'Admin\Tag
 Route::delete('/questions/{question_id}/{answer_id}/destroy', 'Admin\AnswersController@destroy')->name('answers.destroy');
 
 Route::resource('/users', 'Admin\UsersController');
+
+Route::get('/quiz', 'Customer\QuizController@quizStartPage')->name('quiz.startPage');
