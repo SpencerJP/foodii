@@ -32,11 +32,14 @@ class Quiz extends Model
       while(true) {
         $localQuestions = Question::All()->where('weight', '>=', $weightFactor);
         foreach($this->questions as $key => $value) {
-          $localQuestions->where('id', '!=', $key);
+          $localQuestions = $localQuestions->where('id', '!=', $key);
         }
         if ($localQuestions->count() == 0) {
-`          $weightFactor--;
-`          continue;
+          if ($weightFactor == 0) {
+            return null;
+          }
+          $weightFactor--;
+          continue;
         }
         if ($user != null) {
 
@@ -45,21 +48,20 @@ class Quiz extends Model
         }
         $questionToReturn = $localQuestions->random();
         if ($this->questionsAnswered == null) {
-          $this->questionsAnswered = 0;
+          $this->questionsAnswered = 1;
         }
         else {
-          $questionsAnswered++;
+            $this->questionsAnswered = $this->questionsAnswered + 1;
         }
         $this->save();
         $this->questions()->attach($questionToReturn);
         $this->save();
-
         return $questionToReturn;
       }
 
 		}
     else {
-      return null
+      return null;
     }
 	}
 }

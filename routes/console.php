@@ -22,20 +22,21 @@ Artisan::command('yeet', function () {
 })->describe('Display an yeet quote');
 
 
-Artisan::command('testGetNextQuestion {quiz_id}', function ($quiz_id = null) {
-  if ($quiz_id == null) {
-    $quiz = new App\Models\Quiz;
-    $nextQuestion = $quiz->getNextQuestion();
-    if ($nextQuestion != null) {
-      $this->comment($nextQuestion->questionvalue);
-    }
-  }
-  else {
-      $quiz = App\Models\Quiz::find($quiz_id);
+Artisan::command('testGetNextQuestion', function () {
+      $quiz = App\Models\Quiz::find(1);
+      if ($quiz == null) {
+        $quiz = new App\Models\Quiz;
+      }
       $nextQuestion = $quiz->getNextQuestion();
       if ($nextQuestion != null) {
-        $this->comment($nextQuestion->questionvalue);
+        $comment = $quiz->questionsAnswered . ": " . $nextQuestion->questionvalue . ", questionCount: " . $quiz->questions->count();
+        $this->comment($comment);
       }
-  }
+      else {
+        $this->comment("end");
+        $quiz->questionsAnswered = 0;
+        //$quiz->questions->destroy();
+        $quiz->save();
+      }
 
 })->describe('Test getNextQuestion as part of the Quiz class');
