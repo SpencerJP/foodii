@@ -40,3 +40,11 @@ Artisan::command('testGetNextQuestion', function () {
       }
 
 })->describe('Test getNextQuestion as part of the Quiz class');
+
+
+Artisan::command("testImportRestaurants", function() {
+  $googleApiText = file_get_contents("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-37.809576,%20144.963824&radius=1500&type=restaurant&key=AIzaSyAu4UB853iuG3cXpVBC27kzmfV6vkzVRFQ");
+  $json = json_decode($googleApiText, true);
+  $this->comment($json["results"][2]["name"]);
+
+    })->describe('just kill me fam');

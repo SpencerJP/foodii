@@ -55,3 +55,4 @@ Route::delete('/questions/{question_id}/{answer_id}/destroy', 'Admin\AnswersCont
 Route::resource('/users', 'Admin\UsersController');
 
 Route::get('/quiz', 'Customer\QuizController@quizStartPage')->name('quiz.startPage');
+Route::get('/quiz/start', 'Customer\QuizController@quizStart')->name('quiz.start');
