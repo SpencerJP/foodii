@@ -34,7 +34,7 @@ class CustomerPreferencesController extends CustomerController
             return redirect('/home');
         }
         $preferences = \Auth::user()->preferences;
-        return View::make('customer.index')->with('preferences', $preferences); // TODO
+        return View::make('customer.preferences')->with('preferences', $preferences); // TODO
     }
 
     public function create()
