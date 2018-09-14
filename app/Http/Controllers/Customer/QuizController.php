@@ -36,6 +36,7 @@ class QuizController extends Controller
         }
 
         $quiz_id = $request->session()->get('activeQuiz', null);
+        $quiz = null;
         if ($quiz_id == null) {
         	$quiz = new Quiz;
           $quiz->save();
@@ -43,13 +44,13 @@ class QuizController extends Controller
         }
         else {
           $quiz = Quiz::find($quiz_id);
-          if ($quiz == null) {
-            return View::make('quiz.start');
-          }
           }
         }
         $answer =  Answer::find(Input::get('answer_id'));
         $tags = $answer->tags->get();
+        foreach($tags as $key => $value) {
+          $quiz->tags()->attach($key);
+        }
 
         //redirect
         return redirect()->action('Admin\TagsController@restaurantTagIndex', ['restaurant' => $restaurant]);
