@@ -52,7 +52,14 @@ Route::get('/questions/{question_id}/{answer_id}/addtag/{tag_id}', 'Admin\TagsCo
 Route::get('/questions/{question_id}/{answer_id}/removetag/{tag_id}', 'Admin\TagsController@removeTagAnswer')->name('answers.removeTagAnswer');
 Route::delete('/questions/{question_id}/{answer_id}/destroy', 'Admin\AnswersController@destroy')->name('answers.destroy');
 
+
+Route::get('/tags', 'Admin\TagsController@index')->name('tags.index');
+Route::get('/tags/create', 'Admin\TagsController@create')->name('tags.create');
+Route::post('/tags', 'Admin\AnswersController@store')->name('tags.store');
+Route::delete('/tags/destroy/{id}', 'Admin\TagsController@destroy')->name('tags.destroy');
+
 Route::resource('/users', 'Admin\UsersController');
 
 Route::get('/quiz', 'Customer\QuizController@quizStartPage')->name('quiz.startPage');
+Route::post('/quiz', 'Customer\QuizController@answerQuestion')->name('quiz.answerquestion');
 Route::get('/quiz/start', 'Customer\QuizController@quizStart')->name('quiz.start');

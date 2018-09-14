@@ -17,8 +17,8 @@ class TagsController extends Controller
 {
 
     /**
-        Checks if they're a logged in customer
-    */
+      *  Checks if they're a logged in customer
+      */
     private function checkAuth() {
         if(\Auth::check() && !(\Auth::user()->isAdmin() || \Auth::user()->isRestaurantOwner() ) ) {
            return true;
@@ -123,6 +123,15 @@ class TagsController extends Controller
     }
 
 
+    public function index() {
+      if((\Auth::check() && (\Auth::user()->isAdmin()) )) {
+      }
+      else {
+        return redirect('/home');
+      }
+      $tags = Tag::All();
+      return View::make('admin.tag.index')->with('tags', $tags);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -130,7 +139,12 @@ class TagsController extends Controller
      */
     public function create()
     {
-        //
+      if((\Auth::check() && (\Auth::user()->isAdmin()) )) {
+      }
+      else {
+        return redirect('/home');
+      }
+       return View::make('admin.tag.create');
     }
 
     /**
@@ -139,53 +153,47 @@ class TagsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+     public function store()
+     {
+       if((\Auth::check() && (\Auth::user()->isAdmin()) )) {
+       }
+       else {
+         return redirect('/home');
+       }
+         //validate
+         $rules = array(
+             'name' => 'required',
+             'type' => 'required',
+         );
+         $validator = Validator::make(Input::all(), $rules);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+         //process the login
+         if ($validator->fails()){
+             return Redirect::to('\tags\create')
+                 ->withErrors($validator);
+         } else {
+             //store
+             $tag = new Tag;
+             $tag->name = Input::get('name');
+             $tag->type = Input::get('type');
+             $tag->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+             //redirect
+             return Redirect::to('\tags');
+         }
+     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+     public function destroy($id)
+     {
+         if((\Auth::check() && (\Auth::user()->isAdmin()) )) {
+         }
+         else {
+           return redirect('/home');
+         }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+         $tag = Tag::find($id);
+         $tag->delete();
+
+         return Redirect::to('\tags');
+     }
 }

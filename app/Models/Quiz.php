@@ -10,7 +10,7 @@ class Quiz extends Model
 {
 
   protected $fillable = [
-    'questionsAnswered'
+    'questionsAnswered', 'idOfRecentQuestion'
   ];
 
 	public function result()
@@ -55,6 +55,7 @@ class Quiz extends Model
         }
         $this->save();
         $this->questions()->attach($questionToReturn);
+        $this->idOfRecentQuestion = $questionToReturn->id;
         $this->save();
         return $questionToReturn;
       }

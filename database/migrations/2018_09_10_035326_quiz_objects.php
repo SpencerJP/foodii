@@ -16,6 +16,7 @@ class QuizObjects extends Migration
       Schema::create('quizzes', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('questionsAnswered')->nullable();
+          $table->integer('idOfRecentQuestion')->nullable();
           $table->timestamps();
       });
 
