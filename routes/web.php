@@ -29,6 +29,7 @@ Route::get('/admin', 'Admin\AdminController@index')->name('admindashboard');
 
 Route::get('/restaurantowner', 'RestaurantOwner\RestaurantOwnerController@index')->name('restaurantownerdashboard');
 
+Route::get('/quiz', 'QuizController@index')->name('quizdashboard');
 
 Route::get('/customer', 'Customer\CustomerController@index')->name('dashboard');
 
