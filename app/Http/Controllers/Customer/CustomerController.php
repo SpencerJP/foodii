@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
 
 class CustomerController extends Controller
 {
@@ -23,11 +27,18 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    private function checkAuth() {
+        if(\Auth::check() && !(\Auth::user()->isCustomer()) ) {
+            return true;
+        }
+        return false;
+    }
+    
+    
     public function index()
     {
-        if(\Auth::check() && !(\Auth::user()->isCustomer()) ) {
-            return redirect('/home');
-        }
-        return view('testview'); //TODO
+        $restaurants = \Auth::user()->restaurants;
+        return View::make('customer.index')->with('restaurants', $restaurants);
     }
 }
