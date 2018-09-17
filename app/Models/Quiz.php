@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use App\Models\Question;
 use App\Models\Tag;
+use App\Models\Restaurant;
 
 class Quiz extends Model
 {
@@ -81,6 +82,12 @@ class Quiz extends Model
       }
       return null;
 
+    }
+  }
+
+  public function processTags() {
+    foreach($this->tags->get() as $key => $value) {
+      $restaurants = Restaurant::All();
     }
   }
 }

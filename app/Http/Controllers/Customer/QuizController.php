@@ -51,7 +51,7 @@ class QuizController extends Controller
         foreach($tags as $key => $value) {
           $quiz->tags()->attach($key);
         }
-
+        $quiz->processTags();
         //redirect
         return redirect()->action('Admin\TagsController@restaurantTagIndex', ['restaurant' => $restaurant]);
     }
