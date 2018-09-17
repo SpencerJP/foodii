@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="card-body">
-        <a class="btn btn-small btn-success" href="{{ route('quiz.startQuiz') }}">Begin Quiz!</a>
+        <p>Result: {{$restaurant->name}}</p>
       </div>
     </div>
 </div>

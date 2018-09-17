@@ -28,6 +28,11 @@ class Quiz extends Model
 		return $this->belongsToMany("App\Models\Tag", "quiz_tags");
 	}
 
+  // these are restaurants that WILL NOT be part of the final result, aka "ruled out"
+  public function restaurants() {
+    return $this->belongsToMany("App\Models\Restaurant", "quiz_restaurants");
+  }
+
 	public function getNextQuestion($user = null) {
     $weightFactor = rand(1,5); // generate a random number to vary the question weights
 		if ($this->questionsAnswered < Config::get('quizoptions.quiz_question_max')) {
@@ -69,25 +74,37 @@ class Quiz extends Model
 	}
 
   public function checkForResult() {
-    if ((Question::All()->count() - $this->questions->count()) <= Config::get('quizoptions.restaurant_pool_size')) {
+    if ((Restaurant::All()->count() - $this->restaurants->count()) <= Config::get('quizoptions.restaurant_pool_size')) {
       $q;
+      $i = 0;
+      $exit = (Restaurant::All()->count() - $this->restaurants->count());
       while(true) {
-        $q = Question::All()->random(1);
-        if ($this->questions->get()->contains($q)) {
+        $q = Restaurant::All()->except($this->restaurants->get())->random(1);
+        if ($this->restaurants->get()->contains($q)) {
+
+          $i++;
+
+          if ($i == $exit) {
+            return null;
+          }
           continue;
         }
         else {
           return $q;
         }
       }
-      return null;
 
     }
   }
 
   public function processTags() {
-    foreach($this->tags->get() as $key => $value) {
-      $restaurants = Restaurant::All();
+    foreach($this->tags as $tagkey => $quiztag) {
+      $restaurants = Restaurant::All()->except($this->restaurants->get());
+      foreach($restaurants as $restaurantkey => $restaurant) {
+          if($restaurant->tags()->contains($tagkey)) {
+            $this->attach($restaurantkey);
+          }
+      }
     }
   }
 }

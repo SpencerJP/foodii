@@ -60,6 +60,6 @@ Route::delete('/tags/destroy/{id}', 'Admin\TagsController@destroy')->name('tags.
 
 Route::resource('/users', 'Admin\UsersController');
 
-Route::get('/quiz', 'Customer\QuizController@quizStartPage')->name('quiz.startPage');
+Route::get('/quiz', 'Customer\QuizController@index')->name('quiz.startPage');
 Route::post('/quiz', 'Customer\QuizController@answerQuestion')->name('quiz.answerquestion');
-Route::get('/quiz/start', 'Customer\QuizController@quizStart')->name('quiz.start');
+Route::get('/quiz/start', 'Customer\QuizController@startQuiz')->name('quiz.startQuiz');

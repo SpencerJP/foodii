@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="card-body">
           <h2>{{ $question->questionvalue }}</h2>
-          @foreach($question->answers->get() as $key => $answer)
+          @foreach($question->answers as $key => $answer)
             <form action="{{ route('quiz.answerquestion') }}" method="POST">
                 @csrf
                 <input type="hidden" value="{{$answer->id}}" name="answer_id" />

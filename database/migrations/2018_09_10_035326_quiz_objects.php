@@ -35,6 +35,14 @@ class QuizObjects extends Migration
           $table->foreign('tag_id')->references('id')->on('tags');
           $table->timestamps();
       });
+
+      Schema::create('quiz_restaurants', function (Blueprint $table) {
+          $table->integer('quiz_id')->integer();
+          $table->foreign('quiz_id')->references('id')->on('quizzes');
+          $table->integer('restaurant_id')->integer();
+          $table->foreign('restaurant_id')->references('id')->on('restaurants');
+          $table->timestamps();
+      });
     }
 
     /**
@@ -47,5 +55,6 @@ class QuizObjects extends Migration
       Schema::dropIfExists('quizzes');
       Schema::dropIfExists('quiz_questions');
       Schema::dropIfExists('quiz_tags');
+      Schema::dropIfExists('quiz_restaurants');
     }
 }
