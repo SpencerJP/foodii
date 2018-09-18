@@ -84,7 +84,7 @@ class QuizController extends Controller
 
         if ($result != null) {
           info($result);
-          return View::make('quiz.resultpage')->with('restaurant', Restaurant::find($result->restaurant_id));
+          return View::make('quiz.resultpage')->with('quizresult', $result);
         }
         //redirect
         return redirect()->action('Customer\QuizController@index');

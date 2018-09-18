@@ -115,7 +115,7 @@ class User extends Authenticatable
     }
 
     public function result() {
-      return $this->hasMany('App\Models\QuizResult');
+      return $this->hasMany('App\Models\QuizResult', "quiz_results_id");
     }
 
 
