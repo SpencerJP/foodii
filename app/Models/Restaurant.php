@@ -11,11 +11,15 @@ class Restaurant extends Franchise
         'longitude', 'latitude', 'price_range_identifier',
     ];
     /**
-     * 
+     *
      * @return the tags that this restaurant has
      */
     public function tags()
     {
         return $this->belongsToMany('App\Models\Tag', 'restaurant_tags');
+    }
+
+	public function result() {
+      return $this->hasMany('App\Models\QuizResult');
     }
 }

@@ -12,6 +12,7 @@ use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Tag;
+use App\Models\Restaurant;
 class QuizController extends Controller
 {
 
@@ -28,10 +29,23 @@ class QuizController extends Controller
         else {
           $currentQuestionAnswered = $request->session()->get('activeQuestionHasBeenAnswered', false);
           if ($currentQuestionAnswered) {
+            if ($quiz->checkForResult(\Auth::user()->id) != null)  {
+              $result = $quiz->checkForResult(\Auth::user()->id);
+              info($result);
+              return View::make('quiz.resultpage')->with('restaurant', Restaurant::find($result->restaurant_id));
+            }
             $question = $quiz->getNextQuestion();
           }
           else {
             $question = Question::find($quiz->idOfRecentQuestion);
+            if ($question == null) {
+                $question = $quiz->getNextQuestion();
+            }
+          }
+          if ($question == null) {
+            $result = $quiz->checkForResult(\Auth::user()->id);
+            info($result);
+            return View::make('quiz.resultpage')->with('restaurant', Restaurant::find($result->restaurant_id));
           }
           return View::make('quiz.question')->with('quiz', $quiz)->with('question', $question);
         }
@@ -66,11 +80,11 @@ class QuizController extends Controller
         }
         $quiz->processTags();
 
-        $result = $quiz->checkForResult();
+        $result = $quiz->checkForResult(\Auth::user()->id);
 
         if ($result != null) {
           info($result);
-          return View::make('quiz.resultpage')->with('restaurant', $restaurant);
+          return View::make('quiz.resultpage')->with('restaurant', Restaurant::find($result->restaurant_id));
         }
         //redirect
         return redirect()->action('Customer\QuizController@index');

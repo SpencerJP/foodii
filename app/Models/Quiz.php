@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Config;
 use App\Models\Question;
 use App\Models\Tag;
 use App\Models\Restaurant;
+use App\Models\QuizResult;
 
 class Quiz extends Model
 {
@@ -35,6 +36,7 @@ class Quiz extends Model
 
 	public function getNextQuestion($user = null) {
     $weightFactor = rand(1,5); // generate a random number to vary the question weights
+    info(Config::get('quizoptions.quiz_question_max'));
 		if ($this->questionsAnswered < Config::get('quizoptions.quiz_question_max')) {
       while(true) {
         $localQuestions = Question::All()->where('weight', '>=', $weightFactor);
@@ -73,26 +75,51 @@ class Quiz extends Model
     }
 	}
 
-  public function checkForResult() {
-    if ((Restaurant::All()->count() - $this->restaurants->count()) <= Config::get('quizoptions.restaurant_pool_size')) {
-      $q;
-      $i = 0;
-      $exit = (Restaurant::All()->count() - $this->restaurants->count());
-      while(true) {
-        $q = Restaurant::All()->except($this->restaurants->get())->random(1);
-        if ($this->restaurants->get()->contains($q)) {
-
-          $i++;
-
-          if ($i == $exit) {
-            return null;
-          }
-          continue;
+  public function checkForResult($user_id) {
+    info("test " . $this->questionsAnswered);
+    if ($this->result != null) {
+      return $this->result;
+    }
+    if ($this->questionsAnswered >= Config::get('quizoptions.quiz_question_max')) {
+      info('test12345');
+      $r = Restaurant::All()->reject(function ($value, $key) {
+        if ($this->restaurants->contains($key)) {
+          return true;
         }
         else {
-          return $q;
+          return false;
         }
+      })->random(1)->first();
+      if ($r == null) {
+        return null;
       }
+      $quizresult = new QuizResult;
+      $quizresult->restaurant_id = $r->id;
+      $quizresult->user_id = $user_id;
+      $quizresult->quiz_id = $this->id;
+      $quizresult->save();
+      $this->quizresult_id = $quizresult->id;
+      return $quizresult;
+    }
+    if ((Restaurant::All()->count() - $this->restaurants->count()) <= Config::get('quizoptions.restaurant_pool_size')) {
+      $r = Restaurant::All()->reject(function ($value, $key) {
+        if ($this->restaurants->contains($key)) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      })->random(1)->first();
+      if ($r == null) {
+        return null;
+      }
+      $quizresult = new QuizResult;
+      $quizresult->restaurant_id = $r->id;
+      $quizresult->user_id = $user_id;
+      $quizresult->quiz_id = $this->id;
+      $quizresult->save();
+      $this->quizresult_id = $quizresult->id;
+      return $quizresult;
 
     }
   }

@@ -10,6 +10,10 @@ class QuizResult extends Model
     protected $fillable = [
     	'voteResult',
     ];
+
+    public function quiz() {
+      return $this->belongsTo('App\Models\Quiz');
+    }
     public function user()
     {
         return $this->hasOne("App\Models\User");
