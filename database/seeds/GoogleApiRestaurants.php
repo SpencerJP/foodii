@@ -47,7 +47,7 @@ class GoogleApiRestaurants extends Seeder
 
       }
 
-
+      /*
       for($x = 1;$x < 5; $x++) {
         sleep(2); // nextPage only valid after certain period of time to prevent ddos
         $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-37.809576,%20144.963824&radius=2000&type=restaurant&key=AIzaSyAu4UB853iuG3cXpVBC27kzmfV6vkzVRFQ&pagetoken=" . urlencode($nextPageToken);
@@ -86,6 +86,7 @@ class GoogleApiRestaurants extends Seeder
           break;
         }
       }
+      */
 
 
 
