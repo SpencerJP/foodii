@@ -76,12 +76,10 @@ class Quiz extends Model
 	}
 
   public function checkForResult($user_id) {
-    info("test " . $this->questionsAnswered);
     if ($this->result != null) {
       return $this->result;
     }
     if ($this->questionsAnswered >= Config::get('quizoptions.quiz_question_max')) {
-      info('test12345');
       $r = Restaurant::All()->reject(function ($value, $key) {
         if ($this->restaurants->contains($key)) {
           return true;
@@ -98,7 +96,8 @@ class Quiz extends Model
       $quizresult->user_id = $user_id;
       $quizresult->quiz_id = $this->id;
       $quizresult->save();
-      $this->quizresult_id = $quizresult->id;
+      $this->quiz_result_id = $quizresult->id;
+      $this->save();
       return $quizresult;
     }
     if ((Restaurant::All()->count() - $this->restaurants->count()) <= Config::get('quizoptions.restaurant_pool_size')) {
@@ -118,7 +117,8 @@ class Quiz extends Model
       $quizresult->user_id = $user_id;
       $quizresult->quiz_id = $this->id;
       $quizresult->save();
-      $this->quizresult_id = $quizresult->id;
+      $this->quiz_result_id = $quizresult->id;
+      $this->save();
       return $quizresult;
 
     }
@@ -133,5 +133,6 @@ class Quiz extends Model
           }
       }
     }
+    $this->save();
   }
 }
