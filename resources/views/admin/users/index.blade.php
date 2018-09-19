@@ -35,7 +35,7 @@
                             <a class="btn btn-small btn-info" href="{{ URL::to('/admin/users/' . $value->id . '/edit') }}">Edit</a>
 
                             <a class="btn">
-                            {{ Form::open(array('url' => '/admin/users' . $value->id, 'class' => 'pull-left')) }}
+                            {{ Form::open(array('url' => '/admin/users/' . $value->id, 'class' => 'pull-left')) }}
                                {{ Form::hidden('_method', 'DELETE') }}
                                {{ Form::submit('Delete', array('class' => 'btn btn-small btn-danger')) }}
                             {{ Form::close() }}

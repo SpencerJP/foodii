@@ -103,4 +103,19 @@ class UsersController extends Controller
             return Redirect::to('admin\users');
         }
     }
+    
+    public function destroy($id)
+    {
+        //delete
+        $user = User::find($id);
+        $user->delete();
+        
+        //redirect
+        return Redirect::to('admin\users');
+        
+        
+    }
+    
+    
+    
 }
