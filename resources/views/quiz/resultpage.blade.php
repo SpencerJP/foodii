@@ -11,7 +11,7 @@
                   <tr>
                       <td>ID</td>
                       <td>Restaurant Name</td>
-                      <td>Address</td>
+                      <td>countTags()</td>
                       <td>Rating</td>
                   </tr>
               </thead>
@@ -20,7 +20,7 @@
                   <tr>
                       <td>{{ $value->id }}</td>
                       <td>{{ $value->name }}</td>
-                      <td>{{ $value->address }}</td>
+                      <td>{{ $value->countTags($quizresult->quiz->tags) }}</td>
                       <td>
                         @foreach($value->tags as $tagKey => $tagValue){{ $tagValue->name}}, @endforeach</td>
                   </tr>

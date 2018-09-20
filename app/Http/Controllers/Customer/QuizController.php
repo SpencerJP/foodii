@@ -33,6 +33,15 @@ class QuizController extends Controller
             if ($quiz->checkForResult(\Auth::user()->id) != null)  {
               $result = $quiz->checkForResult(\Auth::user()->id);
               $quiz->save();
+              $quiz->potentialRestaurants->sort(function($a, $b) use ($quiz) {
+                        if ($a->countTags($quiz->tags) == $b->countTags($quiz->tags) ) {
+                          return 0;
+                        }
+                        return ($a->countTags($quiz->tags) < $b->countTags($quiz->tags)) ? -1 : 1;
+              });
+
+              info($quiz->potentialRestaurants);
+              $quiz->save();
               return View::make('quiz.resultpage')->with('quizresult', $result);
             }
             $question = $quiz->getNextQuestion();
@@ -56,7 +65,9 @@ class QuizController extends Controller
     }
 
     public function answerQuestion(Request $request) {
-
+        if ($request->session()->get('activeQuestionHasBeenAnswered', false)) {
+          return redirect()->action('Customer\QuizController@index');
+        }
         $request->session()->put('activeQuestionHasBeenAnswered', true);
         $quiz_id = $request->session()->get('activeQuiz', null);
         $quiz = null;
@@ -79,6 +90,13 @@ class QuizController extends Controller
         $quiz->save();
 
         $result = $quiz->checkForResult(\Auth::user()->id);
+        $quiz->potentialRestaurants->sort(function($a, $b) use ($quiz) {
+                  if ($a->countTags($quiz->tags) == $b->countTags($quiz->tags) ) {
+                    return 0;
+                  }
+                  return ($a->countTags($quiz->tags) < $b->countTags($quiz->tags)) ? -1 : 1;
+        });
+        info($quiz->potentialRestaurants);
         $quiz->save();
 
         if ($result != null) {
@@ -92,6 +110,12 @@ class QuizController extends Controller
       if( !Config::get('quizoptions.debug_mode')) {
         if ($quiz->checkForResult(\Auth::user()->id) != null)  {
           $result = $quiz->checkForResult(\Auth::user()->id);
+          $quiz->potentialRestaurants->sort(function($a, $b) use ($quiz) {
+                    if ($a->countTags($quiz->tags) == $b->countTags($quiz->tags) ) {
+                      return 0;
+                    }
+                    return ($a->countTags($quiz->tags) < $b->countTags($quiz->tags)) ? -1 : 1;
+          });
           $quiz->save();
           return View::make('quiz.resultpage')->with('quizresult', $result);
         }

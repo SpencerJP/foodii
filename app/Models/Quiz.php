@@ -40,31 +40,19 @@ class Quiz extends Model
   }
 
 	public function getNextQuestion($user = null) {
-    info("Current loaded questions");
-    foreach($this->questions as $key => $value) {
-    info($key . ": " .$value->questionvalue);
-    }
     $weightFactor = rand(1,5); // generate a random number to vary the question weights
 		if ($this->questionsAnswered < Config::get('quizoptions.quiz_question_max')) {
       while(true) {
         $localQuestions = Question::All()->where('weight', '>=', $weightFactor);
         // prevent you from getting the same question twice
-        info("Beforeloop");
-        foreach($localQuestions as $key => $value) {
-          info($key . ": " .$value->questionvalue);
-        }
         $localQuestions = $localQuestions->reject(function($value, $key) {
-          if ($this->questions->contains($key)) {
+          if ($this->questions->contains($value)) {
             return true;
           }
           else {
             return false;
           }
         });
-        info("Afterloop");
-        foreach($localQuestions as $key => $value) {
-          info($key . ": " .$value->questionvalue);
-        }
         if ($localQuestions->count() == 0) {
 
           if ($weightFactor == 0) {
@@ -74,8 +62,6 @@ class Quiz extends Model
           continue;
         }
         if ($user != null) {
-
-
           $localQuestions->where('questionvalue', '!=', "preferences");
         }
         $questionToReturn = $localQuestions->random();
@@ -112,8 +98,15 @@ class Quiz extends Model
           return false;
         }
       });
+      $r->sort(function($a, $b) {
+                if ($a->countTags($this->tags) == $b->countTags($this->tags) ) {
+                  return 0;
+                }
+                return ($a->countTags($this->tags) < $b->countTags($this->tags)) ? -1 : 1;
+      });
+
       if($r->count() > 0) {
-        $r = $r->random(1)->first();
+        $r = $r->first();
       } else {
         return null;
       }
