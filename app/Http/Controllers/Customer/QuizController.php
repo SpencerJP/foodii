@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Config;
 use App\Http\Controllers\Controller;
 use App\Models\Quiz;
 use App\Models\Question;
@@ -32,7 +33,6 @@ class QuizController extends Controller
             if ($quiz->checkForResult(\Auth::user()->id) != null)  {
               $result = $quiz->checkForResult(\Auth::user()->id);
               $quiz->save();
-              info($result);
               return View::make('quiz.resultpage')->with('quizresult', $result);
             }
             $question = $quiz->getNextQuestion();
@@ -72,7 +72,7 @@ class QuizController extends Controller
         $tags = $answer->tags;
 
         foreach($tags as $key => $value) {
-          $quiz->tags()->attach($key);
+          $quiz->tags()->attach($value->id);
         }
         $quiz->save();
         $quiz->processTags();
@@ -82,10 +82,24 @@ class QuizController extends Controller
         $quiz->save();
 
         if ($result != null) {
-          info($result);
           return View::make('quiz.resultpage')->with('quizresult', $result);
         }
         //redirect
         return redirect()->action('Customer\QuizController@index');
+    }
+
+    public function destroy(Request $request) {
+      if( !Config::get('quizoptions.debug_mode')) {
+        if ($quiz->checkForResult(\Auth::user()->id) != null)  {
+          $result = $quiz->checkForResult(\Auth::user()->id);
+          $quiz->save();
+          return View::make('quiz.resultpage')->with('quizresult', $result);
+        }
+      }
+      else {
+        $request->session()->forget('activeQuiz');
+        $request->session()->forget('activeQuestionHasBeenAnswered');
+        return View::make('quiz.startquiz');
+      }
     }
 }

@@ -63,3 +63,4 @@ Route::resource('/users', 'Admin\UsersController');
 Route::get('/quiz', 'Customer\QuizController@index')->name('quiz.startPage');
 Route::post('/quiz', 'Customer\QuizController@answerQuestion')->name('quiz.answerquestion');
 Route::get('/quiz/start', 'Customer\QuizController@startQuiz')->name('quiz.startQuiz');
+Route::delete('/quiz', 'Customer\QuizController@destroy')->name('quiz.destroy');

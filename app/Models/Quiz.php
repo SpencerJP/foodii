@@ -40,12 +40,19 @@ class Quiz extends Model
   }
 
 	public function getNextQuestion($user = null) {
+    info("Current loaded questions");
+    foreach($this->questions as $key => $value) {
+    info($key . ": " .$value->questionvalue);
+    }
     $weightFactor = rand(1,5); // generate a random number to vary the question weights
-    info(Config::get('quizoptions.quiz_question_max'));
 		if ($this->questionsAnswered < Config::get('quizoptions.quiz_question_max')) {
       while(true) {
         $localQuestions = Question::All()->where('weight', '>=', $weightFactor);
         // prevent you from getting the same question twice
+        info("Beforeloop");
+        foreach($localQuestions as $key => $value) {
+          info($key . ": " .$value->questionvalue);
+        }
         $localQuestions = $localQuestions->reject(function($value, $key) {
           if ($this->questions->contains($key)) {
             return true;
@@ -54,7 +61,12 @@ class Quiz extends Model
             return false;
           }
         });
+        info("Afterloop");
+        foreach($localQuestions as $key => $value) {
+          info($key . ": " .$value->questionvalue);
+        }
         if ($localQuestions->count() == 0) {
+
           if ($weightFactor == 0) {
             return null;
           }
@@ -73,8 +85,9 @@ class Quiz extends Model
         else {
             $this->questionsAnswered = $this->questionsAnswered + 1;
         }
+
         $this->save();
-        $this->questions()->attach($questionToReturn);
+        $this->questions()->attach($questionToReturn->id);
         $this->idOfRecentQuestion = $questionToReturn->id;
         $this->save();
         return $questionToReturn;
@@ -114,7 +127,6 @@ class Quiz extends Model
       $quizresult->save();
       $this->quizresult_id = $quizresult->id;
       $this->save();
-      info("quiz_question_max  was hit");
       return $quizresult;
     }
     if ($this->potentialRestaurants->count() <= Config::get('quizoptions.restaurant_pool_size')) {
@@ -141,7 +153,6 @@ class Quiz extends Model
       $quizresult->save();
       $this->quizresult_id = $quizresult->id;
       $this->save();
-      info("restaurant_pool_size was hit");
       return $quizresult;
 
     }
@@ -149,15 +160,25 @@ class Quiz extends Model
 
   public function processTags() {
     foreach($this->tags as $tagkey => $quiztag) {
-      $restaurants = Restaurant::All()->except($this->restaurants);
+      $restaurants = Restaurant::All()->reject(function ($value, $key) {
+        if ($this->removedRestaurants->contains($key)) {
+          return true;
+        }
+        if ($this->potentialRestaurants->contains($key)) {
+          return true;
+        }
+        return false;
+      });
       foreach($restaurants as $restaurantkey => $restaurant) {
         if($quiztag->type == "negative") {
-            if((!$restaurant->tags->contains($tagkey)) && !($this->removedRestaurants->contains($tagkey))) {
+            if( !$restaurant->tags->contains($tagkey) )  {
+                //info("Removing " . $restaurant->name . " because of the tag " . $quiztag->name);
               $this->removedRestaurants()->attach($restaurantkey);
             }
         }
         else {
-            if(($restaurant->tags->contains($tagkey)) && !($this->potentialRestaurants->contains($tagkey))) {
+            if( $restaurant->tags->contains($tagkey) ) {
+              //info("Attaching " . $restaurant->name . " because of the tag " . $quiztag->name);
               $this->potentialRestaurants()->attach($restaurantkey);
             }
         }
