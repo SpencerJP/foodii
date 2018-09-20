@@ -5,19 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Quiz</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in! YEET
-                    @if( Auth::check() )
-                        Your user type is: {{ Auth::user()->getUserTypeToString() }}
-                    @endif
+                    <div id="container">
+                        <button type="button" id="button1">I'm feeling lucky</button>
+                        <!--<a href="https://www.w3schools.com"></a> -->
+                        <button value="Refresh Page" onClick="window.location.reload()" id="button2">Refresh the page</button>
+                    </div>
                 </div>
             </div>
         </div>

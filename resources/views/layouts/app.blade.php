@@ -19,6 +19,27 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
+    <style type="text/css">
+        #button-container{
+        text-align: center;
+        }
+        
+        #button1{
+        width: 300px;
+        height: 40px;
+
+        }
+        #button2{
+        width: 300px;
+        height: 40px;
+        }
+
+        #button1 , #button2 {
+        display:inline-block;
+        }
+
+    </style>
 </head>
 <body>
     <div id="app">
