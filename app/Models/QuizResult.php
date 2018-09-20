@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class QuizResult extends Model
 {
 
+    protected $table = 'quizresults';
+    
     protected $fillable = [
     	'voteResult',
     ];

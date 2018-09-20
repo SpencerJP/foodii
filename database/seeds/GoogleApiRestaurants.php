@@ -34,7 +34,7 @@ class GoogleApiRestaurants extends Seeder
         else {
             $restaurant->price_range_identifier = 1;
         }
-        $amountOfTags = rand(1,3);
+        $amountOfTags = rand(3,6);
         $restaurant->save();
         for($y = 0; $y < $amountOfTags; $y++) {
           $randomTag = Tag::all()->random(1);
@@ -67,7 +67,7 @@ class GoogleApiRestaurants extends Seeder
                     else {
                         $restaurant->price_range_identifier = 1;
                     }
-            $amountOfTags = rand(1,3);
+            $amountOfTags = rand(3,6);
             $restaurant->save();
             for($y = 0; $y < $amountOfTags; $y++) {
               $randomTag = Tag::all()->random(1);

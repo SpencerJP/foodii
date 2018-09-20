@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(TagSeeder::class);
+        $this->call(QuestionsSeeder::class);
         $this->call(GoogleApiRestaurants::class);
         $this->call(UsersTableSeeder::class);
-        $this->call(QuestionsSeeder::class);
     }
 }

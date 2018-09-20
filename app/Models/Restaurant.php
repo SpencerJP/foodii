@@ -20,6 +20,6 @@ class Restaurant extends Franchise
     }
 
 	public function result() {
-      return $this->hasMany('App\Models\QuizResult', "restaurant_id", "quiz_results_id");
+      return $this->hasMany('App\Models\QuizResult');
     }
 }

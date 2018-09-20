@@ -33,7 +33,7 @@ class QuizController extends Controller
               $result = $quiz->checkForResult(\Auth::user()->id);
               $quiz->save();
               info($result);
-              return View::make('quiz.resultpage')->with('restaurant', Restaurant::find($result->restaurant_id));
+              return View::make('quiz.resultpage')->with('quizresult', $result);
             }
             $question = $quiz->getNextQuestion();
           }
@@ -42,12 +42,6 @@ class QuizController extends Controller
             if ($question == null) {
                 $question = $quiz->getNextQuestion();
             }
-          }
-          if ($question == null) {
-            $result = $quiz->checkForResult(\Auth::user()->id);
-            $quiz->save();
-            info($result);
-            return View::make('quiz.resultpage')->with('restaurant', Restaurant::find($result->restaurant_id));
           }
           return View::make('quiz.question')->with('quiz', $quiz)->with('question', $question);
         }

@@ -17,8 +17,8 @@ class QuizObjects extends Migration
           $table->increments('id');
           $table->integer('questionsAnswered')->nullable();
           $table->integer('idOfRecentQuestion')->nullable();
-          $table->integer('quiz_results_id')->integer()->nullable();
-          $table->foreign('quiz_results_id')->references('id')->on('quiz_results');
+          $table->integer('quizresult_id')->integer()->nullable();
+          $table->foreign('quizresult_id')->references('id')->on('quiz_results');
           $table->timestamps();
       });
 
@@ -38,7 +38,7 @@ class QuizObjects extends Migration
           $table->timestamps();
       });
 
-      Schema::create('quiz_restaurants', function (Blueprint $table) {
+      Schema::create('quiz_potential_restaurants', function (Blueprint $table) {
           $table->integer('quiz_id')->integer();
           $table->foreign('quiz_id')->references('id')->on('quizzes');
           $table->integer('restaurant_id')->integer();
@@ -46,7 +46,15 @@ class QuizObjects extends Migration
           $table->timestamps();
       });
 
-      Schema::create('quiz_results', function(Blueprint $table) {
+      Schema::create('quiz_removed_restaurants', function (Blueprint $table) {
+          $table->integer('quiz_id')->integer();
+          $table->foreign('quiz_id')->references('id')->on('quizzes');
+          $table->integer('restaurant_id')->integer();
+          $table->foreign('restaurant_id')->references('id')->on('restaurants');
+          $table->timestamps();
+      });
+
+      Schema::create('quizresults', function(Blueprint $table) {
         $table->increments('id');
         $table->integer("voteResult")->nullable();
         $table->integer('quiz_id')->integer();
@@ -69,7 +77,8 @@ class QuizObjects extends Migration
       Schema::dropIfExists('quizzes');
       Schema::dropIfExists('quiz_questions');
       Schema::dropIfExists('quiz_tags');
-      Schema::dropIfExists('quiz_restaurants');
-      Schema::dropIfExists('quiz_results');
+      Schema::dropIfExists('quiz_potential_restaurants');
+      Schema::dropIfExists('quiz_removed_restaurants');
+      Schema::dropIfExists('quizresults');
     }
 }

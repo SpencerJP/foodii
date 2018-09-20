@@ -29,9 +29,14 @@ class Quiz extends Model
 		return $this->belongsToMany("App\Models\Tag", "quiz_tags");
 	}
 
+  // these are restaurants to be in the final pool
+  public function potentialRestaurants() {
+    return $this->belongsToMany("App\Models\Restaurant", "quiz_potential_restaurants");
+  }
+
   // these are restaurants that WILL NOT be part of the final result, aka "ruled out"
-  public function restaurants() {
-    return $this->belongsToMany("App\Models\Restaurant", "quiz_restaurants");
+  public function removedRestaurants() {
+    return $this->belongsToMany("App\Models\Restaurant", "quiz_removed_restaurants");
   }
 
 	public function getNextQuestion($user = null) {
@@ -40,9 +45,15 @@ class Quiz extends Model
 		if ($this->questionsAnswered < Config::get('quizoptions.quiz_question_max')) {
       while(true) {
         $localQuestions = Question::All()->where('weight', '>=', $weightFactor);
-        foreach($this->questions as $key => $value) {
-          $localQuestions = $localQuestions->where('id', '!=', $key);
-        }
+        // prevent you from getting the same question twice
+        $localQuestions = $localQuestions->reject(function($value, $key) {
+          if ($this->questions->contains($key)) {
+            return true;
+          }
+          else {
+            return false;
+          }
+        });
         if ($localQuestions->count() == 0) {
           if ($weightFactor == 0) {
             return null;
@@ -81,13 +92,18 @@ class Quiz extends Model
     }
     if ($this->questionsAnswered >= Config::get('quizoptions.quiz_question_max')) {
       $r = Restaurant::All()->reject(function ($value, $key) {
-        if ($this->restaurants->contains($key)) {
+        if ($this->removedRestaurants->contains($key)) {
           return true;
         }
         else {
           return false;
         }
-      })->random(1)->first();
+      });
+      if($r->count() > 0) {
+        $r = $r->random(1)->first();
+      } else {
+        return null;
+      }
       if ($r == null) {
         return null;
       }
@@ -96,19 +112,25 @@ class Quiz extends Model
       $quizresult->user_id = $user_id;
       $quizresult->quiz_id = $this->id;
       $quizresult->save();
-      $this->quiz_result_id = $quizresult->id;
+      $this->quizresult_id = $quizresult->id;
       $this->save();
+      info("quiz_question_max  was hit");
       return $quizresult;
     }
-    if ((Restaurant::All()->count() - $this->restaurants->count()) <= Config::get('quizoptions.restaurant_pool_size')) {
-      $r = Restaurant::All()->reject(function ($value, $key) {
-        if ($this->restaurants->contains($key)) {
+    if ($this->potentialRestaurants->count() <= Config::get('quizoptions.restaurant_pool_size')) {
+      $r = $this->potentialRestaurants->reject(function ($value, $key) {
+        if ($this->removedRestaurants->contains($key)) {
           return true;
         }
         else {
           return false;
         }
-      })->random(1)->first();
+      });
+      if($r->count() > 0) {
+        $r = $r->random(1)->first();
+      } else {
+        return null;
+      }
       if ($r == null) {
         return null;
       }
@@ -117,8 +139,9 @@ class Quiz extends Model
       $quizresult->user_id = $user_id;
       $quizresult->quiz_id = $this->id;
       $quizresult->save();
-      $this->quiz_result_id = $quizresult->id;
+      $this->quizresult_id = $quizresult->id;
       $this->save();
+      info("restaurant_pool_size was hit");
       return $quizresult;
 
     }
@@ -126,11 +149,18 @@ class Quiz extends Model
 
   public function processTags() {
     foreach($this->tags as $tagkey => $quiztag) {
-      $restaurants = Restaurant::All()->except($this->restaurants->get());
+      $restaurants = Restaurant::All()->except($this->restaurants);
       foreach($restaurants as $restaurantkey => $restaurant) {
-          if($restaurant->tags()->contains($tagkey)) {
-            $this->attach($restaurantkey);
-          }
+        if($quiztag->type == "negative") {
+            if((!$restaurant->tags->contains($tagkey)) && !($this->removedRestaurants->contains($tagkey))) {
+              $this->removedRestaurants()->attach($restaurantkey);
+            }
+        }
+        else {
+            if(($restaurant->tags->contains($tagkey)) && !($this->potentialRestaurants->contains($tagkey))) {
+              $this->potentialRestaurants()->attach($restaurantkey);
+            }
+        }
       }
     }
     $this->save();

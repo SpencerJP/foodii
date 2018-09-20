@@ -12,6 +12,7 @@ class TagSeeder extends Seeder
     public function run()
     {
 	    // feel free to add more fellas
+      /*
 	    $defaultTags = array("Vegetarian", "Vegan", "Gluten-Free", "Fish", "Beef", "Chicken", "Curry", "Spicy", "Hot", "Cold", "Dessert", "Italian", "Thai");
 	    $arrlength = count($defaultTags);
 
@@ -20,6 +21,6 @@ class TagSeeder extends Seeder
   		    $tag->name = $defaultTags[$x];
   		    $tag->type = "positive";
   		    $tag->save();
-  		}
+  		}*/
     }
 }
