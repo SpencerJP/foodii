@@ -12,35 +12,35 @@ use Illuminate\Support\Facades\Input;
 
 class UsersController extends Controller
 {
-    
+
     private function checkAuth() {
     if(\Auth::check() && !(\Auth::user()->isAdmin()) ) {
         return true;
     }
     return false;
     }
-    
+
     public function index()
     {
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        
+
         $users = User::All();
         return View::make('admin.users.index')->with('users', $users);
     }
-    
+
     public function show($id)
     {
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        
+
         // Get the restaurant
         $user = User::find($id);
-        
+
         $restaurants = $user->restaurants;
-        
+
         if($user->isRestaurantOwner())
         {
             return View::make('admin.users.showro')
@@ -50,24 +50,24 @@ class UsersController extends Controller
             return View::make('admin.users.show')
             ->with('user', $user);
         }
-        
-        
+
+
     }
-    
+
     public function edit($id)
     {
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        
+
         // get the restaurant
         $user = User::find($id);
-        
+
         // show the edit form and pass the nerd
         return View::make('admin.users.edit')
         ->with('user', $user);
     }
-    
+
     public function update($id)
     {
         if ($this->checkAuth()) {
@@ -83,7 +83,7 @@ class UsersController extends Controller
         /* TODO  Make a proper validator http://laravel.com/docs/validation
          */
         $validator = Validator::make(Input::all(), $rules);
-        
+
         // process the login
         if ($validator->fails()) {
             return Redirect::to('admin\users\edit')
@@ -91,31 +91,32 @@ class UsersController extends Controller
             ->withInput(Input);
         } else {
             // store
-            
-            $user->user_type                        = Input::get('user_type');       
+
+            $user->user_type                        = Input::get('user_type');
             $preferences->dietary_mode              = Input::get('dietary_mode');
             $preferences->preferred_price_range     = Input::get('preferred_price_range');
             $preferences->preferred_radius_size     = Input::get('preferred_radius_size');
             $preferences->save();
             $user->save();
-            
+
             // redirect
             return Redirect::to('admin\users');
         }
     }
-    
+
+
     public function destroy($id)
     {
-        //delete
+        if ($this->checkAuth()) {
+            return redirect('/home');
+        }
+
+        //delete the user
         $user = User::find($id);
         $user->delete();
-        
-        //redirect
-        return Redirect::to('admin\users');
-        
-        
+
+        //redirect to admin users dashboard
+        //Session::flash('message', 'User deleted successfully!');
+        return Redirect::to('\admin\users');
     }
-    
-    
-    
 }

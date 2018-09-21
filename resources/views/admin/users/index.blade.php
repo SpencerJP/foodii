@@ -26,7 +26,7 @@
 
                             <!-- delete the nerd (uses the destroy method DESTROY /nerds/{id} -->
                             <!-- we will add this later since its a little more complicated than the other two buttons -->
-                            
+
 
                             <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
                             <a class="btn btn-small btn-success" href="{{ URL::to('/admin/users/' . $value->id) }}">Details</a>
@@ -40,9 +40,6 @@
                                {{ Form::submit('Delete', array('class' => 'btn btn-small btn-danger')) }}
                             {{ Form::close() }}
                             </a>
-                            
-                            
-
                         </td>
                     </tr>
                 @endforeach
