@@ -49,7 +49,7 @@ class QuestionsSeeder extends Seeder
           $answer->tags()->attach($id);
         }
         else {
-          $id = $this->getTagId($value[0], $value[1]);
+          $id = $this->getTagIdWithType($value[0], $value[1]);
           $answer->tags()->attach($id);
         }
       }
@@ -63,7 +63,9 @@ class QuestionsSeeder extends Seeder
         $newTag->type = 'positive';
 
         $id = Tag::All()->search(function($value, $key) use ($tagName) {
-            $value->name = $tagName;
+            if(($value->name == $tagName) && ($value->type == "positive")) {
+              return true;
+            }
         });
         if ($id == false) {
           $newTag->save();
@@ -79,8 +81,10 @@ class QuestionsSeeder extends Seeder
         $newTag->name = $tagName;
         $newTag->type = $type;
 
-        $id = Tag::All()->search(function($value, $key) use ($tagName) {
-            $value->name = $tagName;
+        $id = Tag::All()->search(function($value, $key) use ($tagName,  $type) {
+            if(($value->name == $tagName) && ($value->type == $type)) {
+              return true;
+            }
         });
         if ($id == false) {
           $newTag->save();

@@ -40,7 +40,6 @@ class QuizController extends Controller
                         return ($a->countTags($quiz->tags) < $b->countTags($quiz->tags)) ? -1 : 1;
               });
 
-              info($quiz->potentialRestaurants);
               $quiz->save();
               return View::make('quiz.resultpage')->with('quizresult', $result);
             }
@@ -96,7 +95,6 @@ class QuizController extends Controller
                   }
                   return ($a->countTags($quiz->tags) < $b->countTags($quiz->tags)) ? -1 : 1;
         });
-        info($quiz->potentialRestaurants);
         $quiz->save();
 
         if ($result != null) {

@@ -90,6 +90,7 @@ class Quiz extends Model
       return $this->result;
     }
     if ($this->questionsAnswered >= Config::get('quizoptions.quiz_question_max')) {
+      info("Hit maximum questions.");
       $r = Restaurant::All()->reject(function ($value, $key) {
         if ($this->removedRestaurants->contains($key)) {
           return true;
@@ -104,7 +105,7 @@ class Quiz extends Model
                 }
                 return ($a->countTags($this->tags) < $b->countTags($this->tags)) ? -1 : 1;
       });
-
+      info("Sorting restaurants array with " . $r->count() . " potential restaurants.");
       if($r->count() > 0) {
         $r = $r->first();
       } else {
@@ -122,7 +123,8 @@ class Quiz extends Model
       $this->save();
       return $quizresult;
     }
-    if ($this->potentialRestaurants->count() <= Config::get('quizoptions.restaurant_pool_size')) {
+    if (($this->potentialRestaurants->count()+$this->removedRestaurants->count()) <= Config::get('quizoptions.restaurant_pool_size')) {
+      info("Have enough restaurants in my pool.");
       $r = $this->potentialRestaurants->reject(function ($value, $key) {
         if ($this->removedRestaurants->contains($key)) {
           return true;
@@ -164,14 +166,14 @@ class Quiz extends Model
       });
       foreach($restaurants as $restaurantkey => $restaurant) {
         if($quiztag->type == "negative") {
-            if( !$restaurant->tags->contains($tagkey) )  {
-                //info("Removing " . $restaurant->name . " because of the tag " . $quiztag->name);
+            if( !$restaurant->tags->contains($quiztag) )  {
+                info("Removing " . $restaurant->name . " because of the tag " . $quiztag->name);
               $this->removedRestaurants()->attach($restaurantkey);
             }
         }
         else {
-            if( $restaurant->tags->contains($tagkey) ) {
-              //info("Attaching " . $restaurant->name . " because of the tag " . $quiztag->name);
+            if( $restaurant->tags->contains($quiztag) ) {
+              info("Attaching " . $restaurant->name . " because of the tag " . $quiztag->name);
               $this->potentialRestaurants()->attach($restaurantkey);
             }
         }
