@@ -1,5 +1,21 @@
 @extends('layouts.app')
 
+
+<style>
+.star-rating {
+  line-height:32px;
+  font-size:1.25em;
+}
+
+.star-rating .fa-star{color: yellow;}
+</style>
+
+
+
+
+
+
+
 @section('content')
 <!--
 					<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
@@ -30,18 +46,31 @@
 	  <div class="row">
 	  	@foreach($restaurants as $key => $value)	
 		<div class="col-md-6 col-sm-6">
-		  <div class="thumbnauk" style="hegiht: 600px">
-			<img class="card-img-top" src="/images/MC.png" alt=""><!--?php echo $restaurant['name/image']?-->
-			<div class="card-body">
+		  <div class="thumbnauk">
+			<img class="card-img-top" src="/images/MC.png" alt="" height="400"><!--?php echo $restaurant['name/image']?-->
+				<div class="card-body">
 				<p class="card-text"><td>Name:</td>{{ $value->name }}</p>
-				<p c><td>ID:</td>{{ $value->id }}</p>
-				<p class="card-text"><td>Rating:</td>{{ $value->rating }}</p>
-				<div class="address">
-					<p class="sub">{{ $value->address }}</p>
-					<p class="sub">Mon-Sat : 9am - 10pm , Sun : 9am - 12am.</p>
-					<p class="sub">{{ $value->phone_number }}</p>
-				</div>
-				
+				<hr class="featurette-divider">	
+				<p ><td>ID:</td>{{ $value->id }}</p>
+				<p>
+
+					
+					
+					<fieldset class="rating">
+					<td>Rating:</td>
+							<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+							<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+							<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+							<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+							<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+					</fieldset>
+					
+				</p>
+				<hr class="featurette-divider">
+				<p class="card-text">{{ $value->address }}</p>
+				<p class="card-text">Mon-Sat : 9am - 10pm , Sun : 9am - 12am.</p>
+				<p class="card-text"	>{{ $value->phone_number }}</p>
+				<hr class="featurette-divider">
 				<div class="caption">
 				<a class="btn btn-primary" href="{{ URL::to('/restaurants/' . $value->id) }}">Details</a>
 				
@@ -49,8 +78,8 @@
 				
 				<a class="btn btn-success" href="{{ URL::to('/restaurants/' . $value->id . '/edit') }}">Edit</a>
 				
-				<a class="btn ">
-					{{ Form::open(array('url' => '/restaurantowner/restaurants/' . $value->id, 'class' => 'pull-left')) }}
+				<a class="">
+					{{ Form::open(array('url' => '/restaurantowner/restaurants/' . $value->id, 'class' => 'pull-right')) }}
 					   {{ Form::hidden('_method', 'DELETE') }}
 					   {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
 					{{ Form::close() }}
