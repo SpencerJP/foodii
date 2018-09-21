@@ -17,55 +17,30 @@
                 <p class="pref">Select your preferences for a more personalised result:</p>
                 </div>
 
-                {{ Form::model($preferences, array('url' =>  route("preferences.update", 0), 'method' => 'PUT')) }}
-
+            {{ Form::model($preferences, array('url' =>  route("preferences.update", 0), 'method' => 'PUT')) }}
                 <div class="form-group">
-                    {{ Form::label('dietary_mode', 'Dietary Mode') }}
-                    <br/>
-                    {{ Form::radio('Diet', '1') }} Vegan
-                    <br/>
-                    {{ Form::radio('Diet', '2') }} Vegetarian
-                    <br/>
-                    {{ Form::radio('Diet','3') }} Halal
-                    <br/>
+                  {{ Form::label('dietary_mode', 'Dietary Mode') }} <br/>
+                    {{ Form::checkbox('Vegan', null, null, array('id'=>'dietary_mode'))}} Vegan
+                    {{ Form::checkbox('Vegetarian', null, null, array('id'=>'dietary_mode'))}} Vegetarian
+                    {{ Form::checkbox('Halal', null, null, array('id'=>'dietary_mode'))}} Halal
                 </div>
 
                 <div class="form-group">
-                    {{ Form::label('allergies', 'Allergies') }}
-                    <br/>
-                    {{ Form::radio('allergies', '1') }} Lactose
-                    <br/>
-                    {{ Form::radio('allergies', '2') }} Gluten
-                    <br/>
-                    {{ Form::radio('alergies','3') }} Nuts
-                    <br/>
+                {{ Form::label('preferred_price_range', 'Price Range') }} <br/>
+                {{ Form::checkbox('$', null, null, array('id'=>'preferred_price_range'))}} $
+                {{ Form::checkbox('$$', null, null, array('id'=>'preferred_price_range'))}} $$
+                {{ Form::checkbox('$$$', null, null, array('id'=>'preferred_price_range'))}} $$$
                 </div>
 
                 <div class="form-group">
-                    {{ Form::label('preferred_price_range', 'Preferred Price Range') }}
-                    <br/>
-                    {{ Form::radio('price', '1') }} $
-                    <br/>
-                    {{ Form::radio('price', '2') }} $$
-                    <br/>
-                    {{ Form::radio('price','3') }} $$$
-                    <br/>
-                </div>
-
-                <div class="form-group">
-                    {{ Form::label('preferred_radius_size', 'Preferred Radius Size') }}
-                    <br/>
-                    {{ Form::radio('distance', '1') }} less than 5km
-                    <br/>
-                    {{ Form::radio('distance', '2') }} less than 10km
-                    <br/>
-                    {{ Form::radio('distance','3') }} Stores that deliver
-                    <br/>
+                    {{ Form::label('preferred_radius_size', 'Radius Size') }} <br/>
+                    {{ Form::checkbox('5km', null, null, array('id'=>'preferred_radius_size'))}} less than 5km
+                    {{ Form::checkbox('10km', null, null, array('id'=>'preferred_radius_size'))}} less than 10km
+                    {{ Form::checkbox('deliver', null, null, array('id'=>'preferred_radius_size'))}} stores that deliver
                 </div>
 
                 {{ Form::submit('Save Changes', array('class' => 'btn btn-primary')) }}
 
-            {{ Form::close() }}
         </div>
     </div>
 </div>

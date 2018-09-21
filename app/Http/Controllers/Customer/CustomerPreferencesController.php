@@ -106,9 +106,9 @@ class CustomerPreferencesController extends CustomerController
                 ->withInput(Input);
         } else {
             // store
-            $preferences->dietary_mode       = Input::get('dietary_mode');
-            $preferences->preferred_price_range      = Input::get('preferred_price_range');
-            $preferences->preferred_radius_size = Input::get('preferred_radius_size');
+            $preferences->dietary_mode       = Input::get('dietary_mode[]');
+            $preferences->preferred_price_range      = Input::get('preferred_price_range[]');
+            $preferences->preferred_radius_size = Input::get('preferred_radius_size[]');
             $preferences->save();
 
             // redirect
