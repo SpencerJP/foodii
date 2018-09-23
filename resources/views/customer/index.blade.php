@@ -9,7 +9,7 @@
                 <p class="pref">Select your <mark>preferences</mark> for a more personalised result:</p>
                 </div>
 
-            {{ Form::model($preferences, array('url' =>  route("preferences.update", 0), 'method' => 'POST')) }}
+            {{ Form::model($preferences, array('url' =>  route("preferences.update", 0), 'method' => 'PUT')) }}
                 <div class="form-group">
                     {{ Form::label('dietary_mode', 'Dietary Mode') }} <br/>
                     {{ Form::checkbox('dietary_mode', '1', false)}} Vegan<br/>
