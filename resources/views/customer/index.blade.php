@@ -4,26 +4,29 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="card-body">
-            {{ Form::model($preferences, array('url' =>  route("preferences.update", 0), 'method' => 'PUT')) }}
-
-                <div class="form-group">
-                    {{ Form::label('dietary_mode', 'Dietary Mode') }}
-                    {{ Form::text('dietary_mode', null, array('class' => 'form-control')) }}
-                </div>
-
-                <div class="form-group">
-                    {{ Form::label('preferred_price_range', 'Preferred Price Range') }}
-                    {{ Form::text('preferred_price_range', null, array('class' => 'form-control')) }}
-                </div>
-
-                <div class="form-group">
-                    {{ Form::label('preferred_radius_size', 'Preferred Radius Size') }}
-                    {{ Form::text('preferred_radius_size', null, array('class' => 'form-control')) }}
-                </div>
-
-                {{ Form::submit('Edit the Preference!', array('class' => 'btn btn-primary')) }}
-
-            {{ Form::close() }}
+            <h1>History</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>Restaurant Name</td>
+                        <td>Address</td>
+                        <td>Phone #</td>
+                        <td>Rating</td>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach($restaurants as $key => $value)
+                    <tr>
+                        <td>{{ $value->logo_image }}</td>
+                        <td>{{ $value->name }}</td>
+                        <td>{{ $value->address }}</td>
+                        <td>{{ $value->phone_number }}</td>
+                        <td>{{ $value->rating }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

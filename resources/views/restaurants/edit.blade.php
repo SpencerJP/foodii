@@ -18,6 +18,16 @@
                     {{ Form::label('address', 'Address') }}
                     {{ Form::text('address', null, array('class' => 'form-control')) }}
                 </div>
+                
+                <div class="form-group">
+                    {{ Form::label('phone_number', 'Phone #') }}
+                    {{ Form::text('phone_number', null, array('class' => 'form-control')) }}
+                </div>
+                
+                <div class="form-group">
+                    {{ Form::label('restaurant_image', 'Image URL') }}
+                    {{ Form::text('restaurant_image', null, array('class' => 'form-control')) }}
+                </div>
             
                 <div class="form-group">
                     {{ Form::label('description', 'Description') }}

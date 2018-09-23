@@ -34,7 +34,7 @@ class CustomerPreferencesController extends CustomerController
             return redirect('/home');
         }
         $preferences = \Auth::user()->preferences;
-        return View::make('customer.index')->with('preferences', $preferences); // TODO
+        return View::make('customer.preferences')->with('preferences', $preferences); // TODO
     }
 
     public function create()
@@ -86,11 +86,11 @@ class CustomerPreferencesController extends CustomerController
      */
     public function update($id)
     {
+        info($id);
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        $user = User::find($id);
-        $preferences = $user->preferences;
+        $preferences = \Auth::user()->preferences;
          $rules = array(
             'dietary_mode'       => 'required',
             'preferred_price_range'      => 'required',
@@ -113,7 +113,7 @@ class CustomerPreferencesController extends CustomerController
             $preferences->save();
 
             // redirect
-            return Redirect::to('\customer\preferences');
+            return Redirect::to('customer');
         }
     }
 

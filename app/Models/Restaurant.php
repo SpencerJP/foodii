@@ -8,7 +8,7 @@ class Restaurant extends Franchise
 {
 
 	protected $fillable = [
-        'longitude', 'latitude'
+        'longitude', 'latitude', 'phone_number', 'logo_image', 'restaurant_image'
     ];
     /**
      * 
