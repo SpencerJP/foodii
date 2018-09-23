@@ -75,7 +75,7 @@ class RestaurantsController extends Controller
 
         //process the login
         if ($validator->fails()){
-            return Redirect::to('\restaurantowner\restaurants\create')
+            return Redirect::to('\restaurants\create')
                 ->withErrors($validator);
         } else {
             //store
@@ -91,7 +91,7 @@ class RestaurantsController extends Controller
             $restaurant->save();
 
             //redirect
-            return Redirect::to('\restaurantowner\restaurants');
+            return Redirect::to('\restaurants');
         }
     }
 
@@ -125,10 +125,10 @@ class RestaurantsController extends Controller
     	if ($this->checkAuth()) {
             return redirect('/home');
         }
-        
+
         // get the restaurant
         $restaurant = Restaurant::find($id);
-        
+
         // show the edit form and pass the nerd
         return View::make('restaurants.edit')
         ->with('restaurant', $restaurant);
@@ -142,7 +142,7 @@ class RestaurantsController extends Controller
     public function update($id)
     {
         if ($this->checkAuth()) {
-            return redirect('/home');            
+            return redirect('/home');
         }
         $restaurant = Restaurant::find($id);
         //validate
@@ -153,10 +153,10 @@ class RestaurantsController extends Controller
             'phone_number' => 'required'
         );
         $validator = Validator::make(Input::all(), $rules);
-        
+
         //process the login
         if ($validator->fails()){
-            return Redirect::to('\restaurantowner\restaurants\edit')
+            return Redirect::to('\restaurants\edit')
                 ->withErrors($validator);
         } else {
             //store
@@ -167,9 +167,9 @@ class RestaurantsController extends Controller
             $restaurant->logo_image = Input::get('logo_image');
             $restaurant->restaurant_image = Input::get('restaurant_image');
             $restaurant->save();
-            
+
             //redirect
-            return Redirect::to('\restaurantowner\restaurants');
+            return Redirect::to('\restaurants');
         }
     }
 
@@ -184,13 +184,13 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        
+
         //delete the restaurant
         $restaurant = Restaurant::find($id);
         $restaurant->delete();
-        
+
         //redirect to restaurants page
         //Session::flash('message', 'Restaurant deleted successfully!');
-        return Redirect::to('\restaurantowner\restaurants');
+        return Redirect::to('\restaurants');
     }
 }
