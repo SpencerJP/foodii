@@ -103,9 +103,10 @@ class Quiz extends Model
                 if ($a->countTags($this->tags) == $b->countTags($this->tags) ) {
                   return 0;
                 }
-                return ($a->countTags($this->tags) < $b->countTags($this->tags)) ? -1 : 1;
+                return ($a->countTags($this->tags) < $b->countTags($this->tags)) ? 1 : -1;
       });
-      info("Sorting restaurants array with " . $r->count() . " potential restaurants.");
+      info("Sorting restaurants array with " . $r->count() . " potential restaurants.");  
+      info($r);
       if($r->count() > 0) {
         $r = $r->first();
       } else {
@@ -114,6 +115,7 @@ class Quiz extends Model
       if ($r == null) {
         return null;
       }
+      info($r);
       $quizresult = new QuizResult;
       $quizresult->restaurant_id = $r->id;
       $quizresult->user_id = $user_id;
