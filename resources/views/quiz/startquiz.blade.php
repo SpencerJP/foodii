@@ -4,7 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="card-body">
-        <a class="btn btn-small btn-success" href="{{ route('quiz.startQuiz') }}">Begin Quiz!</a>
+            <a href="{{ route('quiz.startQuiz') }}">
+            <img src="/images/start_button1.png" >
+            </a>
       </div>
     </div>
 </div>
