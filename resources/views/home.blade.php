@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     <div id="container">
-                        <button onclick="location.href= '{{ url('preferences.index') }}'" type="button" id="button1">Preferences</button>
+                        <button onclick="location.href= '{{ route('preferences.index') }}'" type="button" id="button1">Preferences</button>
                         <!--<a href="https://www.w3schools.com"></a> -->
                         <button onclick="location.href= '{{ url('userhistory') }}'" type="button" id="button2">User's History</button>
                     </div>

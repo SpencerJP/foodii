@@ -8,11 +8,11 @@
         </li>
 
         <li>
-            <a href='/userhistory'>User's History</a>
+            <a href='/usershistory'>User's History</a>
         </li>
 
         <li>
-            <a href='../customer/preferences.index'>Preferences</a>
+            <a href='preferences'>Preferences</a>
         </li>
     </ul>
 </div>
@@ -27,11 +27,11 @@
                         </li>
 
                         <li>
-                            <a href='/userhistory'>User's History</a>
+                            <a href='usershistory'>User's History</a>
                         </li>
 
                         <li>
-                            <a href='../customer/preferences.index'>Preferences</a>
+                            <a href='preferences'>Preferences</a>
                         </li>
                     </ul>
                 <div class="card-body">
