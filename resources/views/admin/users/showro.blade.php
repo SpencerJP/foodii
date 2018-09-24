@@ -13,9 +13,7 @@
                     <strong>Name:</strong> {{ $user->name }}<br>
                     <strong>Email:</strong> {{ $user->email }}<br>
                     <strong>User Type:</strong> {{ $user->getUserTypeToString() }}<br>
-                    <strong>Dietary Mode:</strong> {{ $user->preferences->dietary_mode }}<br>
-                    <strong>Preferred Price Range:</strong> {{ $user->preferences->preferred_price_range }}<br>
-                    <strong>Preferred Radius Size:</strong> {{ $user->preferences->preferred_radius_size}}<br>    
+                       
                 </p>
                 
                                
@@ -34,7 +32,7 @@
                     <tr>
                         <td>{{ $value->id }}</td>
                         <td>{{ $value->name }}</td>
-                        <td>{{ $value->address }}</td>
+                        <td>{{ $value->address }}</td>                        
                         <td>{{ $value->rating }}</td>
                         
                     </tr>

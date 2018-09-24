@@ -24,6 +24,7 @@
                         <td>
 
                           <a class="btn btn-small btn-success" href="{{ route("restaurants.show", $value->id) }}">Details</a>
+                          <a class="btn btn-small btn-success" href="{{ route("tags.restaurantTagIndex", $value->id)}}">View Tags</a>
 
                           <a class="btn btn-small btn-info" href="{{ route("restaurants.edit", $value->id) }}">Edit</a>
 

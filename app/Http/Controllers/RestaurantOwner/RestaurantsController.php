@@ -68,7 +68,8 @@ class RestaurantsController extends Controller
         $rules = array(
             'name' => 'required',
             'address' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'phone_number' => 'required'
         );
         $validator = Validator::make(Input::all(), $rules);
 
@@ -84,6 +85,9 @@ class RestaurantsController extends Controller
             $restaurant->description = Input::get('description');
             $restaurant->rating = rand(1,5);
             $restaurant->user_id = \Auth::user()->id;
+            $restaurant->phone_number = Input::get('phone_number');
+            $restaurant->logo_image = Input::get('logo_image');
+            $restaurant->restaurant_image = Input::get('restaurant_image');
             $restaurant->save();
 
             //redirect
@@ -145,7 +149,8 @@ class RestaurantsController extends Controller
         $rules = array(
             'name' => 'required',
             'address' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'phone_number' => 'required'
         );
         $validator = Validator::make(Input::all(), $rules);
 
@@ -158,6 +163,9 @@ class RestaurantsController extends Controller
             $restaurant->name = Input::get('name');
             $restaurant->address = Input::get('address');
             $restaurant->description = Input::get('description');
+            $restaurant->phone_number = Input::get('phone_number');
+            $restaurant->logo_image = Input::get('logo_image');
+            $restaurant->restaurant_image = Input::get('restaurant_image');
             $restaurant->save();
 
             //redirect

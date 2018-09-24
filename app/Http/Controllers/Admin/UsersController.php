@@ -104,6 +104,7 @@ class UsersController extends Controller
         }
     }
 
+
     public function destroy($id)
     {
         if ($this->checkAuth()) {
