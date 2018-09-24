@@ -109,6 +109,10 @@ class RestaurantsController extends Controller
 
         // Get the restaurant
         $restaurant = Restaurant::find($id);
+        if ($restaurant == null)
+        {
+          info("YOU CAN REMEMBER!");
+        }
 
         return View::make('restaurants.show')
             ->with('restaurant', $restaurant);
@@ -160,12 +164,49 @@ class RestaurantsController extends Controller
                 ->withErrors($validator);
         } else {
             //store
-            $restaurant->name = Input::get('name');
-            $restaurant->address = Input::get('address');
-            $restaurant->description = Input::get('description');
-            $restaurant->phone_number = Input::get('phone_number');
-            $restaurant->logo_image = Input::get('logo_image');
-            $restaurant->restaurant_image = Input::get('restaurant_image');
+            if(Input::get('name') != null || Input::get('name') != "") {
+              $restaurant->name = Input::get('name');
+            }
+            else {
+              $restaurant->name = "";
+            }
+
+            if(Input::get('address') != null || Input::get('address') != "") {
+              $restaurant->address = Input::get('address');
+            }
+            else {
+              $restaurant->address = "";
+            }
+
+            if(Input::get('description') != null || Input::get('description') != "") {
+              $restaurant->description = Input::get('description');
+            }
+            else {
+              $restaurant->description = "";
+            }
+
+            if(Input::get('phone_number') != null || Input::get('phone_number') != "") {
+              $restaurant->phone_number = Input::get('phone_number');
+            }
+            else {
+              $restaurant->phone_number = "";
+            }
+
+            if(Input::get('logo_image') != null || Input::get('logo_image') != "") {
+              $restaurant->logo_image = Input::get('logo_image');
+            }
+            else {
+              $restaurant->logo_image = "";
+            }
+
+            if(Input::get('restaurant_image') != null || Input::get('restaurant_image') != "") {
+              $restaurant->restaurant_image = Input::get('restaurant_image');
+            }
+            else {
+              $restaurant->restaurant_image = "";
+            }
+
+
             $restaurant->save();
 
             //redirect
