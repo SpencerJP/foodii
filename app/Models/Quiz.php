@@ -90,23 +90,26 @@ class Quiz extends Model
       return $this->result;
     }
     if ($this->questionsAnswered >= Config::get('quizoptions.quiz_question_max')) {
-      info("Hit maximum questions.");
+      info("checkForResult: Hit maximum questions.");
+      $count_for_log = 0;
       $r = Restaurant::All()->reject(function ($value, $key) {
         if ($this->removedRestaurants->contains($key)) {
+          $count_for_log++;
           return true;
         }
         else {
           return false;
         }
       });
+      info("checkForResult: Removed " . $count_for_log . " restaurants from potentialRestaurants because they were in removedRestaurants.");
       $r->sort(function($a, $b) {
                 if ($a->countTags($this->tags) == $b->countTags($this->tags) ) {
                   return 0;
                 }
                 return ($a->countTags($this->tags) < $b->countTags($this->tags)) ? 1 : -1;
       });
-      info("Sorting restaurants array with " . $r->count() . " potential restaurants.");  
-      info($r);
+      info("checkForResult: Sorting restaurants array with " . $r->count() . " potential restaurants.");
+      info("checkForResult: Printing sorted restaurant array    " . $r);
       if($r->count() > 0) {
         $r = $r->first();
       } else {
@@ -115,7 +118,6 @@ class Quiz extends Model
       if ($r == null) {
         return null;
       }
-      info($r);
       $quizresult = new QuizResult;
       $quizresult->restaurant_id = $r->id;
       $quizresult->user_id = $user_id;
@@ -126,15 +128,18 @@ class Quiz extends Model
       return $quizresult;
     }
     if (($this->potentialRestaurants->count()+$this->removedRestaurants->count()) <= Config::get('quizoptions.restaurant_pool_size')) {
-      info("Have enough restaurants in my pool.");
+      info("checkForResult: Have enough restaurants in my pool.");
+      $count_for_log = 0;
       $r = $this->potentialRestaurants->reject(function ($value, $key) {
         if ($this->removedRestaurants->contains($key)) {
+          $count_for_log++;
           return true;
         }
         else {
           return false;
         }
       });
+      info("checkForResult: Removed " . $count_for_log . " restaurants from potentialRestaurants because they were in removedRestaurants.");
       if($r->count() > 0) {
         $r = $r->random(1)->first();
       } else {
@@ -158,10 +163,10 @@ class Quiz extends Model
   public function processTags() {
     foreach($this->tags as $tagkey => $quiztag) {
       $restaurants = Restaurant::All()->reject(function ($value, $key) {
-        if ($this->removedRestaurants->contains($key)) {
+        if ($this->removedRestaurants->contains($key, $value)) {
           return true;
         }
-        if ($this->potentialRestaurants->contains($key)) {
+        if ($this->potentialRestaurants->contains($key, $value)) {
           return true;
         }
         return false;
@@ -169,14 +174,14 @@ class Quiz extends Model
       foreach($restaurants as $restaurantkey => $restaurant) {
         if($quiztag->type == "negative") {
             if( !$restaurant->tags->contains($quiztag) )  {
-                info("Removing " . $restaurant->name . " because of the tag " . $quiztag->name);
-              $this->removedRestaurants()->attach($restaurantkey);
+                info("Removing id=" . $restaurant->id . ": " . $restaurant->name . " because of the tag " . $quiztag->name);
+              $this->removedRestaurants()->attach($restaurant->id);
             }
         }
         else {
             if( $restaurant->tags->contains($quiztag) ) {
-              info("Attaching " . $restaurant->name . " because of the tag " . $quiztag->name);
-              $this->potentialRestaurants()->attach($restaurantkey);
+                info("Attaching id=" . $restaurant->id . ": " . $restaurant->name . " because of the tag " . $quiztag->name);
+              $this->potentialRestaurants()->attach($restaurant->id);
             }
         }
       }
@@ -184,3 +189,4 @@ class Quiz extends Model
     $this->save();
   }
 }
+\

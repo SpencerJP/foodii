@@ -26,9 +26,17 @@ class Restaurant extends Franchise
 	public function countTags($tags) {
 		$i = 0;
 		foreach($tags as $key => $value) {
+			if($value->type == "positive") {
 				if($this->tags->contains($value)) {
 					$i++;
 				}
+			}
+			if($value->type == "negative") {
+				if($this->tags->contains($value)) {
+					return 0; // low priority
+				}
+			}
+
 		}
 		return $i;
 	}

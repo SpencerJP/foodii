@@ -80,8 +80,9 @@ class QuizController extends Controller
         }
         $answer = Answer::find(Input::get('answer_id'));
         $tags = $answer->tags;
-
+        $this->log($tags);
         foreach($tags as $key => $value) {
+          $this->log("Attaching " . $value->name);
           $quiz->tags()->attach($value->id);
         }
         $quiz->save();
@@ -98,9 +99,13 @@ class QuizController extends Controller
         $quiz->save();
 
         if ($result != null) {
+
+          $request->session()->put('activeQuestionHasBeenAnswered', false);
           return View::make('quiz.resultpage')->with('quizresult', $result);
         }
         //redirect
+
+        $request->session()->put('activeQuestionHasBeenAnswered', false);
         return redirect()->action('Customer\QuizController@index');
     }
 
@@ -123,5 +128,9 @@ class QuizController extends Controller
         $request->session()->forget('activeQuestionHasBeenAnswered');
         return View::make('quiz.startquiz');
       }
+    }
+
+    private function log($stringToLog) {
+      info("QuizController: " . $stringToLog);
     }
 }
