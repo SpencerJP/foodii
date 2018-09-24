@@ -66,3 +66,7 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
+
+Route::get('/usershistory', function () {
+    return view('usershistory');
+});

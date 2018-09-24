@@ -24,21 +24,37 @@
         #button-container{
         text-align: center;
         }
-        
+
         #button1{
         width: 300px;
-        height: 40px;
+        height: 100px;
+        border-radius: 15px;
+        background: #f0f8ff;
+        border: 2px solid;
+        padding: 20px; 
 
         }
         #button2{
         width: 300px;
-        height: 40px;
+        height: 100px;
+        border-radius: 15px;
+        background: #f0f8ff;
+        border: 2px solid;
+        padding: 20px; 
         }
 
         #button1 , #button2 {
         display:inline-block;
         }
 
+        body {
+            background-color: #f0f8ff;
+        }
+
+        .navbar, .navbar-expand-md, .navbar, .navbar-laravel, .navbar-brand {
+            background-color: #9bc4e2;
+        }
+        
     </style>
 </head>
 <body>
