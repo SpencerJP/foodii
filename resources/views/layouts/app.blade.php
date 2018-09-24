@@ -55,6 +55,47 @@
             background-color: #9bc4e2;
         }
         
+        #related_links {
+            width: 12em;
+            padding: 0 0 1em 0;
+            margin-bottom: 1em;
+            position: relative;
+            padding: .5rem 1rem;
+            }
+
+        #related_links ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border: none;
+            }
+
+        #related_links li {
+            border: 1px solid #90bade;
+            margin: 0;
+            }
+
+        #related_links li a {
+            display: block;
+            padding: 5px 5px 5px 0.5em;
+            background-color: #f0f8ff;
+            color: #313131;
+            text-decoration: none;
+            width: 100%;
+            }
+
+        html>body #related_links li a {
+            width: auto;
+            }
+
+        #related_links li a:hover {
+            background-color: #ffffff;
+            color: #313131;
+            }
+
+        ul {
+            list-style-type: none;
+        }
     </style>
 </head>
 <body>
