@@ -61,9 +61,10 @@ class Quiz extends Model
           $weightFactor--;
           continue;
         }
+        /*
         if ($user != null) {
           $localQuestions->where('questionvalue', '!=', "preferences");
-        }
+        } */
         $questionToReturn = $localQuestions->random();
         if ($this->questionsAnswered == null) {
           $this->questionsAnswered = 1;
@@ -176,6 +177,9 @@ class Quiz extends Model
             if( !$restaurant->tags->contains($quiztag) )  {
                 info("Removing id=" . $restaurant->id . ": " . $restaurant->name . " because of the tag " . $quiztag->name);
               $this->removedRestaurants()->attach($restaurant->id);
+              if($this->potentialRestaurants->contains($restaurant)) {
+                $this->potentialRestaurants->detach($restaurant->id);
+              }
             }
         }
         else {
@@ -189,4 +193,3 @@ class Quiz extends Model
     $this->save();
   }
 }
-\
