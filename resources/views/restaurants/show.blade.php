@@ -13,7 +13,7 @@
                     <strong>Description:</strong> {{ $restaurant->description }}<br>
                     <strong>Phone #:</strong> {{ $restaurant->phone_number }}<br>
                     <strong>Rating:</strong> {{ $restaurant->rating }}<br>
-                    {{ $restaurant->restaurant_image }}<br>
+                    <img src="{{ $restaurant->restaurant_image }}"></img><br>
                 </p>
             </div>
         </div>

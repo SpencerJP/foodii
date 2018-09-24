@@ -23,17 +23,18 @@
 
                         <td>
 
-                            <a class="btn btn-small btn-success" href="{{ URL::to('/restaurants/' . $value->id) }}">Details</a>
-                            <a class="btn btn-small btn-success" href="{{ URL::to('/restaurants/' . $value->id . '/viewtags/') }}">View Tags</a>
-                            <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                            <a class="btn btn-small btn-info" href="{{ URL::to('/restaurants/' . $value->id . '/edit') }}">Edit</a>
+                          <a class="btn btn-small btn-success" href="{{ route("restaurants.show", $value->id) }}">Details</a>
+                          <a class="btn btn-small btn-success" href="{{ route("tags.restaurantTagIndex", $value->id)}}">View Tags</a>
 
-                            <a class="btn">
-                            {{ Form::open(array('url' => '/restaurants/' . $value->id, 'class' => 'pull-left')) }}
-                               {{ Form::hidden('_method', 'DELETE') }}
-                               {{ Form::submit('Delete', array('class' => 'btn btn-small btn-danger')) }}
-                            {{ Form::close() }}
-                            </a>
+                          <a class="btn btn-small btn-info" href="{{ route("restaurants.edit", $value->id) }}">Edit</a>
+
+                          <a class="btn">
+                          <form action="{{ route("restaurants.destroy", $value->id)}}" method="POST">
+                             @method('Delete')
+                             @csrf
+                             <button class="btn btn-small btn-danger">Delete</button>
+                          </form>
+                          </a>
                         </td>
                     </tr>
                 @endforeach
