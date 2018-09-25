@@ -58,3 +58,15 @@ Route::get('questions/{question_id}/{answer_id}/removetag/{tag_id}', 'Admin\Tags
 Route::delete('questions/{question_id}/{answer_id}/destroy', 'Admin\AnswersController@destroy')->name('answers.destroy');
 
 Route::resource('/admin/users', 'Admin\UsersController');
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+Route::get('/usershistory', function () {
+    return view('usershistory');
+});
