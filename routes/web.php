@@ -64,3 +64,15 @@ Route::get('/quiz', 'Customer\QuizController@index')->name('quiz.startPage');
 Route::post('/quiz', 'Customer\QuizController@answerQuestion')->name('quiz.answerquestion');
 Route::get('/quiz/start', 'Customer\QuizController@startQuiz')->name('quiz.startQuiz');
 Route::delete('/quiz', 'Customer\QuizController@destroy')->name('quiz.destroy');
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+Route::get('/usershistory', function () {
+    return view('usershistory');
+});

@@ -20,7 +20,11 @@ class CreateRestaurantTables extends Migration
             $table->string('name');
             $table->string('address')->nullable();
             $table->longText('description')->nullable();
+            $table->string('price_range_identifier')->nullable();
             $table->string('rating')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->longText('logo_image')->nullable();
+            $table->longText('restaurant_image')->nullable();
             $table->timestamps();
         });
     }

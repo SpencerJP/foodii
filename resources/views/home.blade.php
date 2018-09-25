@@ -5,19 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
-
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in! YEET
-                    @if( Auth::check() )
-                        Your user type is: {{ Auth::user()->getUserTypeToString() }}
-                    @endif
+                    <div id="container">
+                        <button onclick="location.href= '{{ route('preferences.index') }}'" type="button" id="button1">Preferences</button>
+                        <button onclick="location.href= '{{ url('usershistory') }}'" type="button" id="button2">User's History</button>
+                    </div>
                 </div>
             </div>
         </div>
