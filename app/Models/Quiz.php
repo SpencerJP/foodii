@@ -162,16 +162,20 @@ class Quiz extends Model
   }
 
   public function processTags() {
+    $restaurants = Restaurant::All()->reject(function ($value, $key) {
+      info("processTags(): checking " . $value->name . " for removal");
+      if ($this->removedRestaurants->contains($value)) {
+        info("processTags(): removing " . $value->name);
+        return true;
+      }
+      if ($this->potentialRestaurants->contains($value)) {
+        info("processTags(): removing " . $value->name);
+        return true;
+      }
+      return false;
+    });
+
     foreach($this->tags as $tagkey => $quiztag) {
-      $restaurants = Restaurant::All()->reject(function ($value, $key) {
-        if ($this->removedRestaurants->contains($key, $value)) {
-          return true;
-        }
-        if ($this->potentialRestaurants->contains($key, $value)) {
-          return true;
-        }
-        return false;
-      });
       foreach($restaurants as $restaurantkey => $restaurant) {
         if($quiztag->type == "negative") {
             if( !$restaurant->tags->contains($quiztag) )  {
@@ -180,12 +184,14 @@ class Quiz extends Model
               if($this->potentialRestaurants->contains($restaurant)) {
                 $this->potentialRestaurants->detach($restaurant->id);
               }
+              $restaurants->forget($restaurantkey);
             }
         }
         else {
             if( $restaurant->tags->contains($quiztag) ) {
                 info("Attaching id=" . $restaurant->id . ": " . $restaurant->name . " because of the tag " . $quiztag->name);
               $this->potentialRestaurants()->attach($restaurant->id);
+              $restaurants->forget($restaurantkey);
             }
         }
       }
