@@ -149,6 +149,7 @@ class RestaurantsController extends Controller
             return redirect('/home');
         }
         $restaurant = Restaurant::find($id);
+
         //validate
         $rules = array(
             'name' => 'required',
