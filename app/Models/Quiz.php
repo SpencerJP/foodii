@@ -93,15 +93,7 @@ class Quiz extends Model
     if ($this->questionsAnswered >= Config::get('quizoptions.quiz_question_max')) {
       info("checkForResult: Hit maximum questions.");
       $count_for_log = 0;
-      $r = Restaurant::All()->reject(function ($value, $key) {
-        if ($this->removedRestaurants->contains($key)) {
-          $count_for_log++;
-          return true;
-        }
-        else {
-          return false;
-        }
-      });
+      $r = $this->potentialRestaurants;
       info("checkForResult: Removed " . $count_for_log . " restaurants from potentialRestaurants because they were in removedRestaurants.");
       $r->sort(function($a, $b) {
                 if ($a->countTags($this->tags) == $b->countTags($this->tags) ) {
@@ -110,7 +102,7 @@ class Quiz extends Model
                 return ($a->countTags($this->tags) < $b->countTags($this->tags)) ? 1 : -1;
       });
       info("checkForResult: Sorting restaurants array with " . $r->count() . " potential restaurants.");
-      info("checkForResult: Printing sorted restaurant array    " . $r);
+      //info("checkForResult: Printing sorted restaurant array    " . $r);
       if($r->count() > 0) {
         $r = $r->first();
       } else {
@@ -131,7 +123,7 @@ class Quiz extends Model
     if (($this->potentialRestaurants->count()+$this->removedRestaurants->count()) <= Config::get('quizoptions.restaurant_pool_size')) {
       info("checkForResult: Have enough restaurants in my pool.");
       $count_for_log = 0;
-      $r = $this->potentialRestaurants->reject(function ($value, $key) {
+      $r = $this->potentialRestaurants->reject(function ($value) {
         if ($this->removedRestaurants->contains($key)) {
           $count_for_log++;
           return true;
@@ -164,21 +156,21 @@ class Quiz extends Model
   public function processTags() {
     foreach($this->tags as $tagkey => $quiztag) {
       $restaurants = Restaurant::All()->reject(function ($value, $key) {
-        if ($this->removedRestaurants->contains($key, $value)) {
+        if ($this->removedRestaurants->contains($value)) {
           return true;
         }
-        if ($this->potentialRestaurants->contains($key, $value)) {
+        if ($this->potentialRestaurants->contains($value)) {
           return true;
         }
         return false;
       });
       foreach($restaurants as $restaurantkey => $restaurant) {
         if($quiztag->type == "negative") {
-            if( !$restaurant->tags->contains($quiztag) )  {
+            if( $restaurant->tags->contains($quiztag) )  {
                 info("Removing id=" . $restaurant->id . ": " . $restaurant->name . " because of the tag " . $quiztag->name);
               $this->removedRestaurants()->attach($restaurant->id);
               if($this->potentialRestaurants->contains($restaurant)) {
-                $this->potentialRestaurants->detach($restaurant->id);
+                $this->potentialRestaurants()->detach($restaurant->id);
               }
             }
         }
@@ -187,6 +179,15 @@ class Quiz extends Model
                 info("Attaching id=" . $restaurant->id . ": " . $restaurant->name . " because of the tag " . $quiztag->name);
               $this->potentialRestaurants()->attach($restaurant->id);
             }
+        }
+      }
+
+      foreach($this->potentialRestaurants as $restaurantkey => $restaurant) {
+        if ($restaurant->countTags($this->tags) == 0) {
+          info("Removing id= " . $restaurant->id . ": " . $restaurant->name . " because it has negative tags");
+          $this->removedRestaurants()->attach($restaurant->id);
+          $this->potentialRestaurants()->detach($restaurant->id);
+
         }
       }
     }

@@ -28,26 +28,21 @@ class QuizController extends Controller
           return View::make('quiz.startquiz');
         }
         else {
-          $currentQuestionAnswered = $request->session()->get('activeQuestionHasBeenAnswered', false);
-          if ($currentQuestionAnswered) {
-            if ($quiz->checkForResult(\Auth::user()->id) != null)  {
-              $result = $quiz->checkForResult(\Auth::user()->id);
-              $quiz->save();
-              $quiz->potentialRestaurants->sort(function($a, $b) use ($quiz) {
-                        if ($a->countTags($quiz->tags) == $b->countTags($quiz->tags) ) {
-                          return 0;
-                        }
-                        return ($a->countTags($quiz->tags) < $b->countTags($quiz->tags)) ? -1 : 1;
-              });
+          if ($quiz->checkForResult(\Auth::user()->id) != null)  {
+            $result = $quiz->checkForResult(\Auth::user()->id);
+            $quiz->save();
+            return View::make('quiz.resultpage')->with('quizresult', $result)->with('quiz', $quiz);
+          }
+          $currentQuestion = $request->session()->get('activeQuestion', null);
 
-              $quiz->save();
-              return View::make('quiz.resultpage')->with('quizresult', $result);
-            }
+          if ($currentQuestion == null) {
             $question = $quiz->getNextQuestion();
+            $request->session()->put('activeQuestion', $question->id);
           }
           else {
-            $question = Question::find($quiz->idOfRecentQuestion);
+            $question = Question::find($currentQuestion);
             if ($question == null) {
+                $request->session()->put('activeQuestionHasBeenAnswered', null);
                 $question = $quiz->getNextQuestion();
             }
           }
@@ -64,10 +59,9 @@ class QuizController extends Controller
     }
 
     public function answerQuestion(Request $request) {
-        if ($request->session()->get('activeQuestionHasBeenAnswered', false)) {
+        if ($request->session()->get('activeQuestion', null) == null) {
           return redirect()->action('Customer\QuizController@index');
         }
-        $request->session()->put('activeQuestionHasBeenAnswered', true);
         $quiz_id = $request->session()->get('activeQuiz', null);
         $quiz = null;
         if ($quiz_id == null) {
@@ -80,7 +74,8 @@ class QuizController extends Controller
         }
         $answer = Answer::find(Input::get('answer_id'));
         $tags = $answer->tags;
-        $this->log($tags);
+        //$this->log($tags);
+
         foreach($tags as $key => $value) {
           $this->log("Attaching " . $value->name);
           $quiz->tags()->attach($value->id);
@@ -90,22 +85,16 @@ class QuizController extends Controller
         $quiz->save();
 
         $result = $quiz->checkForResult(\Auth::user()->id);
-        $quiz->potentialRestaurants->sort(function($a, $b) use ($quiz) {
-                  if ($a->countTags($quiz->tags) == $b->countTags($quiz->tags) ) {
-                    return 0;
-                  }
-                  return ($a->countTags($quiz->tags) < $b->countTags($quiz->tags)) ? -1 : 1;
-        });
         $quiz->save();
 
         if ($result != null) {
 
-          $request->session()->put('activeQuestionHasBeenAnswered', false);
-          return View::make('quiz.resultpage')->with('quizresult', $result);
+          $request->session()->put('activeQuestion', null);
+          return View::make('quiz.resultpage')->with('quizresult', $result)->with('quiz', $quiz);
         }
         //redirect
 
-        $request->session()->put('activeQuestionHasBeenAnswered', false);
+        $request->session()->put('activeQuestion', null);
         return redirect()->action('Customer\QuizController@index');
     }
 
@@ -113,14 +102,8 @@ class QuizController extends Controller
       if( !Config::get('quizoptions.debug_mode')) {
         if ($quiz->checkForResult(\Auth::user()->id) != null)  {
           $result = $quiz->checkForResult(\Auth::user()->id);
-          $quiz->potentialRestaurants->sort(function($a, $b) use ($quiz) {
-                    if ($a->countTags($quiz->tags) == $b->countTags($quiz->tags) ) {
-                      return 0;
-                    }
-                    return ($a->countTags($quiz->tags) < $b->countTags($quiz->tags)) ? -1 : 1;
-          });
           $quiz->save();
-          return View::make('quiz.resultpage')->with('quizresult', $result);
+          return View::make('quiz.resultpage')->with('quizresult', $result)->with('quiz', $quiz);
         }
       }
       else {
