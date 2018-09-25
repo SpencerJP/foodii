@@ -107,16 +107,16 @@ class CustomerPreferencesController extends CustomerController
         } else {
             // store
             $preferences1= Input::get('dietary_mode');
-            $diets = json_encode('preferences1');
             $preferences2= Input::get('preferred_price_range');
-            $prices = json_encode('preferences2');
             $preferences3= Input::get('preferred_radius_size');
-            $distance=json_encode('preferences3');
 
-            $allpreferences=[$diets,$prices,$distance];
-            $preferences=json_encode($allpreferences);
+            /* $allpreferences=[$preferences1,$preferences2,$preferences3]; */
+            $preferences->dietary_mode=json_encode($preferences1);
+            $preferences->preferred_price_range=json_encode($preferences2);
+            $preferences->preferred_radius_size=json_encode($preferences3);
             $preferences->save();
 
+            info($preferences);
             
             // redirect
             return Redirect::to('\customer\preferences');
