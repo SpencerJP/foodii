@@ -91,9 +91,9 @@ class CustomerPreferencesController extends CustomerController
         }
         $preferences = \Auth::user()->preferences;
          $rules = array(
-            'dietary_mode'       => 'required',
+            'dietary_mode'               => 'required',
             'preferred_price_range'      => 'required',
-            'preferred_radius_size' => 'required'
+            'preferred_radius_size'      => 'required'
         );
          /* TODO  Make a proper validator http://laravel.com/docs/validation
          */
@@ -106,10 +106,15 @@ class CustomerPreferencesController extends CustomerController
                 ->withInput(Input);
         } else {
             // store
-            $preferences1->dietary_mode       = Input::get('dietary_mode');
-            $preferences2->preferred_price_range      = Input::get('preferred_price_range');
-            $preferences3->preferred_radius_size = Input::get('preferred_radius_size');
-            $preferences=[$preferences1,$preferences2,$preferences3];
+            $preferences1= Input::get('dietary_mode');
+            $diets = json_encode('preferences1');
+            $preferences2= Input::get('preferred_price_range');
+            $prices = json_encode('preferences2');
+            $preferences3= Input::get('preferred_radius_size');
+            $distance=json_encode('preferences3');
+
+            $allpreferences=[$diets,$prices,$distance];
+            $preferences=json_encode($allpreferences);
             $preferences->save();
 
             

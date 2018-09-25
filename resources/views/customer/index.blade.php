@@ -11,24 +11,24 @@
 
             {{ Form::model($preferences, array('url' =>  route("preferences.update", 0), 'method' => 'PUT')) }}
                 <div class="form-group">
-                    {{ Form::label('dietary_mode', 'Dietary Mode') }} <br/>
-                    {{ Form::checkbox('dietary_mode', '1', false)}} Vegan<br/>
-                    {{ Form::checkbox('dietary_mode', '2', false)}} Vegetarian<br/>
-                    {{ Form::checkbox('dietary_mode', '3', false)}} Halal<br/>
+                    {{ Form::label('diet', 'Dietary Mode') }} <br/>
+                    {{ Form::radio('dietary_mode', 'Vegan', false)}} Vegan<br/>
+                    {{ Form::radio('dietary_mode', 'Vegetarian', false)}} Vegetarian<br/>
+                    {{ Form::radio('dietary_mode', 'Halal', false)}} Halal<br/>
                 </div>
 
                 <div class="form-group">
-                    {{ Form::label('preferred_price_range', 'Price Range') }} <br/>
-                    {{ Form::checkbox('preferred_price_range', '1', false)}} $<br/>
-                     {{ Form::checkbox('preferred_price_range', '2', false)}} $$<br/>
-                     {{ Form::checkbox('preferred_price_range', '3', false)}} $$$<br/>
+                    {{ Form::label('price', 'Price Range') }} <br/>
+                    {{ Form::radio('preferred_price_range', '$', false)}} $<br/>
+                     {{ Form::radio('preferred_price_range', '$$', false)}} $$<br/>
+                     {{ Form::radio('preferred_price_range', '$$$', false)}} $$$<br/>
                 </div>
 
                 <div class="form-group">
-                    {{ Form::label('preferred_radius_size', 'Radius Size') }} <br/>
-                    {{ Form::checkbox('preferred_radius_size', '1', false)}} less than 5km<br/>
-                    {{ Form::checkbox('preferred_radius_size', '2', false)}} less than 10km<br/>
-                    {{ Form::checkbox('preferred_radius_size', '3', false)}} stores that deliver<br/>
+                    {{ Form::label('radius', 'Radius Size') }} <br/>
+                    {{ Form::radio('preferred_radius_size', 'less than 5km', false)}} less than 5km<br/>
+                    {{ Form::radio('preferred_radius_size', 'less than 10km', false)}} less than 10km<br/>
+                    {{ Form::radio('preferred_radius_size', 'stores that deliver', false)}} stores that deliver<br/>
                 </div>
 
                 {{ Form::submit('Save Changes', array('class' => 'btn btn-primary')) }}
