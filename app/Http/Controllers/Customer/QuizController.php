@@ -31,6 +31,7 @@ class QuizController extends Controller
           if ($quiz->checkForResult(\Auth::user()->id) != null)  {
             $result = $quiz->checkForResult(\Auth::user()->id);
             $quiz->save();
+            
             return View::make('quiz.resultpage')->with('quizresult', $result)->with('quiz', $quiz);
           }
           $currentQuestion = $request->session()->get('activeQuestion', null);

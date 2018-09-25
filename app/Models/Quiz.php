@@ -91,17 +91,17 @@ class Quiz extends Model
       return $this->result;
     }
     if ($this->questionsAnswered >= Config::get('quizoptions.quiz_question_max')) {
-      info("checkForResult: Hit maximum questions.");
+      //info("checkForResult: Hit maximum questions.");
       $count_for_log = 0;
       $r = $this->potentialRestaurants;
-      info("checkForResult: Removed " . $count_for_log . " restaurants from potentialRestaurants because they were in removedRestaurants.");
+      //info("checkForResult: Removed " . $count_for_log . " restaurants from potentialRestaurants because they were in removedRestaurants.");
       $r->sort(function($a, $b) {
                 if ($a->countTags($this->tags) == $b->countTags($this->tags) ) {
                   return 0;
                 }
                 return ($a->countTags($this->tags) < $b->countTags($this->tags)) ? 1 : -1;
       });
-      info("checkForResult: Sorting restaurants array with " . $r->count() . " potential restaurants.");
+      //info("checkForResult: Sorting restaurants array with " . $r->count() . " potential restaurants.");
       //info("checkForResult: Printing sorted restaurant array    " . $r);
       if($r->count() > 0) {
         $r = $r->first();
@@ -121,7 +121,7 @@ class Quiz extends Model
       return $quizresult;
     }
     if (($this->potentialRestaurants->count()+$this->removedRestaurants->count()) <= Config::get('quizoptions.restaurant_pool_size')) {
-      info("checkForResult: Have enough restaurants in my pool.");
+      //info("checkForResult: Have enough restaurants in my pool.");
       $count_for_log = 0;
       $r = $this->potentialRestaurants->reject(function ($value) {
         if ($this->removedRestaurants->contains($key)) {
@@ -132,7 +132,7 @@ class Quiz extends Model
           return false;
         }
       });
-      info("checkForResult: Removed " . $count_for_log . " restaurants from potentialRestaurants because they were in removedRestaurants.");
+      //info("checkForResult: Removed " . $count_for_log . " restaurants from potentialRestaurants because they were in removedRestaurants.");
       if($r->count() > 0) {
         $r = $r->random(1)->first();
       } else {
@@ -155,13 +155,13 @@ class Quiz extends Model
 
   public function processTags() {
     $restaurants = Restaurant::All()->reject(function ($value, $key) {
-      info("processTags(): checking " . $value->name . " for removal");
+      //info("processTags(): checking " . $value->name . " for removal");
       if ($this->removedRestaurants->contains($value)) {
-        info("processTags(): removing " . $value->name);
+        //info("processTags(): removing " . $value->name);
         return true;
       }
       if ($this->potentialRestaurants->contains($value)) {
-        info("processTags(): removing " . $value->name);
+        //info("processTags(): removing " . $value->name);
         return true;
       }
       return false;
@@ -171,7 +171,7 @@ class Quiz extends Model
       foreach($restaurants as $restaurantkey => $restaurant) {
         if($quiztag->type == "negative") {
             if( $restaurant->tags->contains($quiztag) )  {
-                info("Removing id=" . $restaurant->id . ": " . $restaurant->name . " because of the tag " . $quiztag->name);
+                //info("Removing id=" . $restaurant->id . ": " . $restaurant->name . " because of the tag " . $quiztag->name);
               $this->removedRestaurants()->attach($restaurant->id);
               if($this->potentialRestaurants->contains($restaurant)) {
                 $this->potentialRestaurants()->detach($restaurant->id);
@@ -181,7 +181,7 @@ class Quiz extends Model
         }
         else {
             if( $restaurant->tags->contains($quiztag) ) {
-                info("Attaching id=" . $restaurant->id . ": " . $restaurant->name . " because of the tag " . $quiztag->name);
+                //info("Attaching id=" . $restaurant->id . ": " . $restaurant->name . " because of the tag " . $quiztag->name);
               $this->potentialRestaurants()->attach($restaurant->id);
               $restaurants->forget($restaurantkey);
             }
@@ -190,7 +190,7 @@ class Quiz extends Model
 
       foreach($this->potentialRestaurants as $restaurantkey => $restaurant) {
         if ($restaurant->countTags($this->tags) == 0) {
-          info("Removing id= " . $restaurant->id . ": " . $restaurant->name . " because it has negative tags");
+          //info("Removing id= " . $restaurant->id . ": " . $restaurant->name . " because it has negative tags");
           $this->removedRestaurants()->attach($restaurant->id);
           $this->potentialRestaurants()->detach($restaurant->id);
 
