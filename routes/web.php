@@ -36,7 +36,7 @@ Route::get('/restaurants/{restaurant_id}/removetag/{tag_id}', 'Admin\TagsControl
 
 Route::resource('/preferences', 'Customer\CustomerPreferencesController')->only([
     'index', 'update'
-]);
+])->middleware('verified');
 
 Route::resource('/questions', 'Admin\QuestionsController')->only(['index', 'create', 'store', 'destroy']);
 
@@ -76,6 +76,10 @@ Route::get('/contact', function () {
 Route::get('/usershistory', function () {
     return view('usershistory');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
