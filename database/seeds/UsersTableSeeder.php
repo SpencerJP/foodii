@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
         $restaurantowner->name = "TestRO";
         $restaurantowner->password = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; // secret
         $restaurantowner->email = "testro@example.com";
+        $restaurantowner->email_verified_at = now();
         $restaurantowner->user_type = "restaurant_owner";
         $restaurantowner->save();
         $j = 0;
@@ -37,6 +38,7 @@ class UsersTableSeeder extends Seeder
         $admin->name = "TestAdmin";
         $admin->password = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; // secret
         $admin->email = "testadmin@example.com";
+        $admin->email_verified_at = now();
         $admin->user_type = "admin";
         $admin->save();
 
@@ -44,6 +46,8 @@ class UsersTableSeeder extends Seeder
         $customer->name = "TestCustomer";
         $customer->password = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; // secret
         $customer->email = "testcustomer@example.com";
+
+        $customer->email_verified_at = now();
         $customer->user_type = "customer";
         $customer->save();
 
