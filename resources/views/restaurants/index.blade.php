@@ -43,7 +43,7 @@
 	  	@foreach($restaurants as $key => $value)	
 		<div class="col-md-6 col-sm-6">
 		  <div class="thumbnauk">
-			<img class="card-img-top" src="/images/MC.png" alt="" height="400"><!--?php echo $restaurant['name/image']?-->
+			<img class="card-img-top" src="{{ $restaurant->restaurant_image }}" alt="" height="400"><!--?php echo $restaurant['name/image']?-->
 				<div class="card-body">
 				<p class="card-text"><td>Name:</td>{{ $value->name }}</p>
 				<hr class="featurette-divider">

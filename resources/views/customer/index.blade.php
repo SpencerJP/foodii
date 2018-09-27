@@ -1,33 +1,43 @@
+
+
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="card-body">
-            <h1>History</h1>
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <td></td>
-                        <td>Restaurant Name</td>
-                        <td>Address</td>
-                        <td>Phone #</td>
-                        <td>Rating</td>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach($restaurants as $key => $value)
-                    <tr>
-                        <td>{{ $value->logo_image }}</td>
-                        <td>{{ $value->name }}</td>
-                        <td>{{ $value->address }}</td>
-                        <td>{{ $value->phone_number }}</td>
-                        <td>{{ $value->rating }}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+	
+<main role="main">
+
+	<section class="jumbotron text-center">
+	<div class="container">
+	  <h1 class="jumbotron-heading">Welcome Back! </h1>
+	  <p class="lead text-muted">This is your history</p>
+	  <p class="lead text-muted">You can rate the selected restaurants.</p>
+	</div>
+	</section>
+
+	<div class="container">
+	  <div class="row">
+         @foreach($restaurants as $key => $value)
+		<div class="col-md-6 col-sm-6">
+		  <div class="thumbnauk" style="hegiht: 600px">
+			<img class="card-img-top" src="" alt=""><!--?php echo $restaurant['name/image']?-->
+			    <div class="card-body">
+                    <p class="card-text"><td>Name:</td>{{ $value->name }}</p>
+                    <p c><td>ID:</td>{{ $value->id }}</p>
+                    <p class="card-text"><td>Rating:</td>{{ $value->rating }}</p>
+                    <div class="address">
+                        <p class="sub">{{ $value->address }}</p>
+                        <p class="sub">{{ $value->phone_number }}</p>
+                    </div>          
+			    </div>
+			</div>  
+		  </div>
+		</div>
+		 @endforeach
+	  </div>
+	</div>
+	
+</main>
+
+
+
 @endsection
