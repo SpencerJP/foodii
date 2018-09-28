@@ -16,9 +16,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($restaurants as $key => $value)
+                @foreach($quizresult as $key => $value)
                     <tr>
-                        <td>{{ $value->logo_image }}</td>
+                        <td>{{ $value->user_id }}</td>
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->address }}</td>
                         <td>{{ $value->phone_number }}</td>

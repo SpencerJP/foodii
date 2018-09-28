@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use App\Models\QuizResult;
+use App\Models\Restaurant;
+use App\Models\User;
 
 class CustomerController extends Controller
 {
@@ -19,7 +22,7 @@ class CustomerController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        
+
     }
 
     /**
@@ -27,18 +30,18 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     private function checkAuth() {
         if(\Auth::check() && !(\Auth::user()->isCustomer()) ) {
             return true;
         }
         return false;
     }
-    
-    
+
+
     public function index()
     {
-        $restaurants = \Auth::user()->restaurants;
-        return View::make('customer.index')->with('restaurants', $restaurants);
+        $quizresult = QuizResult::where('user_id','=', \Auth::user()->id)->get();
+        return View::make('customer.index')->with('quizresult', $quizresult);
     }
 }
