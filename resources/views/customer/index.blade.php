@@ -18,7 +18,7 @@
                 <tbody>
                 @foreach($quizresult as $key => $value)
                     <tr>
-                        <td>{{ $value->user_id }}</td>
+                        <td>{{ $value->restaurant_image }}</td>
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->address }}</td>
                         <td>{{ $value->phone_number }}</td>

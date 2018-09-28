@@ -41,7 +41,11 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $quizresult = QuizResult::where('user_id','=', \Auth::user()->id)->get();
+        $quizresult = QuizResult::select('restaurants.*')
+                      ->join('restaurants', 'restaurants.id', '=', 'quizresults.restaurant_id')
+                      ->where('quizresults.user_id','=', \Auth::user()->id)
+                      ->get();
+
         return View::make('customer.index')->with('quizresult', $quizresult);
     }
 }
