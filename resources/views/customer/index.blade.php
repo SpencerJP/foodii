@@ -13,6 +13,7 @@
                         <td>Address</td>
                         <td>Phone #</td>
                         <td>Rating</td>
+                        <td>Quiz Taken</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,6 +24,7 @@
                         <td>{{ $value->address }}</td>
                         <td>{{ $value->phone_number }}</td>
                         <td>{{ $value->rating }}</td>
+                        <td>{{ $value->created_at }}</td>
                     </tr>
                 @endforeach
                 </tbody>
