@@ -13,16 +13,18 @@
                         <td>Address</td>
                         <td>Phone #</td>
                         <td>Rating</td>
+                        <td>Quiz Taken</td>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($restaurants as $key => $value)
+                @foreach($quizresult as $key => $value)
                     <tr>
-                        <td>{{ $value->logo_image }}</td>
+                        <td>{{ $value->restaurant_image }}</td>
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->address }}</td>
                         <td>{{ $value->phone_number }}</td>
                         <td>{{ $value->rating }}</td>
+                        <td>{{ $value->created_at }}</td>
                     </tr>
                 @endforeach
                 </tbody>
