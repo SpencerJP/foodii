@@ -12,12 +12,12 @@
             {{ Form::model($preferences, array('url' =>  route("preferences.update", 0), 'method' => 'PUT')) }}
                 <div class="form-group">
                     {{ Form::label('diet', 'Dietary Mode') }} <br/>
-                    {{ Form::checkbox('dietary_mode[]', 'Vegan', false)}} Vegan<br/>  
-                    {{ Form::checkbox('dietary_mode[]', 'Vegetarian', false)}} Vegetarian<br/>  
-                    {{ Form::checkbox('dietary_mode[]', 'Halal', false)}} Halal<br/>  
-                    {{ Form::checkbox('dietary_mode[]', 'Lactose Intolerant', false)}} Lactose Intolerant<br/>  
-                    {{ Form::checkbox('dietary_mode[]', 'Gluten-free', false)}} Gluten-free<br/> 
-                    {{ Form::checkbox('dietary_mode[]', 'Nut Allergy', false)}} Nut Allergy  <br/>
+                    {{ Form::checkbox('dietary_mode[]', 'Vegan', false )}} Vegan<br/>  
+                    {{ Form::checkbox('dietary_mode[]', 'Vegetarian', false )}} Vegetarian<br/>  
+                    {{ Form::checkbox('dietary_mode[]', 'Halal', false )}} Halal<br/>  
+                    {{ Form::checkbox('dietary_mode[]', 'Lactose Intolerant', false )}} Lactose Intolerant<br/>  
+                    {{ Form::checkbox('dietary_mode[]', 'Gluten-free', false )}} Gluten-free<br/> 
+                    {{ Form::checkbox('dietary_mode[]', 'Nut Allergy', false )}} Nut Allergy  <br/>
                 </div>
 
                 <div class="form-group">

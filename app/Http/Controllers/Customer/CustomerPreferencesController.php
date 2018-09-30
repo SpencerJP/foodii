@@ -110,13 +110,20 @@ class CustomerPreferencesController extends CustomerController
             $preferences2= Input::get('preferred_price_range');
             $preferences3= Input::get('preferred_radius_size');
 
-            /* $allpreferences=[$preferences1,$preferences2,$preferences3]; */
+
+
             $preferences->dietary_mode=json_encode($preferences1);
             $preferences->preferred_price_range=json_encode($preferences2);
             $preferences->preferred_radius_size=json_encode($preferences3);
             $preferences->save();
 
             info($preferences);
+
+            $dietary_mode->preferences=json_decode($preferences1);
+            $preferred_price_range->preferences=json_decode($preferences2);
+            $preferred_radius_size->preferences=json_decode($preferences3);
+
+
             
             // redirect
             return Redirect::to('\customer\preferences');
