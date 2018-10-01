@@ -3,7 +3,7 @@
 <style type="text/css">
 	.login-form {
 		width: 380px;
-    	margin: 70px auto;
+    	margin: 50px auto;
 	}
     .login-form form {
     	margin-bottom: 20px;
@@ -31,9 +31,9 @@
 <div class="text-center">
 <img class="mb-4" src="/images/Logo1.png" alt="" width="180" height="180">
 <div class="login-form">
-    <h2 class="text-center">{{ __('Login') }}</h2>   
+    <h2 class="text-center"></h2>   
     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-
+    @csrf
         <div class="form-group">
             <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email address"name="email" value="{{ old('email') }}" required autofocus>
 
