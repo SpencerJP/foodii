@@ -18,7 +18,7 @@ class Restaurant extends Franchise
     {
         return $this->belongsToMany('App\Models\Tag', 'restaurant_tags');
     }
-
+		
 	public function result() {
       return $this->hasMany('App\Models\QuizResult');
   }

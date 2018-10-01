@@ -17,12 +17,13 @@ class QuestionsSeeder extends Seeder
     public function run()
     {
         // if you want to make something a negative tag you can specify it as ["tagName", "negative"] instead of "tagName"
-        $this->question(null, "What time of day meal are you looking for?", [$this->answer("Breakfast", ["Breakfast"]), $this->answer("Lunch", ["Lunch"]), $this->answer("Dinner", ["Dinner"])]);
+        $this->question(null, "What meal is this for?", [$this->answer("Breakfast", ["Breakfast"]), $this->answer("Lunch", ["Lunch"]), $this->answer("Dinner", ["Dinner"])]);
         $this->question(null, "What type of 'eater' are you?", [$this->answer("Bottomless Pit", ["Large"]), $this->answer("Average Eater", ["Medium"]), $this->answer("Light Eater", ["Small"])]);
-        $this->question(null, "What are you craving right now?", [$this->answer("Sweets and sugar", ["Sweet", "Dessert", "Sugar"]), $this->answer("Spicy, hot and wild", ["Spicy"]), $this->answer("After some veggies", ["Vegetarian"])]);
+        $this->question(null, "Are you craving any of these right now?", [$this->answer("Sweets and sugar", ["Sweet", "Dessert", "Sugar"]), $this->answer("Spicy, hot and wild", ["Spicy"]), $this->answer("After some veggies", ["Vegetarian"]), $this->answer("Not really", [])]);
         $this->question(null, "Where would you prefer to eat?", [$this->answer("At a restaurant", ["Restaurant"]), $this->answer("At a pub", ["Pub"]), $this->answer("At home", ["Takeaway"])]);
         $this->question(null, "Are you a vegetarian?", [$this->answer("Yes", ["Vegetarian", ["Beef", "negative"], ["Chicken", "negative"], ["Fish", "negative"]]), $this->answer("No", [])]);
         $this->question(null, "What is your favourite utensil to eat with?", [$this->answer("Knife and fork", ["Steak", "Beef"]), $this->answer("A spoon", ["Soup", "Beef"]), $this->answer("Chopsticks", ["Asian", "Noodles", "Curry"]), $this->answer("My hands", ["Chicken", "Burgers", "Chips"]) ]);
+
     }
 
     public function question($weight = 5, $questionvalue, array $answers) {

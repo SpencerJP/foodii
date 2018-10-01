@@ -17,13 +17,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($quizresult as $key => $value)
+                @foreach($quizresults as $key => $value)
                     <tr>
-                        <td>{{ $value->restaurant_image }}</td>
-                        <td>{{ $value->name }}</td>
-                        <td>{{ $value->address }}</td>
-                        <td>{{ $value->phone_number }}</td>
-                        <td>{{ $value->rating }}</td>
+                      <?php $restaurant = App\Models\Restaurant::find($value->restaurant_id) ?>
+                        <td>{{ $restaurant->restaurant_image }}</td>
+                        <td>{{ $restaurant->name }}</td>
+                        <td>{{ $restaurant->address }}</td>
+                        <td>{{ $restaurant->phone_number }}</td>
+                        <td>{{ $restaurant->rating }}</td>
                         <td>{{ $value->created_at }}</td>
                     </tr>
                 @endforeach
