@@ -6,7 +6,7 @@
 /****** Style Star Rating Widget *****/
 .checked {
     color: orange;
-}	
+}
 </style>
 
 
@@ -15,8 +15,8 @@
 
 <div class="container">
     <section class="jumbotron">
-    <!--set image here-->
-    </section>	
+
+    </section>
     <div class="row featurette">
     <div class="col-md-7">
         <h2 class="featurette-heading">{{ $restaurant->name }}</h2>
@@ -25,7 +25,7 @@
     <div class="col-md-5">
         <img class="featurette-image img-fluid mx-auto" src="{{ $restaurant->restaurant_image }}">
     </div>
-    
+
     </div>
         <p class="sub">{{ $restaurant->address }}</p>
         <p class="sub">{{ $restaurant->phone_number }}</p>
@@ -81,6 +81,9 @@
 					@endif
 				</p>
     <hr class="featurette-divider">
+    <div style="width: 1000px; height: 500px;">
+       {!! Mapper::render() !!}
+    </div>
 </div>
 
 

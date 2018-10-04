@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 
 use App\Models\Restaurant;
+use Mapper;
 
 class RestaurantsController extends Controller
 {
@@ -114,6 +115,7 @@ class RestaurantsController extends Controller
           info("YOU CAN REMEMBER!");
         }
 
+        Mapper::map($restaurant->latitude, $restaurant->longitude);
         return View::make('restaurants.show')
             ->with('restaurant', $restaurant);
     }
