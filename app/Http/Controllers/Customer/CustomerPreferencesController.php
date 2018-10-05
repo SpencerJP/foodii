@@ -34,8 +34,42 @@ class CustomerPreferencesController extends CustomerController
             return redirect('/home');
         }
         $preferences = \Auth::user()->preferences;
-        return View::make('customer.index')->with('preferences', $preferences); // TODO
+
+        if ($preferences == null) {
+          $preferences = new Preferences;
+          $preferences->user_id = \Auth::user()->id;
+          $preferences->save();
+          \Auth::user()->preference_id = $preferences->id;
+          return View::make('customer.index')->with('preferences', $preferences)->
+          with('dietary_mode', [])->
+          with('preferred_price_range', "")->
+          with('preferred_radius_size', "");
+        }
+        if (json_decode($preferences->dietary_mode) == null){
+          return View::make('customer.index')->with('preferences', $preferences)->
+          with('dietary_mode', [])->
+          with('preferred_price_range', "")->
+          with('preferred_radius_size', "");
+        }
+        else {
+          $dietary_mode=json_decode($preferences->dietary_mode);
+          $preferred_price_range=$preferences->preferred_price_range;
+          $preferred_radius_size=$preferences->preferred_radius_size;
+          return View::make('customer.index')->with('preferences', $preferences)->
+          with('dietary_mode', $dietary_mode)->
+          with('preferred_price_range', $preferred_price_range)->
+          with('preferred_radius_size', $preferred_radius_size);
+        }
+
+        /*
+        $dietary_mode=json_decode($preferences->dietary_mode);
+        $preferred_price_range=json_decode($preferences->preferred_price_range);
+        $preferred_radius_size=json_decode($preferences->preferred_radius_size);
+        info($dietary_mode);
+
+        */
     }
+
 
     public function create()
     {
@@ -52,7 +86,7 @@ class CustomerPreferencesController extends CustomerController
      */
     public function store()
     {
-        
+
     }
 
     /**
@@ -89,7 +123,6 @@ class CustomerPreferencesController extends CustomerController
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        $preferences = \Auth::user()->preferences;
          $rules = array(
             'dietary_mode'               => 'required',
             'preferred_price_range'      => 'required',
@@ -101,9 +134,8 @@ class CustomerPreferencesController extends CustomerController
 
         // process the login
         if ($validator->fails()) {
-            return Redirect::to('customer.index')
-                ->withErrors($validator)
-                ->withInput(Input);
+            return Redirect::to('/customer/preferences')
+                ->withErrors($validator);
         } else {
             // store
             $preferences1= Input::get('dietary_mode');
@@ -111,22 +143,15 @@ class CustomerPreferencesController extends CustomerController
             $preferences3= Input::get('preferred_radius_size');
 
 
+            $preferences = \Auth::user()->preferences;
 
             $preferences->dietary_mode=json_encode($preferences1);
-            $preferences->preferred_price_range=json_encode($preferences2);
-            $preferences->preferred_radius_size=json_encode($preferences3);
+            $preferences->preferred_price_range= $preferences2;
+            $preferences->preferred_radius_size= $preferences3;
             $preferences->save();
 
-            info($preferences);
-
-            $dietary_mode->preferences=json_decode($preferences1);
-            $preferred_price_range->preferences=json_decode($preferences2);
-            $preferred_radius_size->preferences=json_decode($preferences3);
-
-
-            
             // redirect
-            return Redirect::to('\customer\preferences');
+            return redirect('/customer/preferences');
         }
     }
 

@@ -24,9 +24,6 @@ class UsersTableSeeder extends Seeder
         	});
 
 	        $preferences = new App\Models\Preferences;
-	        $preferences->dietary_mode = "None";
-	        $preferences->preferred_price_range = "None";
-	        $preferences->preferred_radius_size = "None";
 	        $preferences->save();
 
 	        $u->preference_id = $preferences->id;
@@ -61,5 +58,11 @@ class UsersTableSeeder extends Seeder
     	$customer->email = "testcustomer@example.com";
     	$customer->user_type = "customer";
     	$customer->save();
+      $preferences = new App\Models\Preferences;
+      $preferences->save();
+      $customer->preference_id = $preferences->id;
+      $customer->save();
+      $preferences->user_id = $customer->id;
+      $preferences->save();
     }
 }
