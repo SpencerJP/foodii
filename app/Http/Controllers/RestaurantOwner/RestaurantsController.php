@@ -10,15 +10,17 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 
 use App\Models\Restaurant;
+use Mapper;
 
 class RestaurantsController extends Controller
 {
-    
+
     /**
-        Checks if they're a logged in customer
+     *  Checks if they're authenticated correctly
+     *  @return boolean they authenticated?
     */
     private function checkAuth() {
-        if(\Auth::check() && !(\Auth::user()->isRestaurantOwner()) ) {
+        if(\Auth::check() && !(\Auth::user()->isRestaurantOwner() || \Auth::user()->isAdmin()) ) {
            return true;
         }
         return false;
@@ -34,8 +36,14 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        $restaurants = \Auth::user()->restaurants;
-        return View::make('restaurants.index')->with('restaurants', $restaurants); // TODO
+        if (\Auth::check() && \Auth::user()->isAdmin()) {
+          $restaurants = Restaurant::All();
+          return View::make('restaurants.index')->with('restaurants', $restaurants);
+        }
+        else {
+          $restaurants = \Auth::user()->restaurants;
+          return View::make('restaurants.index')->with('restaurants', $restaurants);
+        }
     }
 
     public function create()
@@ -54,20 +62,21 @@ class RestaurantsController extends Controller
     public function store()
     {
         if ($this->checkAuth()) {
-            return redirect('/home');            
+            return redirect('/home');
         }
-        
+
         //validate
         $rules = array(
             'name' => 'required',
             'address' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'phone_number' => 'required'
         );
         $validator = Validator::make(Input::all(), $rules);
-        
+
         //process the login
         if ($validator->fails()){
-            return Redirect::to('\restaurantowner\restaurants\create')
+            return Redirect::to('\restaurants\create')
                 ->withErrors($validator);
         } else {
             //store
@@ -77,10 +86,13 @@ class RestaurantsController extends Controller
             $restaurant->description = Input::get('description');
             $restaurant->rating = rand(1,5);
             $restaurant->user_id = \Auth::user()->id;
+            $restaurant->phone_number = Input::get('phone_number');
+            $restaurant->logo_image = Input::get('logo_image');
+            $restaurant->restaurant_image = Input::get('restaurant_image');
             $restaurant->save();
-            
+
             //redirect
-            return Redirect::to('\restaurantowner\restaurants');
+            return Redirect::to('\restaurants');
         }
     }
 
@@ -95,10 +107,15 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        
+
         // Get the restaurant
         $restaurant = Restaurant::find($id);
-        
+        if ($restaurant == null)
+        {
+          info("YOU CAN REMEMBER!");
+        }
+
+        Mapper::map($restaurant->latitude, $restaurant->longitude);
         return View::make('restaurants.show')
             ->with('restaurant', $restaurant);
     }
@@ -114,6 +131,13 @@ class RestaurantsController extends Controller
     	if ($this->checkAuth()) {
             return redirect('/home');
         }
+
+        // get the restaurant
+        $restaurant = Restaurant::find($id);
+
+        // show the edit form and pass the nerd
+        return View::make('restaurants.edit')
+        ->with('restaurant', $restaurant);
     }
 
     /**
@@ -126,30 +150,70 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
-        $preferences = \Auth::user()->preferences;
-         $rules = array(
-            'dietary_mode'       => 'required',
-            'preferred_price_range'      => 'required',
-            'preferred_radius_size' => 'required'
+        $restaurant = Restaurant::find($id);
+
+        //validate
+        $rules = array(
+            'name' => 'required',
+            'address' => 'required',
+            'description' => 'required',
+            'phone_number' => 'required'
         );
-         /* TODO  Make a proper validator http://laravel.com/docs/validation
-         */
         $validator = Validator::make(Input::all(), $rules);
 
-        // process the login
-        if ($validator->fails()) {
-            return Redirect::to('customer.index')
-                ->withErrors($validator)
-                ->withInput(Input);
+        //process the login
+        if ($validator->fails()){
+            return Redirect::to('\restaurants\edit')
+                ->withErrors($validator);
         } else {
-            // store
-            $preferences->dietary_mode       = Input::get('dietary_mode');
-            $preferences->preferred_price_range      = Input::get('preferred_price_range');
-            $preferences->preferred_radius_size = Input::get('preferred_radius_size');
-            $preferences->save();
+            //store
+            if(Input::get('name') != null || Input::get('name') != "") {
+              $restaurant->name = Input::get('name');
+            }
+            else {
+              $restaurant->name = "";
+            }
 
-            // redirect
-            return Redirect::to('\customer\preferences');
+            if(Input::get('address') != null || Input::get('address') != "") {
+              $restaurant->address = Input::get('address');
+            }
+            else {
+              $restaurant->address = "";
+            }
+
+            if(Input::get('description') != null || Input::get('description') != "") {
+              $restaurant->description = Input::get('description');
+            }
+            else {
+              $restaurant->description = "";
+            }
+
+            if(Input::get('phone_number') != null || Input::get('phone_number') != "") {
+              $restaurant->phone_number = Input::get('phone_number');
+            }
+            else {
+              $restaurant->phone_number = "";
+            }
+
+            if(Input::get('logo_image') != null || Input::get('logo_image') != "") {
+              $restaurant->logo_image = Input::get('logo_image');
+            }
+            else {
+              $restaurant->logo_image = "";
+            }
+
+            if(Input::get('restaurant_image') != null || Input::get('restaurant_image') != "") {
+              $restaurant->restaurant_image = Input::get('restaurant_image');
+            }
+            else {
+              $restaurant->restaurant_image = "";
+            }
+
+
+            $restaurant->save();
+
+            //redirect
+            return Redirect::to('\restaurants');
         }
     }
 
@@ -164,5 +228,13 @@ class RestaurantsController extends Controller
         if ($this->checkAuth()) {
             return redirect('/home');
         }
+
+        //delete the restaurant
+        $restaurant = Restaurant::find($id);
+        $restaurant->delete();
+
+        //redirect to restaurants page
+        //Session::flash('message', 'Restaurant deleted successfully!');
+        return Redirect::to('\restaurants');
     }
 }

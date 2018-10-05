@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email',
     ];
 
     /**
@@ -49,7 +50,7 @@ class User extends Authenticatable
     /**
      * Is the user an admin
      *
-     * @return bool 
+     * @return bool
      */
     public function isAdmin()
     {
@@ -57,7 +58,7 @@ class User extends Authenticatable
         {
             return true;
         }
-        else 
+        else
         {
             return false;
         }
@@ -65,7 +66,7 @@ class User extends Authenticatable
     /**
      * Is the user a restaurant owner
      *
-     * @return bool 
+     * @return bool
      */
     public function isRestaurantOwner()
     {
@@ -73,7 +74,7 @@ class User extends Authenticatable
         {
             return true;
         }
-        else 
+        else
         {
             return false;
         }
@@ -82,7 +83,7 @@ class User extends Authenticatable
     /**
      * Is the user a customer
      *
-     * @return bool 
+     * @return bool
      */
     public function isCustomer()
     {
@@ -99,7 +100,7 @@ class User extends Authenticatable
     /**
      * Returns a readable string of what kind of user this is
      *
-     * @return String 
+     * @return String
      */
     public function getUserTypeToString()
     {
@@ -112,6 +113,10 @@ class User extends Authenticatable
             return "Admin";
         }
         return "Customer";
+    }
+
+    public function result() {
+      return $this->hasMany('App\Models\QuizResult');
     }
 
 

@@ -68,15 +68,14 @@ class RegisterController extends Controller
         $preferences = new Preferences;
         $preferences->save();
 
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'user_type' => 'Customer',
-        ]);
-
+        $user = new User;
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = Hash::make($data['password']);
+        $user->user_type = 'Customer';
         $user->preference_id = $preferences->id;
         $user->save();
+        
         $preferences->user_id = $user->id;
         $preferences->save();
 

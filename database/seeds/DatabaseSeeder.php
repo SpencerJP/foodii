@@ -11,6 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        $this->call(TagSeeder::class);
+        $this->call(QuestionsSeeder::class);
+        $this->call(GoogleApiRestaurants::class);
         $this->call(UsersTableSeeder::class);
     }
 }

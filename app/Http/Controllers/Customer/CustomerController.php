@@ -4,6 +4,13 @@ namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+use App\Models\QuizResult;
+use App\Models\Restaurant;
+use App\Models\User;
 
 class CustomerController extends Controller
 {
@@ -15,7 +22,7 @@ class CustomerController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        
+
     }
 
     /**
@@ -23,11 +30,22 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private function checkAuth() {
+        if(\Auth::check() && !(\Auth::user()->isCustomer()) ) {
+            return true;
+        }
+        return false;
+    }
+
+
     public function index()
     {
-        if(\Auth::check() && !(\Auth::user()->isCustomer()) ) {
-            return redirect('/home');
-        }
-        return view('testview'); //TODO
+        $quizresult = QuizResult::select('restaurants.*')
+                      ->join('restaurants', 'restaurants.id', '=', 'quizresults.restaurant_id')
+                      ->where('quizresults.user_id','=', \Auth::user()->id)
+                      ->get();
+
+        return View::make('customer.index')->with('quizresult', $quizresult);
     }
 }
