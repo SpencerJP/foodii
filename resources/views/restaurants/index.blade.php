@@ -5,18 +5,8 @@
 /****** Style Star Rating Widget *****/
 .checked {
     color: orange;
-}	
+}
 </style>
-
-
-
-<<<<<<< HEAD
-
-
-
-
-=======
->>>>>>> development
 @section('content')
 <!--
 					<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
@@ -32,7 +22,7 @@
 					</div>
 
 -->
-	
+
 
 
 <main role="main">
@@ -47,18 +37,9 @@
 
 	<div class="container">
 	  <div class="row">
-	  	@foreach($restaurants as $key => $value)	
+	  	@foreach($restaurants as $key => $value)
 		<div class="col-md-6 col-sm-6">
 		  <div class="thumbnauk">
-<<<<<<< HEAD
-			<img class="card-img-top" src="/images/MC.png" alt="" height="400"><!--?php echo $restaurant['name/image']?-->
-				<div class="card-body">
-				<p class="card-text"><td>Name:</td>{{ $value->name }}</p>
-				<hr class="featurette-divider">	
-				<p ><td>ID:</td>{{ $value->id }}</p>
-				<p>
-					
-=======
 			<img class="card-img-top" src="{{$value->restaurant_image}}" alt="" height="400"><!--?php echo $restaurant['name/image']?-->
 				<div class="card-body">
 				<p class="card-text"><td>Name:</td>{{ $value->name }}</p>
@@ -66,10 +47,9 @@
 				<p class="card-text">{{ $value->address }}</p>
 				<p class="card-text">{{ $value->phone_number }}</p>
 				<hr class="featurette-divider">
-				
+
 				<p>
 				<td>Rating</td>
->>>>>>> development
 					@if ($value->rating == 1) {
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star"></span>
@@ -118,8 +98,6 @@
 					}
 
 					@endif
-<<<<<<< HEAD
-					
 				</p>
 				<hr class="featurette-divider">
 				<p class="card-text">{{ $value->address }}</p>
@@ -127,87 +105,27 @@
 				<p class="card-text"	>{{ $value->phone_number }}</p>
 				<hr class="featurette-divider">
 				<div class="caption">
-				<a class="btn btn-primary" href="{{ URL::to('/restaurants/' . $value->id) }}">Details</a>
-				
-				<a class="btn btn-default" href="{{ URL::to('/restaurants/' . $value->id . '/viewtags/') }}">View Tags</a>
-				
-				<a class="btn btn-success" href="{{ URL::to('/restaurants/' . $value->id . '/edit') }}">Edit</a>
-				
-				<a class="">
-					{{ Form::open(array('url' => '/restaurantowner/restaurants/' . $value->id, 'class' => 'pull-right')) }}
-					   {{ Form::hidden('_method', 'DELETE') }}
-					   {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
-					{{ Form::close() }}
-				</a>
-				
-				</div>
-=======
-				</p>
+          <a class="btn btn-primary" href="{{ route("restaurants.show", $value->id) }}">Details</a>
+  				<a class="btn btn-default" href="{{ route("tags.restaurantTagIndex", $value->id)}}">View Tags</a>
+  				<a class="btn btn-success" href="{{ route("restaurants.edit", $value->id) }}">Edit</a>
 
-
-
-
-
-
-
-				<div class="caption">
-				<a class="btn btn-primary" href="{{ route("restaurants.show", $value->id) }}">Details</a>
-				<a class="btn btn-default" href="{{ route("tags.restaurantTagIndex", $value->id)}}">View Tags</a>
-				<a class="btn btn-success" href="{{ route("restaurants.edit", $value->id) }}">Edit</a>
-				
-				<a class="pull-right">
-				<form action="{{ route("restaurants.destroy", $value->id)}}" method="POST">
-				@method('Delete')
-				@csrf
-				<button class="btn btn-danger">Delete</button>
-				</form>
-				</a>
-				</div>
-				
-			
-
->>>>>>> development
+          <a class="pull-right">
+  				<form action="{{ route("restaurants.destroy", $value->id)}}" method="POST">
+  				@method('Delete')
+  				@csrf
+  				<button class="btn btn-danger">Delete</button>
+  				</form>
+  				</a>
+  			</div>
 			</div>
 		  </div>
 		</div>
 		 @endforeach
 	  </div>
 	</div>
-	
+
 </main>
 
 
 
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
