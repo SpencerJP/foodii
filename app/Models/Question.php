@@ -22,8 +22,13 @@ class Question extends Model
      *
      * @return this question's answers, must have 2+
      */
-        public function answers()
+    public function answers()
     {
         return $this->hasMany('App\Models\Answer');
+    }
+
+    public function quizzes()
+    {
+      return $this->belongsToMany('App\Models\Quiz');
     }
 }

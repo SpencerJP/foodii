@@ -21,9 +21,9 @@
                         <td>{{ $value->email }}</td>
                         <td>{{ $value->getUserTypeToString()}}</td>
 
-                        <!-- we will also add show, edit, and delete buttons -->
                         <td>
 
+<<<<<<< HEAD
                             <!-- delete the nerd (uses the destroy method DESTROY /nerds/{id} -->
                             <!-- we will add this later since its a little more complicated than the other two buttons -->
                             
@@ -39,6 +39,18 @@
                                {{ Form::hidden('_method', 'DELETE') }}
                                {{ Form::submit('Delete', array('class' => 'btn btn-small btn-danger')) }}
                             {{ Form::close() }}
+=======
+                            <a class="btn btn-small btn-success" href="{{ route("users.show", $value->id) }}">Details</a>
+
+                            <a class="btn btn-small btn-info" href="{{ route("users.edit", $value->id) }}">Edit</a>
+
+                            <a class="btn">
+                            <form action="{{ route("users.destroy", $value->id)}}" method="POST">
+                               @method('Delete')
+                               @csrf
+                               <button class="btn btn-small btn-danger">Delete</button>
+                            </form>
+>>>>>>> development
                             </a>
                             
                             

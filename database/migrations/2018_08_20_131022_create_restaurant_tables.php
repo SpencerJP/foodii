@@ -18,12 +18,22 @@ class CreateRestaurantTables extends Migration
             $table->integer('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('name');
+<<<<<<< HEAD
             $table->string('address');
             $table->string('phone_number')->nullable();
             $table->longText('description')->nullable();
             $table->longText('logo_image')->nullable();
             $table->longText('restaurant_image')->nullable();
             $table->string('rating');
+=======
+            $table->string('address')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('price_range_identifier')->nullable();
+            $table->string('rating')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->longText('logo_image')->nullable();
+            $table->longText('restaurant_image')->nullable();
+>>>>>>> development
             $table->timestamps();
         });
     }

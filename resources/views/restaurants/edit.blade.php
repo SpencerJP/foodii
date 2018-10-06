@@ -5,11 +5,15 @@
 
 
 <div class="container">
+<<<<<<< HEAD
 	
+=======
+>>>>>>> development
 	<section class="jumbotron text-center">
 	<!--set image here-->
 	<h1 class="jumbotron-heading">Edit {{ $restaurant->name }}</h1>
 	</section>
+<<<<<<< HEAD
 	
 	{{ Form::model($restaurant, array('route' => array('restaurants.update', $restaurant->id), 'method' => 'PUT')) }}
 	
@@ -50,5 +54,42 @@
 	{{ Form::submit('Confirm', array('class' => 'btn btn-primary')) }}
 	{{ Form::close() }}
 	<hr class="featurette-divider">
+=======
+	{{ Form::model($restaurant, array('route' => array('restaurants.update', $restaurant->id), 'method' => 'PUT')) }}
+        <div class="row featurette">
+        <div class="col-md-7">
+            <h2 class="featurette-heading">
+                <div class="form-group">
+                    {{ Form::label('name', 'Name') }}
+                    {{ Form::text('name', null, array('class' => 'form-control')) }}
+                </div>
+            </h2>
+            <p class="lead">                
+                <div class="form-group">
+                    {{ Form::label('description', 'Description') }}
+                    {{ Form::text('description', null, array('class' => 'form-control')) }}
+                </div> 
+            </p>
+        </div>
+
+        <div class="col-md-5">
+                {{ Form::label('restaurant_image', 'Image URL') }}
+                {{ Form::text('restaurant_image', null, array('class' => 'form-control')) }}
+        </div>
+        </div>
+        <p class="sub">
+            <div class="form-group">
+                {{ Form::label('address', 'Address') }}
+                {{ Form::text('address', null, array('class' => 'form-control')) }}
+            </div>
+        </p>
+        <p class="sub">
+            {{ Form::label('phone_number', 'Phone #') }}
+            {{ Form::text('phone_number', null, array('class' => 'form-control')) }}
+        </p>
+        {{ Form::submit('Edit the Restaurant!', array('class' => 'btn btn-primary')) }}
+        {{ Form::close() }}
+        <hr class="featurette-divider">
+>>>>>>> development
 </div>
 @endsection

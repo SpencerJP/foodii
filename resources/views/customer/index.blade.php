@@ -13,16 +13,30 @@
                         <td>Address</td>
                         <td>Phone #</td>
                         <td>Rating</td>
+<<<<<<< HEAD
                     </tr>
                 </thead>
                 <tbody>
                 @foreach($restaurants as $key => $value)
                     <tr>
                         <td>{{ $value->logo_image }}</td>
+=======
+                        <td>Quiz Taken</td>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach($quizresult as $key => $value)
+                    <tr>
+                        <td>{{ $value->restaurant_image }}</td>
+>>>>>>> development
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->address }}</td>
                         <td>{{ $value->phone_number }}</td>
                         <td>{{ $value->rating }}</td>
+<<<<<<< HEAD
+=======
+                        <td>{{ $value->created_at }}</td>
+>>>>>>> development
                     </tr>
                 @endforeach
                 </tbody>

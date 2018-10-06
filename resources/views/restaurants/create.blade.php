@@ -1,5 +1,11 @@
+
+<<<<<<< HEAD
+=======
+
+
 @extends('layouts.app')
 
+>>>>>>> development
 @section('content')
 <div class="container">
     <div class="text-center">
@@ -12,6 +18,7 @@
 		 {{ Form::open(array('url' =>  route("restaurants.store"), 'method' => 'POST')) }}
 		
 			<div class="row">
+<<<<<<< HEAD
 				<div class="col-md-4 ">
 				  <h4 class="d-flex justify-content-between align-items-center mb-3">
 					<span class="text-muted">Your Tags</span>
@@ -42,6 +49,8 @@
 					</div>
 				  </form>
 				</div>
+=======
+>>>>>>> development
 				<div class="col-md-8">
 				  <h4 class="mb-3">Restaurant Detail</h4>
 				  <form class="needs-validation" novalidate>
@@ -88,7 +97,12 @@
 						</div>
 					</div>
 					<hr class="mb-4">
+<<<<<<< HEAD
 					<button class="btn btn-primary btn-lg btn-block" type="submit">Apply</button>
+=======
+					 {{ Form::submit('Submit the restaurant', array('class' => 'btn btn-primary')) }}
+					 
+>>>>>>> development
 				  </form>
 				</div>
 			</div>
