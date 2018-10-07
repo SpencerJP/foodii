@@ -65,9 +65,12 @@ class CustomerController extends Controller
 
     public function rate(Request $request)
     {
-      //$quizresult =
-
+      $quizresult_id = Input::post('result_id');
       $rating = Input::post('rating');
+
+      $quizresult = QuizResult::find($quizresult_id);
+      $quizresult->rating = $rating;
+      $quizresult->save();
 
       return Redirect::to('/customer');
 

@@ -25,4 +25,13 @@ class QuizResult extends Model
     {
         return $this->hasOne("App\Models\Restaurant");
     }
+
+    public function getRatingChecked($integer) {
+      if($integer == $this->rating) {
+        return "checked=\"checked\"";
+      }
+      else {
+        return "";
+      }
+    }
 }

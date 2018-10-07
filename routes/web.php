@@ -77,11 +77,3 @@ Route::get('/contact', function () {
 Route::get('/usershistory', function () {
     return view('usershistory');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
