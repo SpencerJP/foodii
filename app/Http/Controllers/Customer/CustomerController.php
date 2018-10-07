@@ -48,4 +48,12 @@ class CustomerController extends Controller
 
         return View::make('customer.index')->with('quizresult', $quizresult);
     }
+
+    public function rate($id)
+    {
+
+
+
+
+    }
 }

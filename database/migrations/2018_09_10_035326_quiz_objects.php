@@ -63,6 +63,7 @@ class QuizObjects extends Migration
         $table->foreign('user_id')->references('id')->on('users');
         $table->integer('restaurant_id')->integer();
         $table->foreign('restaurant_id')->references('id')->on('restaurants');
+        $table->integer('rating')->integer();
         $table->timestamps();
       });
     }
