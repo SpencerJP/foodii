@@ -27,11 +27,14 @@ class QuizResult extends Model
     }
 
     public function getRatingChecked($integer) {
+      if($this->rating == null) {
+        return " ";
+      }
       if($integer == $this->rating) {
-        return "checked=\"checked\"";
+        return " checked=\"checked\" ";
       }
       else {
-        return "";
+        return " ";
       }
     }
 }
