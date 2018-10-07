@@ -65,16 +65,15 @@ h1 { font-size: 1.5em; margin: 10px; }
 
 	<div class="container">
 	  <div class="row">
-       @foreach($quizresult as $result)
-         @foreach($result->restaurant as $value)
+       @foreach($quizresults as $key => $value)
       		<div class="col-md-6 col-sm-6">
       		  <div class="thumbnauk" style="hegiht: 600px">
       			<img class="card-img-top" src="" alt=""><!--?php echo $restaurant['name/image']?-->
       			    <div class="card-body">
-                  <p class="card-text"><td>Name:</td>{{ $value->name }}</p>
+                  <p class="card-text"><td>Name:</td>{{ App\Models\Restaurant::find($value->restaurant_id)->name }}</p>
                     <div class="address">
-                      <p class="sub">{{ $value->address }}</p>
-                      <p class="sub">{{ $value->phone_number }}</p>
+                      <p class="sub">{{ App\Models\Restaurant::find($value->restaurant_id)->address }}</p>
+                      <p class="sub">{{ App\Models\Restaurant::find($value->restaurant_id)->phone_number }}</p>
                     </div>
                     <form action="{{ route('history.rate') }}" method="POST">
                     <p class="card-text"><td>Rating:</td>
@@ -87,7 +86,7 @@ h1 { font-size: 1.5em; margin: 10px; }
         								<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
         							</fieldset>
 
-                      {{ Form::hidden('result_id', $value->quizresult_id) }}
+                      {{ Form::hidden('result_id', $value->id) }}
                       {{ Form::submit('Rate', array('class' => 'btn btn-primary')) }}
 
                       @csrf
@@ -97,7 +96,6 @@ h1 { font-size: 1.5em; margin: 10px; }
       			 </div>
       		  </div>
       		</div>
-      @endforeach
 		 @endforeach
 	  </div>
 	</div>
