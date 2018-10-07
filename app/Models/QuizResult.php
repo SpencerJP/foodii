@@ -8,9 +8,9 @@ class QuizResult extends Model
 {
 
     protected $table = 'quizresults';
-    
+
     protected $fillable = [
-    	'voteResult',
+    	'voteResult', 'rating'
     ];
 
     public function quiz() {
