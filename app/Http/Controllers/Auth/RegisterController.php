@@ -66,9 +66,6 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $preferences = new Preferences;
-        $preferences->dietary_mode = "None";
-        $preferences->preferred_price_range = "None";
-        $preferences->preferred_radius_size = "None";
         $preferences->save();
 
         $user = new User;
