@@ -95,7 +95,6 @@ class Quiz extends Model
       $count_for_log = 0;
       $r = $this->potentialRestaurants;
       //info("checkForResult: Removed " . $count_for_log . " restaurants from potentialRestaurants because they were in removedRestaurants.");
-      $r->sort(function($a, $b) {
                 if ($a->countTags($this->tags) == $b->countTags($this->tags) ) {
                   return 0;
                 }

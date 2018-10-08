@@ -39,13 +39,13 @@ class CustomerPreferencesController extends CustomerController
           $preferences->user_id = \Auth::user()->id;
           $preferences->save();
           \Auth::user()->preference_id = $preferences->id;
-          return View::make('customer.index')->with('preferences', $preferences)->
+          return View::make('customer.preferences')->with('preferences', $preferences)->
           with('dietary_mode', [])->
           with('preferred_price_range', "")->
           with('preferred_radius_size', "");
         }
         if (json_decode($preferences->dietary_mode) == null){
-          return View::make('customer.index')->with('preferences', $preferences)->
+          return View::make('customer.preferences')->with('preferences', $preferences)->
           with('dietary_mode', [])->
           with('preferred_price_range', "")->
           with('preferred_radius_size', "");
@@ -54,7 +54,7 @@ class CustomerPreferencesController extends CustomerController
           $dietary_mode=json_decode($preferences->dietary_mode);
           $preferred_price_range=$preferences->preferred_price_range;
           $preferred_radius_size=$preferences->preferred_radius_size;
-          return View::make('customer.index')->with('preferences', $preferences)->
+          return View::make('customer.preferences')->with('preferences', $preferences)->
           with('dietary_mode', $dietary_mode)->
           with('preferred_price_range', $preferred_price_range)->
           with('preferred_radius_size', $preferred_radius_size);
@@ -126,7 +126,7 @@ class CustomerPreferencesController extends CustomerController
 
         // process the login
         if ($validator->fails()) {
-            return Redirect::to('customer')
+            return Redirect::to('/preferences')
                 ->withErrors($validator);
 
         } else {
@@ -145,7 +145,7 @@ class CustomerPreferencesController extends CustomerController
 
             // redirect
 
-            return Redirect::to('customer');
+            return Redirect::to('/preferences');
         }
     }
 
