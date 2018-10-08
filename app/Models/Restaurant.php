@@ -40,4 +40,60 @@ class Restaurant extends Franchise
 		}
 		return $i;
 	}
+
+	public function getAverageRating() {
+
+		$quizresults = QuizResult::all();
+		$restaurant_id = $this->id;
+		$sumOfRatings = 0;
+		$totalRatings = 0;
+
+		info("Array Count ". $quizresults->count());
+
+		$quizresults = $quizresults->reject(function($value, $key) use($restaurant_id) {
+			if ($value->restaurant_id == $restaurant_id) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		});
+
+		foreach ($quizresults as $key => $value) {
+			if ($value->rating != null) {
+				$totalRatings++;
+				$sumOfRatings = $sumOfRatings + $value->rating;
+			}
+			info("Array Count ". $totalRatings . "" . $sumOfRatings);
+		}
+
+		if ($totalRatings == 0) {
+			return -1;
+		}
+
+		return ($sumOfRatings / $totalRatings);
+	}
+
+	public function getRoundedRating() {
+		$rating = $this->getAverageRating();
+
+		if ($rating >= 1 && $rating < 1.5) {
+			return 1;
+		}
+		elseif ($rating >= 1.5 && $rating < 2.5) {
+			return 2;
+		}
+		elseif($rating >= 2.5 && $rating < 3.5) {
+			return 3;
+		}
+		elseif($rating >= 3.5 && $rating < 4.5) {
+			return 4;
+		}
+		elseif($rating >= 4.5) {
+			return 5;
+		}
+		else {
+			return -1;
+		}
+	}
 }

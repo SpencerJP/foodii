@@ -8,9 +8,9 @@ class QuizResult extends Model
 {
 
     protected $table = 'quizresults';
-    
+
     protected $fillable = [
-    	'voteResult',
+    	'voteResult', 'rating'
     ];
 
     public function quiz() {
@@ -24,5 +24,17 @@ class QuizResult extends Model
     public function restaurant()
     {
         return $this->hasOne("App\Models\Restaurant");
+    }
+
+    public function getRatingChecked($integer) {
+      if($this->rating == null) {
+        return " ";
+      }
+      if($integer == $this->rating) {
+        return " checked=\"checked\" ";
+      }
+      else {
+        return " ";
+      }
     }
 }

@@ -11,13 +11,13 @@ h1 { font-size: 1.5em; margin: 10px; }
 
 /****** Style Star Rating Widget *****/
 
-.rating { 
+.rating {
   border: none;
   float: left;
 }
 
-.rating > input { display: none; } 
-.rating > label:before { 
+.rating > input { display: none; }
+.rating > label:before {
   margin: 5px;
   font-size: 1.25em;
   font-family: FontAwesome;
@@ -25,14 +25,14 @@ h1 { font-size: 1.5em; margin: 10px; }
   content: "\f005";
 }
 
-.rating > .half:before { 
+.rating > .half:before {
   content: "\f089";
   position: absolute;
 }
 
-.rating > label { 
-  color: #ddd; 
- float: right; 
+.rating > label {
+  color: #ddd;
+ float: right;
 }
 
 /***** CSS Magic to Highlight Stars on Hover *****/
@@ -44,7 +44,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 .rating > input:checked + label:hover, /* hover current star when changing rating */
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
 
 </style>
 
@@ -52,7 +52,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 
 
 @section('content')
-	
+
 <main role="main">
 
 	<section class="jumbotron text-center">
@@ -65,34 +65,41 @@ h1 { font-size: 1.5em; margin: 10px; }
 
 	<div class="container">
 	  <div class="row">
-         @foreach($restaurants as $key => $value)
-		<div class="col-md-6 col-sm-6">
-		  <div class="thumbnauk" style="hegiht: 600px">
-			<img class="card-img-top" src="" alt=""><!--?php echo $restaurant['name/image']?-->
-			    <div class="card-body">
-                    <p class="card-text"><td>Name:</td>{{ $value->name }}</p>
-
-                    <p class="card-text"><td>Rating:</td>
-										<fieldset class="rating">
-										<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-										<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-										<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-										<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-										<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-										</fieldset>
-										</p>
+       @foreach($quizresults as $key => $value)
+      		<div class="col-md-6 col-sm-6">
+      		  <div class="thumbnauk" style="height: 600px">
+      			<img class="card-img-top" src="" alt=""><!--?php echo $restaurant['name/image']?-->
+      			    <div class="card-body">
+                  <p class="card-text"><td>Name:</td>{{ App\Models\Restaurant::find($value->restaurant_id)->name }}</p>
                     <div class="address">
-                        <p class="sub">{{ $value->address }}</p>
-                        <p class="sub">{{ $value->phone_number }}</p>
-                    </div>          
-			    </div>
-			</div>  
-		  </div>
-		</div>
+                      <p class="sub">{{ App\Models\Restaurant::find($value->restaurant_id)->address }}</p>
+                      <p class="sub">{{ App\Models\Restaurant::find($value->restaurant_id)->phone_number }}</p>
+                    </div>
+                    <form action="{{ route('history.rate') }}" method="POST">
+                    <p class="card-text"><td>Rating:</td>
+
+                      <fieldset class="rating" method="POST">
+        								<input type="radio" id="star5_{{$key}}" name="rating"{{$value->getRatingChecked(5)}}value="5" /><label class = "full" for="star5_{{$key}}" title="Awesome - 5 stars"></label>
+        								<input type="radio" id="star4_{{$key}}" name="rating"{{$value->getRatingChecked(4)}}value="4" /><label class = "full" for="star4_{{$key}}" title="Pretty good - 4 stars"></label>
+        								<input type="radio" id="star3_{{$key}}" name="rating"{{$value->getRatingChecked(3)}}value="3" /><label class = "full" for="star3_{{$key}}" title="Meh - 3 stars"></label>
+        								<input type="radio" id="star2_{{$key}}" name="rating"{{$value->getRatingChecked(2)}}value="2" /><label class = "full" for="star2_{{$key}}" title="Kinda bad - 2 stars"></label>
+        								<input type="radio" id="star1_{{$key}}" name="rating"{{$value->getRatingChecked(1)}}value="1" /><label class = "full" for="star1_{{$key}}" title="Sucks big time - 1 star"></label>
+        							</fieldset>
+
+                      {{ Form::hidden('result_id', $value->id) }}
+                      {{ Form::submit('Rate', array('class' => 'btn btn-primary')) }}
+
+                      @csrf
+        						</p>
+                </form>
+              </div>
+      			 </div>
+      		  </div>
+      		</div>
 		 @endforeach
 	  </div>
 	</div>
-	
+
 </main>
 
 

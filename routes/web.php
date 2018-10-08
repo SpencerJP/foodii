@@ -28,6 +28,7 @@ Route::get('/admin', 'Admin\AdminController@index')->name('admindashboard');
 Route::get('/restaurantowner', 'RestaurantOwner\RestaurantOwnerController@index')->name('restaurantownerdashboard');
 
 Route::get('/customer', 'Customer\CustomerController@index')->name('dashboard');
+Route::post('/customer', 'Customer\CustomerController@rate')->name('history.rate');
 
 Route::resource('/restaurants', 'RestaurantOwner\RestaurantsController');
 Route::get('/restaurants/{restaurant_id}/viewtags', 'Admin\TagsController@restaurantTagIndex')->name('tags.restaurantTagIndex');
@@ -76,11 +77,3 @@ Route::get('/contact', function () {
 Route::get('/usershistory', function () {
     return view('usershistory');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
