@@ -46,7 +46,6 @@ class UsersTableSeeder extends Seeder
         $customer->name = "TestCustomer";
         $customer->password = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; // secret
         $customer->email = "testcustomer@example.com";
-
         $customer->email_verified_at = now();
         $customer->user_type = "customer";
         $customer->save();
@@ -67,9 +66,6 @@ class UsersTableSeeder extends Seeder
 
 
 	        $preferences = new App\Models\Preferences;
-	        $preferences->dietary_mode = "None";
-	        $preferences->preferred_price_range = "None";
-	        $preferences->preferred_radius_size = "None";
 	        $preferences->save();
 
 	        $u->preference_id = $preferences->id;
@@ -97,7 +93,5 @@ class UsersTableSeeder extends Seeder
           $i++;
         }
       }
-
-
     }
 }

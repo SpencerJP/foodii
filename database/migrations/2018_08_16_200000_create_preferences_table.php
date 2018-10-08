@@ -15,9 +15,9 @@ class CreatePreferencesTable extends Migration
     {
         Schema::create('preferences', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('dietary_mode');
-            $table->string('preferred_price_range');
-            $table->string('preferred_radius_size');
+            $table->longText('dietary_mode')->nullable();
+            $table->string('preferred_price_range')->nullable();
+            $table->string('preferred_radius_size')->nullable();
             $table->timestamps();
         });
     }
