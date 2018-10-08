@@ -31,30 +31,30 @@
         <p class="sub">{{ $restaurant->phone_number }}</p>
         <p>
 				<td>Rating</td>
-					@if ($restaurant->rating == 1) {
+					@if ($restaurant->getRoundedRating() == 1) {
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star"></span>
 						<span class="fa fa-star"></span>
 						<span class="fa fa-star"></span>
 						<span class="fa fa-star"></span>
 					}
-					@elseif ($restaurant->rating == 2) {
+					@elseif ($restaurant->getRoundedRating() == 2) {
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-					}
-
-					@elseif ($restaurant->rating == 3) {
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star"></span>
 						<span class="fa fa-star"></span>
 					}
 
-					@elseif ($restaurant->rating == 4) {
+					@elseif ($restaurant->getRoundedRating() == 3) {
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+					}
+
+					@elseif ($restaurant->getRoundedRating() == 4) {
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star checked"></span>
@@ -62,7 +62,7 @@
 						<span class="fa fa-star"></span>
 					}
 
-					@elseif ($restaurant->rating == 5) {
+					@elseif ($restaurant->getRoundedRating() == 5) {
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star checked"></span>
