@@ -19,7 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
     <style type="text/css">
         #button-container{
         text-align: center;
@@ -31,7 +31,7 @@
         border-radius: 15px;
         background: #f0f8ff;
         border: 2px solid;
-        padding: 20px; 
+        padding: 20px;
 
         }
         #button2{
@@ -40,7 +40,7 @@
         border-radius: 15px;
         background: #f0f8ff;
         border: 2px solid;
-        padding: 20px; 
+        padding: 20px;
         }
 
         #button1 , #button2 {
@@ -54,7 +54,7 @@
         .navbar, .navbar-expand-md, .navbar, .navbar-laravel, .navbar-brand {
             background-color: #9bc4e2;
         }
-        
+
         #related_links {
             width: 12em;
             padding: 0 0 1em 0;
@@ -140,17 +140,17 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-                                
+
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('home') }}">
+                                <a class="dropdown-item" href="{{ route('quiz.startQuiz') }}">
                                     {{ __('Quiz') }}
                                 </a>
-                                <a class="dropdown-item" href="{{ route('dashboard') }}">
-                                    {{ __('Profile') }}
-                                </a>
-
                                 <a class="dropdown-item" href="{{ route('preferences.index') }}">
                                     {{ __('Preferences') }}
+                                </a>
+
+                                <a class="dropdown-item" href="{{ route('history') }}">
+                                    {{ __('History') }}
                                 </a>
 
 
