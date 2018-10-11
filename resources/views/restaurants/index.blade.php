@@ -6,6 +6,16 @@
 .checked {
     color: orange;
 }	
+
+
+.jumbotron {
+    background-image: url("/images/header2.jpg");
+    min-height: 38%;
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
 </style>
 
 
@@ -31,10 +41,13 @@
 <main role="main">
 
 	<section class="jumbotron text-center">
+	
 	<div class="container">
-	  <h1 class="jumbotron-heading">Welcome Back! </h1>
-	  <p class="lead text-muted">You can view and edit restaurants you have.Please E-mail us if you have any questions.</p>
-	  <p class="lead text-muted">Foodii@help.com</p>
+	
+	  <h1 class="jumbotron-heading"><font  color="black">Welcome Back!</font> </h1>
+	  <p class="lead text-muted"><font color="black">You can view and edit restaurants you have.Please E-mail us if you have any questions.</font></p>
+	  <p class="lead text-muted"><font color="black">Foodii@help.com</font></p>
+	 
 	</div>
 	</section>
 
