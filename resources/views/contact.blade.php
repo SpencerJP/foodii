@@ -2,22 +2,17 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Get in touch with us</div>
 
-                <div class="card-body">
-                    <p>
-                        Our email: foodii@gmail.com
-                    </p>
-
-                    <p>
-                        Our phone: +61 0459 625 236
-                    </p>                    
-                </div>
-            </div>
+      <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Contact Us</h1>
+          <p class="lead text-muted">E-mail: Foodii@gmail.com</p>
+          <p class="lead text-muted">Phone:  +61 0459 625 236</p>
+          <p>
+          </p>
         </div>
-    </div>
+      </section>
 </div>
 @endsection
+
+
