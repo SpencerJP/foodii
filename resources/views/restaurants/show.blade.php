@@ -7,28 +7,39 @@
 .checked {
     color: orange;
 }
+
+
+.jumbotron {
+    background-image: url("/images/navimage2.png");
+    min-height: 30%;
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
 </style>
 
 
 
 @section('content')
-
+<section class="jumbotron">
+	
+</section>
 <div class="container">
-    <section class="jumbotron">
-
-    </section>
+   
     <div class="row featurette">
     <div class="col-md-7">
         <h2 class="featurette-heading">{{ $restaurant->name }}</h2>
         <p class="lead">{{ $restaurant->description }}</p>
+		<p class="sub">{{ $restaurant->address }}</p>
+        <p class="sub">{{ $restaurant->phone_number }}</p>
     </div>
     <div class="col-md-5">
-        <img class="featurette-image img-fluid mx-auto" src="{{ $restaurant->restaurant_image }}">
+        <img class="featurette-image img-fluid mx-auto" src="{{ $restaurant->restaurant_image }}" width="300" height="400">
     </div>
 
     </div>
-        <p class="sub">{{ $restaurant->address }}</p>
-        <p class="sub">{{ $restaurant->phone_number }}</p>
+        
         <p>
 				<td>Rating</td>
 					@if ($restaurant->getRoundedRating() == 1) {
@@ -84,6 +95,7 @@
     <div style="width: 1000px; height: 500px;">
        {!! Mapper::render() !!}
     </div>
+	
 </div>
 
 

@@ -50,13 +50,13 @@
 	 
 	</div>
 	</section>
-
+	
 	<div class="container">
 	  <div class="row">
 	  	@foreach($restaurants as $key => $value)	
 		<div class="col-md-6 col-sm-6">
 		  <div class="thumbnauk">
-			<img class="card-img-top" src="{{$value->restaurant_image}}" alt="" height="400"><!--?php echo $restaurant['name/image']?-->
+			<img src="{{$value->restaurant_image}}" alt="" height="300" width="400"><!--?php echo $restaurant['name/image']?-->
 				<div class="card-body">
 				<p class="card-text"><td>Name:</td>{{ $value->name }}</p>
 				<hr class="featurette-divider">
