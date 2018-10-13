@@ -5,6 +5,15 @@
 <style>
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
+.jumbotron {
+    background-image: url("/images/navimage2.png");
+    min-height: 38%;
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
 fieldset, label { margin: 0; padding: 0; }
 body{ margin: 20px; }
 h1 { font-size: 1.5em; margin: 10px; }
@@ -58,8 +67,8 @@ h1 { font-size: 1.5em; margin: 10px; }
 	<section class="jumbotron text-center">
 	<div class="container">
 	  <h1 class="jumbotron-heading">Welcome Back! </h1>
-	  <p class="lead text-muted">This is your history</p>
-	  <p class="lead text-muted">You can rate the selected restaurants.</p>
+	  <p class="lead ">This is your history</p>
+	  <p class="lead ">You can rate the selected restaurants.</p>
 	</div>
 	</section>
 
