@@ -76,8 +76,8 @@ h1 { font-size: 1.5em; margin: 10px; }
 	  <div class="row">
        @foreach($quizresults as $key => $value)
       		<div class="col-md-6 col-sm-6">
-      		  <div class="thumbnauk" style="height: 600px">
-      			<img class="card-img-top" src="" alt=""><!--?php echo $restaurant['name/image']?-->
+      		  <div class="thumbnauk" style="height:600px">
+      			<img class="card-img-top" src="{{ App\Models\Restaurant::find($value->restaurant_id)->restaurant_image }}" alt="" height="300" width="400"> <!--?php echo $restaurant['name/image']?-->
       			    <div class="card-body">
                   <p class="card-text"><td>Name:</td>{{ App\Models\Restaurant::find($value->restaurant_id)->name }}</p>
                     <div class="address">
