@@ -95,7 +95,7 @@
     <div style="width: 1000px; height: 500px;">
        {!! Mapper::render() !!}
     </div>
-	
+	<a class="btn btn-success" href="{{ route('restaurants.index') }}">Back</a>
 </div>
 
 

@@ -56,7 +56,7 @@
 	  	@foreach($restaurants as $key => $value)	
 		<div class="col-md-6 col-sm-6">
 		  <div class="thumbnauk">
-			<img src="{{$value->restaurant_image}}" alt="" height="300" width="400"><!--?php echo $restaurant['name/image']?-->
+			<img src="{{$value->restaurant_image}}" height="300" width="400"><!--?php echo $restaurant['name/image']?-->
 				<div class="card-body">
 				<p class="card-text"><td>Name:</td>{{ $value->name }}</p>
 				<hr class="featurette-divider">
@@ -143,6 +143,7 @@
 		</div>
 		 @endforeach
 	  </div>
+	  <a class="btn btn-success" href="{{ route('home') }}">Back to Home</a>
 	</div>
 	
 </main>
