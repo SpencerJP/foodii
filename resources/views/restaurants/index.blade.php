@@ -47,6 +47,7 @@
 	  <h1 class="jumbotron-heading"><font  color="black">Welcome Back!</font> </h1>
 	  <p class="lead text-muted"><font color="black">You can view and edit restaurants you have.Please E-mail us if you have any questions.</font></p>
 	  <p class="lead text-muted"><font color="black">Foodii@help.com</font></p>
+	  <p><a href="{{ route('home') }}" class="btn btn-primary my-2" >Back to Home</a></p>
 	 
 	</div>
 	</section>
@@ -143,7 +144,7 @@
 		</div>
 		 @endforeach
 	  </div>
-	  <a class="btn btn-success" href="{{ route('home') }}">Back to Home</a>
+	 
 	</div>
 	
 </main>

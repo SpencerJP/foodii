@@ -23,7 +23,7 @@
 
 @section('content')
 <section class="jumbotron">
-	
+
 </section>
 <div class="container">
    
@@ -95,7 +95,8 @@
     <div style="width: 1000px; height: 500px;">
        {!! Mapper::render() !!}
     </div>
-	<a class="btn btn-success" href="{{ route('restaurants.index') }}">Back</a>
+	<p><a href="{{ route('restaurants.index') }}" class="btn btn-primary my-2" >Back</a></p>
+
 </div>
 
 

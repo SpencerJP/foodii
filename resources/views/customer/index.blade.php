@@ -69,6 +69,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 	  <h1 class="jumbotron-heading">Welcome Back! </h1>
 	  <p class="lead ">This is your history</p>
 	  <p class="lead ">You can rate the selected restaurants.</p>
+    <p><a href="{{ route('home') }}" class="btn btn-primary my-2" >Back to Home</a></p>
 	</div>
 	</section>
 
